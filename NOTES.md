@@ -131,9 +131,14 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       Reset automático si hay gap > 1 día. `incrementStreak` eliminada del
       API del store; no quedan llamadas explícitas desde pantallas.
 
-- [ ] Banco de distractores curados (`src/data/quizDistractors.json`): eliminaría el
-      riesgo residual de que una respuesta válida de OTRA pregunta aparezca como distractor.
-      Costo: ~360 entradas manuales. Evaluar en Fase 7 según feedback real de usuarios.
+- [x] Heurística de coherencia de distractores (2026-09-18): cascada de 5
+      niveles en `buildOptions` (quiz.tsx) — misma categoría + paridad de
+      palabras estricta → relajada → cualquier categoría + estricta →
+      relajada → fallback actual. Garantiza 4 opciones siempre. Cubierto
+      por `quiz-build-check.js` (regla 'Vote-style': correcta ≥5 palabras
+      no admite distractor ≤2 palabras). El banco curado
+      `src/data/quizDistractors.json` (~360 entradas) sigue pendiente como
+      refuerzo para Fase 7, ya no como parche de un bug.
 
 - [ ] Pantalla "Mi estado" (Grupo B de las 8 dinámicas): permitir al usuario elegir
       su estado de residencia para resolver senadores, representante, gobernador y capital.

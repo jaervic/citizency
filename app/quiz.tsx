@@ -139,13 +139,67 @@ for (const answer of ANSWER_BANK) {
 }
 
 /**
+ * Diferencia máxima de palabras entre la correcta y un distractor en el primer y en el segundo
+ * intento de la cascada (`STRICT_WORD_DELTA` en los niveles 1 y 3, `LOOSE_WORD_DELTA` en 2 y 4).
+ */
+const STRICT_WORD_DELTA = 3;
+const LOOSE_WORD_DELTA = 6;
+
+/** Palabras a partir de las cuales la correcta se considera "larga" (ver `isTooShort`). */
+const LONG_CORRECT_WORDS = 5;
+
+/**
+ * Palabras o menos que convierten un distractor en absurdo junto a una correcta larga: es el caso
+ * real que motivó esta heurística ("Citizens eighteen (18) and older can vote." con "Vote").
+ */
+const SHORT_DISTRACTOR_WORDS = 2;
+
+/** Respuesta del banco con su diferencia de palabras respecto a la respuesta correcta. */
+type AnswerCandidate = {
+  candidate: AnswerPair;
+  /** |palabras(correcta) - palabras(candidato)|. */
+  delta: number;
+};
+
+/**
+ * Número de palabras de un texto en inglés: los signos se tratan como espacios y los espacios de
+ * más se colapsan ("Citizens eighteen (18) and older can vote." -> 7 palabras). Se usa para medir
+ * la paridad de longitud entre la correcta y cada distractor.
+ */
+function countWords(text: string): number {
+  return text
+    .replace(/[^A-Za-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length;
+}
+
+/**
  * Opciones de una pregunta: 1 correcta + 3 distractores, barajadas.
  *
  * La opción correcta es SIEMPRE la primera respuesta aceptada (`answers_en[0]`: en
- * `questions.json` las más comunes van al inicio). Los distractores se eligen en este orden: las
- * demás respuestas aceptadas de esta pregunta (ver `USE_SIBLING_ANSWERS_AS_DISTRACTORS`), el banco
- * de la misma categoría y, si hicieran falta, el banco completo. Nunca se repiten textos (ni en
- * inglés ni en español) dentro de las 4 opciones de una misma pregunta.
+ * `questions.json` las más comunes van al inicio). Los distractores se buscan en una CASCADA de
+ * coherencia que prioriza que sean formal y temáticamente plausibles, y solo se relaja si no hay
+ * candidatos suficientes:
+ *
+ *   Nivel 1: misma categoría + diferencia de palabras <= 3.
+ *   Nivel 2: misma categoría + diferencia de palabras <= 6.
+ *   Nivel 3: cualquier categoría + diferencia de palabras <= 3.
+ *   Nivel 4: cualquier categoría + diferencia de palabras <= 6.
+ *   Nivel 5: cualquier categoría, cualquier longitud (el reparto antiguo, sin filtro de coherencia).
+ *
+ * El nivel 5 existe para NUNCA romper el examen: garantiza que siempre haya 4 opciones aunque los
+ * niveles 1-4 se queden cortos. Con `questions.json` actual no se alcanza (el nivel 1 cubre ~98%
+ * de las preguntas y los niveles 4-5 no llegan a usarse); queda como red de seguridad para el
+ * futuro y para datos nuevos. Después, por el mismo motivo, una última pasada con el banco
+ * completo sin el veto de coherencia.
+ *
+ * Antes de los niveles se aplica el veto "Vote-style": si la correcta es larga (>= 5 palabras) se
+ * descartan los distractores de 1-2 palabras, que el usuario percibe como un sinsentido.
+ *
+ * En todos los niveles se excluyen la propia pregunta, TODAS sus `answers_en` (ver
+ * `USE_SIBLING_ANSWERS_AS_DISTRACTORS`) y los distractores ya elegidos, y los candidatos se
+ * barajan dentro de cada nivel para no sesgarse por el orden del JSON. Si un nivel no llega a 3
+ * candidatos se pasa al siguiente y se completan los que falten.
  */
 function buildOptions(question: Question): QuizOption[] {
   const correct: AnswerPair = {
@@ -174,15 +228,50 @@ function buildOptions(question: Question): QuizOption[] {
       }))
     : [];
 
-  const candidates = [
+  const correctWords = countWords(correct.en);
+
+  // Veto "Vote-style": una correcta larga no admite distractores de 1-2 palabras.
+  const isTooShort = (candidate: AnswerPair): boolean =>
+    correctWords >= LONG_CORRECT_WORDS && countWords(candidate.en) <= SHORT_DISTRACTOR_WORDS;
+
+  // La diferencia de palabras de cada respuesta del banco se mide UNA sola vez: la cascada
+  // reevalúa el mismo banco en varios niveles.
+  const measure = (pool: AnswerPair[]): AnswerCandidate[] =>
+    pool.map((candidate) => ({
+      candidate,
+      delta: Math.abs(countWords(candidate.en) - correctWords),
+    }));
+
+  const coherentOnly = (entries: AnswerCandidate[]): AnswerCandidate[] =>
+    entries.filter((entry) => !isTooShort(entry.candidate));
+
+  const withMaxDelta = (entries: AnswerCandidate[], maxDelta: number): AnswerPair[] =>
+    entries.filter((entry) => entry.delta <= maxDelta).map((entry) => entry.candidate);
+
+  const coherentSameCategory = coherentOnly(
+    measure(DISTRACTORS_BY_CATEGORY.get(question.category) ?? []),
+  );
+  const coherentBank = coherentOnly(measure(ANSWER_BANK));
+
+  // Cascada en orden de preferencia (niveles 1-5) + pasada final con el banco completo SIN el veto
+  // de coherencia, que es la que garantiza las 4 opciones si algún día los niveles no bastaran.
+  const pools: AnswerPair[][] = [
+    withMaxDelta(coherentSameCategory, STRICT_WORD_DELTA),
+    withMaxDelta(coherentSameCategory, LOOSE_WORD_DELTA),
+    withMaxDelta(coherentBank, STRICT_WORD_DELTA),
+    withMaxDelta(coherentBank, LOOSE_WORD_DELTA),
+    coherentBank.map((entry) => entry.candidate),
+    ANSWER_BANK,
+  ];
+
+  const candidatesInOrder = [
     ...shuffle(siblingDistractors),
-    ...shuffle(DISTRACTORS_BY_CATEGORY.get(question.category) ?? []),
-    ...shuffle(ANSWER_BANK),
+    ...pools.flatMap((pool) => shuffle(pool)),
   ];
 
   const distractors: AnswerPair[] = [];
 
-  for (const candidate of candidates) {
+  for (const candidate of candidatesInOrder) {
     if (distractors.length >= DISTRACTORS_PER_QUESTION) {
       break;
     }
