@@ -1,0 +1,154 @@
+# NOTES.md — Decisiones de producto, monetización y legal
+
+Este archivo NO es código. Es la fuente de verdad para decisiones que no deben perderse entre sesiones de chat. Cada vez que tomemos una decisión importante de producto, monetización o legal, se documenta acá.
+
+Última actualización: 2026-09-18
+
+---
+
+## 1. Modelo de monetización
+
+**Modelo elegido**: Freemium con **pago único** (NO suscripción).
+
+**Justificación**:
+- Público objetivo: inmigrantes hispanohablantes con presupuesto ajustado.
+- La suscripción mensual genera rechazo psicológico en este segmento.
+- El pago único "para prepararte hasta tu examen" encaja mejor: el usuario sabe cuándo termina su necesidad.
+- Google Play cobra 15% (no 30%) si estamos en el programa de pequeñas empresas (<$1M USD/año).
+
+**Precio tentativo**: $4.99 – $7.99 USD (definir en Fase 7 según pruebas con usuarios).
+
+### Qué queda GRATIS
+
+- Flashcards completas (128 preguntas, inglés + español).
+- Quiz sin cronómetro (20 preguntas aleatorias, corrección automática).
+- Progreso básico (racha, XP, categorías).
+- Botón 🔊 con expo-speech en todo el contenido.
+- Datos oficiales actualizados (presidente, VP, speaker, chief justice).
+
+### Qué queda PREMIUM (pago único)
+
+- Simulacro de entrevista con voz (Fase 6).
+- Modo "examen cronometrado" con límite de tiempo real.
+- Estadísticas avanzadas por categoría.
+- (Evaluar en su momento) Guía de audio descargable / offline.
+
+### Qué NO vamos a hacer (por ahora)
+
+- **Suscripciones mensuales**: rechazado por UX y por el segmento.
+- **In-App Purchases fragmentados** ("Guía intensiva de entrevista", "Pack de N-400", etc.): complica UX, backend y lógica de validación. Un solo desbloqueo premium es suficiente.
+- **Supabase en v1**: no se necesita. Todo el estado vive local (Zustand + AsyncStorage). Supabase recién tiene sentido si sincronizamos progreso entre dispositivos (Fase 8+).
+- **Analytics invasivos**: cero. Si en algún momento se necesitan métricas, usar Plausible o Umami (privacy-first).
+
+---
+
+## 2. Estrategia de publicación
+
+**Orden**:
+1. Publicar en Google Play **gratis, sin paywall**, por 2–4 semanas.
+2. Objetivo: juntar reseñas positivas y datos de uso reales.
+3. Después: activar el paywall premium con Play Billing.
+
+**Por qué**: lanzar con paywall sin base de reseñas mata el algoritmo de Play Store. Mejor entrar gratis, posicionar, y después monetizar a los que ya confían.
+
+**Herramienta de billing**: Google Play Billing directo. Evaluar RevenueCat si la lógica se complica (tiene tier gratis hasta $2.5K USD/mes de ingresos).
+
+---
+
+## 3. Privacidad y datos
+
+**Principio rector**: minimizar recolección de datos personales sensibles.
+
+- Todo el progreso vive local en el dispositivo (AsyncStorage).
+- No hay login, no hay cuenta de usuario, no hay email obligatorio.
+- No hay analytics de terceros en v1.
+- Fase 6 (AssemblyAI para voz): la API key va detrás de un proxy en Vercel. El audio del usuario NO se almacena en servidores nuestros.
+- Si en el futuro se agrega Supabase: solo progreso anónimo, nunca datos personales ni audio.
+
+**Documentar en política de privacidad** (Fase 7):
+- Qué datos se guardan (progreso local, nada más).
+- Qué NO se guarda (audio, ubicación, contactos, etc.).
+- Cómo eliminar los datos (desinstalar la app).
+
+---
+
+## 4. Legal y disclaimers
+
+### Texto del disclaimer (para Home / pantalla "Acerca de")
+
+> **Aviso importante**
+>
+> Esta aplicación es una **herramienta de estudio independiente** para ayudar a prepararte para el examen de ciudadanía de los Estados Unidos. **No constituye asesoría legal** de ningún tipo ni sustituye la consulta con un abogado de inmigración.
+>
+> El contenido se basa en materiales públicos del USCIS y se actualiza periódicamente, pero **no garantizamos la aprobación del examen** ni la exactitud absoluta de la información oficial. Verifica siempre con fuentes oficiales del USCIS antes de tomar decisiones legales.
+>
+> Esta app no está afiliada, patrocinada ni respaldada por el USCIS ni por ninguna agencia del gobierno de los Estados Unidos.
+
+### Texto para la ficha de Google Play
+
+> Aplicación de estudio independiente para el examen de ciudadanía USCIS. No está afiliada al USCIS ni constituye asesoría legal.
+
+### Dónde debe aparecer
+
+- [ ] Pantalla "Acerca de" o modal en Home (Fase 7).
+- [ ] Ficha de Google Play (Fase 7).
+- [ ] Pantalla inicial antes del primer uso (opcional, evaluar).
+
+---
+
+## 5. Contenido y actualización
+
+- El contenido se basa en el temario oficial del USCIS versión 2025 (128 preguntas).
+- `src/data/officialData.json` guarda los datos que cambian con el tiempo (presidente, VP, speaker, chief justice) con fecha de actualización visible.
+- **Revisión periódica**: cada cambio de administración o de figuras clave, actualizar `officialData.json`. Al menos 1 vez al año.
+- Las 4 preguntas que dependen del estado del usuario (senadores, representante, gobernador, capital) mantienen aviso genérico porque no podemos conocer el estado sin pedir ubicación.
+
+---
+
+## 6. Roadmap y fases
+
+- [x] Fase 1–4: contenido, algoritmo, flashcards, datos oficiales.
+- [ ] **Fase 5** (en curso): quiz.tsx → progress.tsx → modo revisión.
+- [ ] Fase 6: entrevista con voz (grabación + AssemblyAI vía proxy Vercel + comparación difusa + feedback de pronunciación).
+- [ ] Fase 7: disclaimers, Play Billing, EAS Build, publicación gratis, luego paywall.
+- [ ] Fase 8: examen de lectura/escritura, práctica N-400, evaluación de Supabase, estructura 501(c)(3).
+
+**Regla**: no tocar monetización hasta terminar Fase 6. El paywall se define después de tener el producto premium construido.
+
+---
+
+## 7. Decisiones pendientes (para revisar en su momento)
+
+- [ ] Precio final del desbloqueo premium.
+- [ ] ¿El simulacro de entrevista tiene límite de intentos en la versión gratis? (tentativo: 1 intento gratis, ilimitado en premium).
+- [ ] ¿Agregar modo oscuro? (bajo esfuerzo, alto impacto en reviews).
+- [ ] ¿Idioma inglés para la UI además de español? (para usuarios que quieren practicar inmersión).
+- [ ] Política de reembolsos (Play Store la maneja, pero documentar el flujo).
+- [ ] Racha: migrar a `markStudiedToday()` en useStore con lógica diaria idempotente.
+      Hoy solo flashcards la incrementa; quiz y futuras pantallas también deben hacerlo.
+
+- [ ] Banco de distractores curados (`src/data/quizDistractors.json`): eliminaría el
+      riesgo residual de que una respuesta válida de OTRA pregunta aparezca como distractor.
+      Costo: ~360 entradas manuales. Evaluar en Fase 7 según feedback real de usuarios.
+
+- [ ] Pantalla "Mi estado" (Grupo B de las 8 dinámicas): permitir al usuario elegir
+      su estado de residencia para resolver senadores, representante, gobernador y capital.
+      Preguntas afectadas: gov-023, gov-029, gov-061, gov-062. Fase 5 o 6.
+---
+
+## 8. Referencias
+
+- Repositorios y proyectos similares en GitHub: sirven como referencia de UX, no para copiar código.
+- Consejos recibidos sobre arquitectura privacy-first, módulo de audio y ética: en su mayoría ya están implementados o agendados. Lo único nuevo que aportaron fue la insistencia en **disclaimers legales visibles** y **contenido actualizado según USCIS**, ambos ya cubiertos.
+
+## 9. Recordatorios de contexto
+
+- **AssemblyAI (Fase 6)**: la API key NUNCA va en el bundle. Proxy obligatorio en
+  Vercel Edge Function. Usar `eas secret:create`, no `EXPO_PUBLIC_`.
+- **Branding (Fase 7)**: nombre definitivo, ícono, splash, colores de marca y
+  tipografía aún sin decidir. No urgente.
+- **Subvenciones USCIS (Fase 8+)**: considerar estructura 501(c)(3) cuando haya
+  tracción real. Programa CINAS: hasta $300K por organización en 2 años.
+  Es recordatorio personal, no tarea.
+- **Tests en `.expo/selftest/`**: `requeue-check.js`, `answers-truncation-check.js`,
+  `phase-official-check.js`, `quiz-build-check.js`. Gitignoreados pero útiles.

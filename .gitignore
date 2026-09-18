@@ -30,8 +30,25 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
+# local env files (NUNCA se versionan: pueden llevar claves reales)
+.env
+.env.local
 .env*.local
+.env.*
+# la plantilla de ejemplo SÍ se versiona: no contiene valores reales
+!.env.example
+
+# credenciales y ficheros de firma
+*.keystore
+google-services.json
+GoogleService-Info.plist
+
+# logs
+*.log
+
+# NOTA: src/data/officialData.json SÍ se versiona: la app lo importa para responder las
+# preguntas dinámicas (presidente, vicepresidente, speaker, chief justice...). Actualízalo a
+# mano cuando cambie el gobierno y sube también la fecha `lastUpdated`.
 
 # typescript
 *.tsbuildinfo

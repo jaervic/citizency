@@ -1,0 +1,4383 @@
+{
+  "languageCode": "multi",
+  "questions": [
+    {
+      "id": "gov-001",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "What is the form of government of the United States?",
+      "answers_en": [
+        "Republic",
+        "Constitution-based federal republic",
+        "Representative democracy"
+      ],
+      "question_es": "¿Cuál es la forma de gobierno de los Estados Unidos?",
+      "answers_es": [
+        "República",
+        "República federal basada en la Constitución",
+        "Democracia representativa"
+      ],
+      "explanation_es": "Los fundadores rechazaron la monarquía y pusieron el poder en manos del pueblo, que lo ejerce a través de personas elegidas. Ese poder no es ilimitado: una Constitución escrita fija sus límites. Por eso no se trata de una democracia directa.",
+      "vocabulary": [
+        {
+          "word": "constitution",
+          "translation": "constitución"
+        },
+        {
+          "word": "representative",
+          "translation": "representante"
+        },
+        {
+          "word": "federal",
+          "translation": "federal (relativo a la federación)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-002",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "What is the supreme law of the land?",
+      "answers_en": [
+        "(U.S.) Constitution"
+      ],
+      "question_es": "¿Cuál es la ley suprema del país?",
+      "answers_es": [
+        "La Constitución (de EE. UU.)"
+      ],
+      "explanation_es": "Ninguna ley estatal ni decisión del gobierno puede contradecirla: es la norma de mayor jerarquía del país. Los tribunales, incluida la Corte Suprema, la usan para decidir si otras normas son válidas. Se aprobó en 1787 y entró en vigor en 1789.",
+      "vocabulary": [
+        {
+          "word": "supreme",
+          "translation": "supremo, suprema"
+        },
+        {
+          "word": "law",
+          "translation": "ley"
+        },
+        {
+          "word": "land",
+          "translation": "país, territorio (en 'law of the land')"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-003",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "Name one thing the U.S. Constitution does.",
+      "answers_en": [
+        "Forms the government",
+        "Defines powers of government",
+        "Defines the parts of government",
+        "Protects the rights of the people"
+      ],
+      "question_es": "Nombre una función de la Constitución de EE. UU.",
+      "answers_es": [
+        "Establece el gobierno",
+        "Define los poderes del gobierno",
+        "Define las partes del gobierno",
+        "Protege los derechos del pueblo"
+      ],
+      "explanation_es": "Es el documento que crea la estructura del país: establece las instituciones, reparte sus facultades y fija los límites del poder. También reconoce derechos fundamentales frente al gobierno. Todo lo demás debe ajustarse a sus reglas.",
+      "vocabulary": [
+        {
+          "word": "defines",
+          "translation": "define, establece"
+        },
+        {
+          "word": "powers",
+          "translation": "poderes, facultades"
+        },
+        {
+          "word": "rights",
+          "translation": "derechos"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-004",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "The U.S. Constitution starts with the words \"We the People.\" What does \"We the People\" mean?",
+      "answers_en": [
+        "Self-government",
+        "Popular sovereignty",
+        "Consent of the governed",
+        "People should govern themselves",
+        "Social contract"
+      ],
+      "question_es": "La Constitución de EE. UU. comienza con las palabras \"Nosotros, el Pueblo\". ¿Qué significa \"Nosotros, el Pueblo\"?",
+      "answers_es": [
+        "Autogobierno",
+        "Soberanía popular",
+        "Consentimiento de los gobernados",
+        "El pueblo debe gobernarse a sí mismo",
+        "Contrato social"
+      ],
+      "explanation_es": "El preámbulo afirma que la autoridad nace del pueblo y no de un monarca ni de un grupo privilegiado. El gobierno existe porque los gobernados aceptan someterse a él y pueden reformarlo. Es la base de la idea de que el poder público es un acuerdo entre iguales.",
+      "vocabulary": [
+        {
+          "word": "sovereignty",
+          "translation": "soberanía"
+        },
+        {
+          "word": "consent",
+          "translation": "consentimiento"
+        },
+        {
+          "word": "governed",
+          "translation": "gobernados"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-005",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "How are changes made to the U.S. Constitution?",
+      "answers_en": [
+        "Amendments",
+        "The amendment process"
+      ],
+      "question_es": "¿Cómo se hacen cambios a la Constitución de EE. UU.?",
+      "answers_es": [
+        "Enmiendas",
+        "El proceso de enmienda"
+      ],
+      "explanation_es": "El texto no se reescribe: se le añaden cambios formales mediante un procedimiento exigente. Deben aprobarlos dos tercios del Congreso y después tres cuartas partes de los estados. Así se evita alterar la norma suprema por una mayoría pasajera.",
+      "vocabulary": [
+        {
+          "word": "amendments",
+          "translation": "enmiendas"
+        },
+        {
+          "word": "changes",
+          "translation": "cambios"
+        },
+        {
+          "word": "process",
+          "translation": "proceso"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-006",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "What does the Bill of Rights protect?",
+      "answers_en": [
+        "The basic rights of Americans",
+        "The basic rights of people living in the United States"
+      ],
+      "question_es": "¿Qué protege la Carta de Derechos?",
+      "answers_es": [
+        "Los derechos básicos de los estadounidenses",
+        "Los derechos básicos de las personas que viven en los Estados Unidos"
+      ],
+      "explanation_es": "Son las diez primeras enmiendas, ratificadas en 1791, que limitan lo que el gobierno puede hacer contra las personas. Incluyen la libertad de expresión y de culto, garantías judiciales y protección frente a registros arbitrarios. Cubren a todas las personas del país.",
+      "vocabulary": [
+        {
+          "word": "protect",
+          "translation": "protege, proteger"
+        },
+        {
+          "word": "rights",
+          "translation": "derechos"
+        },
+        {
+          "word": "basic",
+          "translation": "básico, básicos"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-007",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "How many amendments does the U.S. Constitution have?",
+      "answers_en": [
+        "Twenty-seven (27)"
+      ],
+      "question_es": "¿Cuántas enmiendas tiene la Constitución de EE. UU.?",
+      "answers_es": [
+        "Veintisiete (27)"
+      ],
+      "explanation_es": "Solo se han aprobado veintisiete desde 1789, porque el procedimiento exige un consenso muy amplio. Las diez primeras llegaron juntas en 1791 y las demás se añadieron una por una a lo largo de más de dos siglos. La última fue ratificada en 1992.",
+      "vocabulary": [
+        {
+          "word": "amendments",
+          "translation": "enmiendas"
+        },
+        {
+          "word": "Constitution",
+          "translation": "Constitución"
+        },
+        {
+          "word": "Twenty-seven",
+          "translation": "veintisiete"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-008",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "Why is the Declaration of Independence important?",
+      "answers_en": [
+        "It says America is free from British control.",
+        "It says all people are created equal.",
+        "It identifies inherent rights.",
+        "It identifies individual freedoms."
+      ],
+      "question_es": "¿Por qué es importante la Declaración de Independencia?",
+      "answers_es": [
+        "Dice que Estados Unidos es libre del control británico.",
+        "Dice que todas las personas son creadas iguales.",
+        "Identifica derechos inherentes.",
+        "Identifica libertades individuales."
+      ],
+      "explanation_es": "Firmada el 4 de julio de 1776, rompió el vínculo con la corona británica y justificó la independencia ante el mundo. Su argumento central es que existen derechos que nadie concede ni puede quitar. Esa idea sirvió después para reclamar igualdad y libertades.",
+      "vocabulary": [
+        {
+          "word": "inherent",
+          "translation": "inherente, propio por naturaleza"
+        },
+        {
+          "word": "freedoms",
+          "translation": "libertades"
+        },
+        {
+          "word": "British",
+          "translation": "británico"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-009",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "What founding document said the American colonies were free from Britain?",
+      "answers_en": [
+        "Declaration of Independence"
+      ],
+      "question_es": "¿Qué documento fundacional declaró que las colonias americanas eran libres de Gran Bretaña?",
+      "answers_es": [
+        "La Declaración de Independencia"
+      ],
+      "explanation_es": "En 1776 los representantes de las trece colonias lo aprobaron en Filadelfia y anunciaron la separación de la corona. Fue el paso previo a la guerra de independencia y a la creación de un país nuevo. Su fecha se celebra hoy como el día nacional.",
+      "vocabulary": [
+        {
+          "word": "founding",
+          "translation": "fundacional, fundador"
+        },
+        {
+          "word": "colonies",
+          "translation": "colonias"
+        },
+        {
+          "word": "Britain",
+          "translation": "Gran Bretaña"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-010",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "Name two important ideas from the Declaration of Independence and the U.S. Constitution.",
+      "answers_en": [
+        "Equality",
+        "Liberty",
+        "Social contract",
+        "Natural rights",
+        "Limited government",
+        "Self-government"
+      ],
+      "question_es": "Nombre dos ideas importantes de la Declaración de Independencia y la Constitución de EE. UU.",
+      "answers_es": [
+        "Igualdad",
+        "Libertad",
+        "Contrato social",
+        "Derechos naturales",
+        "Gobierno limitado",
+        "Autogobierno"
+      ],
+      "explanation_es": "Ambos textos comparten la idea de que las personas tienen derechos que el Estado no crea, solo reconoce. De ahí nacen principios como la igualdad ante la ley y un gobierno sujeto a límites. Se estudian juntos porque se refuerzan entre sí.",
+      "vocabulary": [
+        {
+          "word": "equality",
+          "translation": "igualdad"
+        },
+        {
+          "word": "liberty",
+          "translation": "libertad"
+        },
+        {
+          "word": "limited",
+          "translation": "limitado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-011",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "The words \"Life, Liberty, and the pursuit of Happiness\" are in what founding document?",
+      "answers_en": [
+        "Declaration of Independence"
+      ],
+      "question_es": "Las palabras \"Vida, Libertad y la búsqueda de la Felicidad\" están en qué documento fundacional?",
+      "answers_es": [
+        "La Declaración de Independencia"
+      ],
+      "explanation_es": "La frase, inspirada en John Locke, aparece en el texto de 1776 que declaró la independencia. Sostiene que cada persona posee derechos que el gobierno debe respetar, no otorgar. Es una de las formulaciones más citadas de la tradición política estadounidense.",
+      "vocabulary": [
+        {
+          "word": "pursuit",
+          "translation": "búsqueda"
+        },
+        {
+          "word": "Happiness",
+          "translation": "felicidad"
+        },
+        {
+          "word": "Life",
+          "translation": "vida"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-012",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "What is the economic system of the United States?",
+      "answers_en": [
+        "Capitalism",
+        "Free market economy"
+      ],
+      "question_es": "¿Cuál es el sistema económico de los Estados Unidos?",
+      "answers_es": [
+        "Capitalismo",
+        "Economía de libre mercado"
+      ],
+      "explanation_es": "Se basa en la propiedad privada, la libertad de empresa y el mercado para fijar precios. El gobierno interviene con regulaciones, impuestos y programas sociales, pero no planifica la economía. Estados Unidos tiene una de las economías más grandes del mundo.",
+      "vocabulary": [
+        {
+          "word": "capitalism",
+          "translation": "capitalismo"
+        },
+        {
+          "word": "market",
+          "translation": "mercado"
+        },
+        {
+          "word": "economic",
+          "translation": "económico"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-013",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "What is the rule of law?",
+      "answers_en": [
+        "Everyone must follow the law.",
+        "Leaders must obey the law.",
+        "Government must obey the law.",
+        "No one is above the law."
+      ],
+      "question_es": "¿Qué es el estado de derecho?",
+      "answers_es": [
+        "Todos deben obedecer la ley.",
+        "Los líderes deben obedecer la ley.",
+        "El gobierno debe obedecer la ley.",
+        "Nadie está por encima de la ley."
+      ],
+      "explanation_es": "Significa que la ley está por encima de cualquier persona o institución, incluidos los gobernantes. Nadie puede usar su cargo o su poder para quedar impune. Sin este principio los derechos no serían exigibles ni las decisiones previsibles.",
+      "vocabulary": [
+        {
+          "word": "obey",
+          "translation": "obedecer"
+        },
+        {
+          "word": "above",
+          "translation": "por encima de"
+        },
+        {
+          "word": "rule",
+          "translation": "regla, norma (aquí: gobierno de la ley)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-014",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "Many documents influenced the U.S. Constitution. Name one.",
+      "answers_en": [
+        "Declaration of Independence",
+        "Articles of Confederation",
+        "Federalist Papers",
+        "Anti-Federalist Papers",
+        "Virginia Declaration of Rights",
+        "Fundamental Orders of Connecticut",
+        "Mayflower Compact",
+        "Iroquois Great Law of Peace"
+      ],
+      "question_es": "Muchos documentos influyeron en la Constitución de EE. UU. Nombre uno.",
+      "answers_es": [
+        "La Declaración de Independencia",
+        "Los Artículos de la Confederación",
+        "Los Documentos Federalistas",
+        "Los Documentos Anti-Federalistas",
+        "La Declaración de Derechos de Virginia",
+        "Las Órdenes Fundamentales de Connecticut",
+        "El Pacto del Mayflower",
+        "La Gran Ley de Paz Iroquesa"
+      ],
+      "explanation_es": "Los redactores de 1787 tomaron ideas de pactos coloniales, declaraciones estatales de derechos y ensayos políticos de la época. Entre ellos hay acuerdos de autogobierno de los primeros colonos y textos que debatían cómo repartir el poder. Todos aportaron conceptos vigentes hasta hoy.",
+      "vocabulary": [
+        {
+          "word": "Confederation",
+          "translation": "Confederación"
+        },
+        {
+          "word": "Compact",
+          "translation": "pacto, acuerdo"
+        },
+        {
+          "word": "Iroquois",
+          "translation": "iroqués, iroquesa"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-015",
+      "category": "Principios del gobierno estadounidense",
+      "question_en": "There are three branches of government. Why?",
+      "answers_en": [
+        "So one part does not become too powerful",
+        "Checks and balances",
+        "Separation of powers"
+      ],
+      "question_es": "Hay tres ramas del gobierno. ¿Por qué?",
+      "answers_es": [
+        "Para que ninguna parte se vuelva demasiado poderosa",
+        "Controles y equilibrios",
+        "Separación de poderes"
+      ],
+      "explanation_es": "La división evita que una sola institución acumule demasiado poder y pueda abusar de él. Cada rama vigila a las otras y puede frenar sus decisiones, de modo que casi todo exige negociación. Así el poder se reparte y se controla a sí mismo.",
+      "vocabulary": [
+        {
+          "word": "branches",
+          "translation": "ramas (del gobierno)"
+        },
+        {
+          "word": "balances",
+          "translation": "equilibrios, contrapesos"
+        },
+        {
+          "word": "separation",
+          "translation": "separación"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-016",
+      "category": "Sistema de gobierno",
+      "question_en": "Name the three branches of government.",
+      "answers_en": [
+        "Legislative, executive, and judicial",
+        "Congress, president, and the courts"
+      ],
+      "question_es": "Nombre las tres ramas del gobierno.",
+      "answers_es": [
+        "Legislativa, ejecutiva y judicial",
+        "Congreso, presidente y los tribunales"
+      ],
+      "explanation_es": "Cada una cumple una función distinta: una aprueba las normas, otra las ejecuta y otra resuelve los conflictos e interpreta la ley. Están separadas, pero se controlan mutuamente. Sus nombres en inglés derivan de esas tres funciones: legislar, ejecutar y juzgar.",
+      "vocabulary": [
+        {
+          "word": "Legislative",
+          "translation": "legislativa"
+        },
+        {
+          "word": "executive",
+          "translation": "ejecutiva"
+        },
+        {
+          "word": "judicial",
+          "translation": "judicial"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-017",
+      "category": "Sistema de gobierno",
+      "question_en": "The President of the United States is in charge of which branch of government?",
+      "answers_en": [
+        "Executive branch"
+      ],
+      "question_es": "¿El Presidente de los Estados Unidos está a cargo de qué rama del gobierno?",
+      "answers_es": [
+        "La rama ejecutiva"
+      ],
+      "explanation_es": "Esa rama aplica las leyes y dirige la administración federal, las fuerzas armadas y la política exterior. El presidente la encabeza y nombra a sus principales funcionarios. Aun así, no puede aprobar leyes ni decidir casos judiciales por sí mismo.",
+      "vocabulary": [
+        {
+          "word": "charge",
+          "translation": "cargo; estar a cargo (in charge of)"
+        },
+        {
+          "word": "branch",
+          "translation": "rama (del gobierno)"
+        },
+        {
+          "word": "Executive",
+          "translation": "ejecutiva"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-018",
+      "category": "Sistema de gobierno",
+      "question_en": "What part of the federal government writes laws?",
+      "answers_en": [
+        "(U.S.) Congress",
+        "Legislature",
+        "Legislative branch"
+      ],
+      "question_es": "¿Qué parte del gobierno federal escribe las leyes?",
+      "answers_es": [
+        "El Congreso (de EE. UU.)",
+        "La legislatura",
+        "La rama legislativa"
+      ],
+      "explanation_es": "Redactar y aprobar las normas corresponde a la institución que representa a los ciudadanos y a los estados. Sus proyectos deben pasar por ambas cámaras y recibir la firma del presidente. Si este los rechaza, puede insistirse con una mayoría reforzada.",
+      "vocabulary": [
+        {
+          "word": "writes",
+          "translation": "escribe (verbo 'write')"
+        },
+        {
+          "word": "Congress",
+          "translation": "Congreso"
+        },
+        {
+          "word": "Legislature",
+          "translation": "legislatura, órgano legislativo"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-019",
+      "category": "Sistema de gobierno",
+      "question_en": "What are the two parts of the U.S. Congress?",
+      "answers_en": [
+        "Senate and House of Representatives"
+      ],
+      "question_es": "¿Cuáles son las dos partes del Congreso de EE. UU.?",
+      "answers_es": [
+        "El Senado y la Cámara de Representantes"
+      ],
+      "explanation_es": "Una cámara representa a los estados por igual, con dos escaños cada uno; la otra se reparte según la población. Ambas deben aprobar el mismo texto para que llegue al presidente. Este diseño surgió de un acuerdo entre estados grandes y pequeños en 1787.",
+      "vocabulary": [
+        {
+          "word": "Senate",
+          "translation": "Senado"
+        },
+        {
+          "word": "House",
+          "translation": "Cámara (en 'House of Representatives')"
+        },
+        {
+          "word": "Representatives",
+          "translation": "Representantes"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-020",
+      "category": "Sistema de gobierno",
+      "question_en": "Name one power of the U.S. Congress.",
+      "answers_en": [
+        "Writes laws",
+        "Declares war",
+        "Makes the federal budget"
+      ],
+      "question_es": "Nombre un poder del Congreso de EE. UU.",
+      "answers_es": [
+        "Escribe leyes",
+        "Declara la guerra",
+        "Elabora el presupuesto federal"
+      ],
+      "explanation_es": "Su facultad más conocida es aprobar las normas federales, pero también decide el gasto público y puede declarar la guerra. Además supervisa al poder ejecutivo e investiga asuntos de interés público. En la mayoría de los casos necesita el acuerdo de las dos cámaras.",
+      "vocabulary": [
+        {
+          "word": "declares",
+          "translation": "declara (verbo 'declare')"
+        },
+        {
+          "word": "war",
+          "translation": "guerra"
+        },
+        {
+          "word": "budget",
+          "translation": "presupuesto"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-021",
+      "category": "Sistema de gobierno",
+      "question_en": "How many U.S. senators are there?",
+      "answers_en": [
+        "One hundred (100)"
+      ],
+      "question_es": "¿Cuántos senadores de EE. UU. hay?",
+      "answers_es": [
+        "Cien (100)"
+      ],
+      "explanation_es": "El número resulta de la regla que da dos escaños a cada uno de los cincuenta estados, sin importar su población. Así un estado pequeño tiene el mismo peso que uno grande en esa cámara. Por eso se dice que representa a los estados y no al conjunto de la población.",
+      "vocabulary": [
+        {
+          "word": "senators",
+          "translation": "senadores"
+        },
+        {
+          "word": "hundred",
+          "translation": "cien"
+        },
+        {
+          "word": "many",
+          "translation": "cuántos (how many)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-022",
+      "category": "Sistema de gobierno",
+      "question_en": "How long is a term for a U.S. senator?",
+      "answers_en": [
+        "Six (6) years"
+      ],
+      "question_es": "¿Cuánto dura el mandato de un senador de EE. UU.?",
+      "answers_es": [
+        "Seis (6) años"
+      ],
+      "explanation_es": "Un mandato largo aporta estabilidad y permite pensar en el interés del país a largo plazo, lejos de la presión inmediata de las urnas. Solo se renueva un tercio de la cámara en cada elección bienal. Ese calendario busca continuidad en la labor legislativa.",
+      "vocabulary": [
+        {
+          "word": "term",
+          "translation": "mandato, período"
+        },
+        {
+          "word": "years",
+          "translation": "años"
+        },
+        {
+          "word": "long",
+          "translation": "largo, prolongado (how long: cuánto dura)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-023",
+      "category": "Sistema de gobierno",
+      "question_en": "Who is one of your state's U.S. senators now?",
+      "answers_en": [],
+      "question_es": "¿Quién es uno de los senadores de EE. UU. de su estado actualmente?",
+      "answers_es": [],
+      "explanation_es": "Su respuesta cambia con las elecciones, las renuncias y los nombramientos de tu estado, por eso la app la resuelve con datos actuales y no con un texto fijo. Lo útil es memorizar los nombres de los dos senadores que representan a tu estado.",
+      "vocabulary": [
+        {
+          "word": "senators",
+          "translation": "senadores"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        },
+        {
+          "word": "now",
+          "translation": "actualmente, ahora"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": true,
+      "officialField": "senators"
+    },
+    {
+      "id": "gov-024",
+      "category": "Sistema de gobierno",
+      "question_en": "How many voting members are in the House of Representatives?",
+      "answers_en": [
+        "Four hundred thirty-five (435)"
+      ],
+      "question_es": "¿Cuántos miembros con derecho a voto hay en la Cámara de Representantes?",
+      "answers_es": [
+        "Cuatrocientos treinta y cinco (435)"
+      ],
+      "explanation_es": "El número se fijó por ley en 1929 y se reparte entre los estados según el censo de cada década. Cada estado recibe al menos un escaño, aunque su población sea pequeña. Además hay delegados sin voto que representan a territorios y al Distrito de Columbia.",
+      "vocabulary": [
+        {
+          "word": "voting",
+          "translation": "con derecho a voto, votación"
+        },
+        {
+          "word": "members",
+          "translation": "miembros"
+        },
+        {
+          "word": "Representatives",
+          "translation": "Representantes"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-025",
+      "category": "Sistema de gobierno",
+      "question_en": "How long is a term for a member of the House of Representatives?",
+      "answers_en": [
+        "Two (2) years"
+      ],
+      "question_es": "¿Cuánto dura el mandato de un miembro de la Cámara de Representantes?",
+      "answers_es": [
+        "Dos (2) años"
+      ],
+      "explanation_es": "El mandato corto obliga a los representantes a rendir cuentas con frecuencia ante sus votantes. La cámara completa se renueva cada dos años, en elecciones que coinciden o no con las presidenciales. Ese ritmo hace que reaccione antes a los cambios de opinión.",
+      "vocabulary": [
+        {
+          "word": "term",
+          "translation": "mandato, período"
+        },
+        {
+          "word": "member",
+          "translation": "miembro"
+        },
+        {
+          "word": "years",
+          "translation": "años"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-026",
+      "category": "Sistema de gobierno",
+      "question_en": "Why do U.S. representatives serve shorter terms than U.S. senators?",
+      "answers_en": [
+        "To more closely follow public opinion"
+      ],
+      "question_es": "¿Por qué los representantes de EE. UU. sirven mandatos más cortos que los senadores?",
+      "answers_es": [
+        "Para seguir más de cerca la opinión pública"
+      ],
+      "explanation_es": "El diseño busca que una cámara responda más rápido a lo que la gente piensa en cada momento. La otra, con mandatos más largos, aporta continuidad y visión de largo plazo. Ese contraste es intencional y forma parte del equilibrio entre ambas.",
+      "vocabulary": [
+        {
+          "word": "serve",
+          "translation": "cumplen (un mandato), sirven"
+        },
+        {
+          "word": "shorter",
+          "translation": "más cortos"
+        },
+        {
+          "word": "closely",
+          "translation": "de cerca (closely follow: seguir de cerca)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-027",
+      "category": "Sistema de gobierno",
+      "question_en": "How many senators does each state have?",
+      "answers_en": [
+        "Two (2)"
+      ],
+      "question_es": "¿Cuántos senadores tiene cada estado?",
+      "answers_es": [
+        "Dos (2)"
+      ],
+      "explanation_es": "El número es fijo y no depende de la población: cada estado tiene la misma voz en esa cámara. Así, un estado muy poblado y uno pequeño pesan igual al votar las leyes federales. Esta igualdad fue una condición que los estados pequeños pusieron para unirse a la federación.",
+      "vocabulary": [
+        {
+          "word": "senators",
+          "translation": "senadores"
+        },
+        {
+          "word": "each",
+          "translation": "cada"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-028",
+      "category": "Sistema de gobierno",
+      "question_en": "Why does each state have two senators?",
+      "answers_en": [
+        "Equal representation for small states",
+        "The Great Compromise (Connecticut Compromise)"
+      ],
+      "question_es": "¿Por qué cada estado tiene dos senadores?",
+      "answers_es": [
+        "Representación igualitaria para los estados pequeños",
+        "El Gran Compromiso (Compromiso de Connecticut)"
+      ],
+      "explanation_es": "En 1787 los estados pequeños temían que los grandes dominaran el Congreso si los escaños se repartían según los habitantes. El acuerdo alcanzado en Filadelfia les garantizó el mismo peso en una cámara y dejó la otra sujeta a la población. Ese pacto permitió que la Constitución saliera adelante.",
+      "vocabulary": [
+        {
+          "word": "representation",
+          "translation": "representación"
+        },
+        {
+          "word": "compromise",
+          "translation": "compromiso, acuerdo"
+        },
+        {
+          "word": "equal",
+          "translation": "igual, igualitaria"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-029",
+      "category": "Sistema de gobierno",
+      "question_en": "Name your U.S. representative.",
+      "answers_en": [],
+      "question_es": "Nombre a su representante de EE. UU.",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende de tu distrito congresional, porque cada distrito elige a su propio representante y sus límites cambian con el censo. Por eso la app no muestra un nombre fijo: lo consulta en datos actuales. También cambia después de cada elección.",
+      "vocabulary": [
+        {
+          "word": "representative",
+          "translation": "representante"
+        },
+        {
+          "word": "name",
+          "translation": "mencione, nombre (verbo en “name your…”)"
+        },
+        {
+          "word": "your",
+          "translation": "tu, su"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": true,
+      "officialField": "representative"
+    },
+    {
+      "id": "gov-030",
+      "category": "Sistema de gobierno",
+      "question_en": "What is the name of the Speaker of the House of Representatives now?",
+      "answers_en": [],
+      "question_es": "¿Cuál es el nombre del Presidente de la Cámara de Representantes actualmente?",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende de quién ocupe ese cargo en este momento: lo elige la propia cámara al inicio de cada legislatura y puede cambiar. Por eso la app no guarda un nombre fijo y lo consulta de fuentes vigentes. Conviene verificar el nombre actual antes del examen.",
+      "vocabulary": [
+        {
+          "word": "Speaker",
+          "translation": "Presidente de la Cámara (Speaker)"
+        },
+        {
+          "word": "Representatives",
+          "translation": "Representantes"
+        },
+        {
+          "word": "now",
+          "translation": "actualmente, ahora"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": "speakerOfHouse"
+    },
+    {
+      "id": "gov-031",
+      "category": "Sistema de gobierno",
+      "question_en": "Who does a U.S. senator represent?",
+      "answers_en": [
+        "Citizens of their state",
+        "People of their state"
+      ],
+      "question_es": "¿A quién representa un senador de EE. UU.?",
+      "answers_es": [
+        "A los ciudadanos de su estado",
+        "A las personas de su estado"
+      ],
+      "explanation_es": "Cada miembro de esa cámara defiende los intereses de todo su estado, no de una zona concreta dentro de él. Como lo votan los habitantes del conjunto del estado, su mandato abarca a toda la población estatal. Esa es la diferencia clave con la otra cámara.",
+      "vocabulary": [
+        {
+          "word": "represent",
+          "translation": "representa, representar"
+        },
+        {
+          "word": "citizens",
+          "translation": "ciudadanos"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-032",
+      "category": "Sistema de gobierno",
+      "question_en": "Who elects U.S. senators?",
+      "answers_en": [
+        "Citizens from their state"
+      ],
+      "question_es": "¿Quién elige a los senadores de EE. UU.?",
+      "answers_es": [
+        "Los ciudadanos de su estado"
+      ],
+      "explanation_es": "Desde 1913 se eligen por votación popular directa en cada estado, y no por las legislaturas estatales como ocurría antes. Las elecciones se celebran cada dos años y solo se renueva una parte de la cámara. Solo pueden votar los ciudadanos de ese estado.",
+      "vocabulary": [
+        {
+          "word": "elects",
+          "translation": "elige, elegir"
+        },
+        {
+          "word": "citizens",
+          "translation": "ciudadanos"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-033",
+      "category": "Sistema de gobierno",
+      "question_en": "Who does a member of the House of Representatives represent?",
+      "answers_en": [
+        "Citizens in their congressional district",
+        "Citizens in their district",
+        "People from their congressional district",
+        "People in their district"
+      ],
+      "question_es": "¿A quién representa un miembro de la Cámara de Representantes?",
+      "answers_es": [
+        "A los ciudadanos de su distrito congresional",
+        "A los ciudadanos de su distrito",
+        "A las personas de su distrito congresional",
+        "A las personas de su distrito"
+      ],
+      "explanation_es": "Cada miembro de esa cámara representa solo la zona que lo eligió, delimitada por fronteras trazadas según la población. Por eso hay muchos más escaños que estados y los distritos se reajustan cada diez años con el censo. Los senadores, en cambio, representan al estado entero.",
+      "vocabulary": [
+        {
+          "word": "district",
+          "translation": "distrito"
+        },
+        {
+          "word": "congressional",
+          "translation": "congresional"
+        },
+        {
+          "word": "member",
+          "translation": "miembro"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-034",
+      "category": "Sistema de gobierno",
+      "question_en": "Who elects members of the House of Representatives?",
+      "answers_en": [
+        "Citizens from their congressional district"
+      ],
+      "question_es": "¿Quién elige a los miembros de la Cámara de Representantes?",
+      "answers_es": [
+        "Los ciudadanos de su distrito congresional"
+      ],
+      "explanation_es": "Los votantes de cada distrito escogen a su representante en elecciones que se celebran cada dos años. No participan los ciudadanos de todo el estado, sino solo quienes residen en esa zona. Ese vínculo tan directo con el distrito explica la brevedad de sus mandatos.",
+      "vocabulary": [
+        {
+          "word": "elects",
+          "translation": "elige, elegir"
+        },
+        {
+          "word": "members",
+          "translation": "miembros"
+        },
+        {
+          "word": "congressional",
+          "translation": "congresional"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-035",
+      "category": "Sistema de gobierno",
+      "question_en": "Some states have more representatives than other states. Why?",
+      "answers_en": [
+        "Because of the state's population",
+        "Because they have more people",
+        "Because some states have more people"
+      ],
+      "question_es": "Algunos estados tienen más representantes que otros. ¿Por qué?",
+      "answers_es": [
+        "Por la población del estado",
+        "Porque tienen más personas",
+        "Porque algunos estados tienen más personas"
+      ],
+      "explanation_es": "El reparto de escaños en esa cámara se calcula con los habitantes contados en el censo, que se realiza cada diez años. Los estados más poblados reciben más escaños y los menos poblados pueden quedarse con uno solo. En el Senado, en cambio, todos tienen el mismo número.",
+      "vocabulary": [
+        {
+          "word": "population",
+          "translation": "población"
+        },
+        {
+          "word": "representatives",
+          "translation": "representantes"
+        },
+        {
+          "word": "because",
+          "translation": "porque, debido a"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-036",
+      "category": "Sistema de gobierno",
+      "question_en": "The President of the United States is elected for how many years?",
+      "answers_en": [
+        "Four (4) years"
+      ],
+      "question_es": "¿El Presidente de los Estados Unidos es elegido por cuántos años?",
+      "answers_es": [
+        "Cuatro (4) años"
+      ],
+      "explanation_es": "El mandato dura cuatro años y se renueva en elecciones que coinciden con los años bisiestos. Ese plazo permite gobernar con continuidad sin alejarse demasiado de la voluntad de los votantes. Quien gana asume el cargo el 20 de enero siguiente.",
+      "vocabulary": [
+        {
+          "word": "elected",
+          "translation": "elegido, electo"
+        },
+        {
+          "word": "years",
+          "translation": "años"
+        },
+        {
+          "word": "President",
+          "translation": "Presidente"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-037",
+      "category": "Sistema de gobierno",
+      "question_en": "The President of the United States can serve only two terms. Why?",
+      "answers_en": [
+        "Because of the 22nd Amendment",
+        "To keep the president from becoming too powerful"
+      ],
+      "question_es": "El Presidente de los Estados Unidos solo puede servir dos mandatos. ¿Por qué?",
+      "answers_es": [
+        "Por la Enmienda 22",
+        "Para evitar que el presidente se vuelva demasiado poderoso"
+      ],
+      "explanation_es": "La limitación nació de una costumbre respetada desde los primeros gobiernos y se volvió obligatoria en 1951, después de cuatro mandatos seguidos de un mismo gobernante. Busca impedir que una sola persona acumule poder demasiado tiempo. Ningún otro cargo federal tiene esa restricción.",
+      "vocabulary": [
+        {
+          "word": "terms",
+          "translation": "mandatos, períodos"
+        },
+        {
+          "word": "powerful",
+          "translation": "poderoso"
+        },
+        {
+          "word": "Amendment",
+          "translation": "enmienda"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-038",
+      "category": "Sistema de gobierno",
+      "question_en": "What is the name of the President of the United States now?",
+      "answers_en": [],
+      "question_es": "¿Cuál es el nombre del Presidente de los Estados Unidos actualmente?",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende de quién gobierne en este momento y cambia con las elecciones presidenciales, que se celebran cada cuatro años. Por eso la app la resuelve con información vigente en lugar de con un texto fijo. Verifica el nombre actual antes de la entrevista.",
+      "vocabulary": [
+        {
+          "word": "name",
+          "translation": "nombre"
+        },
+        {
+          "word": "President",
+          "translation": "Presidente"
+        },
+        {
+          "word": "now",
+          "translation": "actualmente, ahora"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": "president"
+    },
+    {
+      "id": "gov-039",
+      "category": "Sistema de gobierno",
+      "question_en": "What is the name of the Vice President of the United States now?",
+      "answers_en": [],
+      "question_es": "¿Cuál es el nombre del Vicepresidente de los Estados Unidos actualmente?",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende de quién ocupe el cargo ahora: se renueva en cada elección presidencial, porque se elige en la misma papeleta, y también cambia si esa persona asume la presidencia o renuncia. Comprueba el nombre vigente antes del examen.",
+      "vocabulary": [
+        {
+          "word": "Vice President",
+          "translation": "Vicepresidente"
+        },
+        {
+          "word": "name",
+          "translation": "nombre"
+        },
+        {
+          "word": "now",
+          "translation": "actualmente, ahora"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": "vicePresident"
+    },
+    {
+      "id": "gov-040",
+      "category": "Sistema de gobierno",
+      "question_en": "If the president can no longer serve, who becomes president?",
+      "answers_en": [
+        "The Vice President of the United States"
+      ],
+      "question_es": "Si el presidente ya no puede servir, ¿quién se convierte en presidente?",
+      "answers_es": [
+        "El Vicepresidente de los Estados Unidos"
+      ],
+      "explanation_es": "La Constitución prevé la sucesión para que el Poder Ejecutivo no quede vacío: si quien gobierna muere, renuncia o no puede ejercer, lo reemplaza quien ocupa el segundo cargo. Una enmienda de 1967 confirmó ese relevo y reguló qué pasa después. El mecanismo busca dar continuidad al gobierno.",
+      "vocabulary": [
+        {
+          "word": "serve",
+          "translation": "ejercer (un cargo), servir"
+        },
+        {
+          "word": "becomes",
+          "translation": "se convierte en, pasa a ser"
+        },
+        {
+          "word": "longer",
+          "translation": "más (no longer = ya no)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-041",
+      "category": "Sistema de gobierno",
+      "question_en": "Name one power of the president.",
+      "answers_en": [
+        "Signs bills into law",
+        "Vetoes bills",
+        "Enforces laws",
+        "Commander in Chief of the military",
+        "Chief diplomat",
+        "Appoints federal judges"
+      ],
+      "question_es": "Nombre un poder del presidente.",
+      "answers_es": [
+        "Firma proyectos de ley para convertirlos en leyes",
+        "Veta proyectos de ley",
+        "Hace cumplir las leyes",
+        "Comandante en Jefe de las fuerzas armadas",
+        "Diplomático en jefe",
+        "Nombra jueces federales"
+      ],
+      "explanation_es": "Además de aplicar lo que aprueba el Congreso, puede rechazar un proyecto devolviéndolo a las cámaras, proponer nombramientos de jueces y dirigir las fuerzas armadas y la política exterior. Sus facultades son amplias, pero casi todas exigen el acuerdo de otro poder.",
+      "vocabulary": [
+        {
+          "word": "vetoes",
+          "translation": "veta, rechaza"
+        },
+        {
+          "word": "Appoints",
+          "translation": "nombra"
+        },
+        {
+          "word": "Enforces",
+          "translation": "hace cumplir, aplica"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-042",
+      "category": "Sistema de gobierno",
+      "question_en": "Who is Commander in Chief of the U.S. military?",
+      "answers_en": [
+        "The President of the United States"
+      ],
+      "question_es": "¿Quién es el Comandante en Jefe de las fuerzas armadas de EE. UU.?",
+      "answers_es": [
+        "El Presidente de los Estados Unidos"
+      ],
+      "explanation_es": "Es una función civil: quien gana las elecciones dirige las fuerzas armadas aunque no sea militar de carrera. La Constitución la reserva a esa persona para evitar que los generales controlen el Estado. Puede ordenar despliegues, pero declarar la guerra corresponde al Congreso.",
+      "vocabulary": [
+        {
+          "word": "Commander",
+          "translation": "comandante"
+        },
+        {
+          "word": "Chief",
+          "translation": "jefe, principal"
+        },
+        {
+          "word": "military",
+          "translation": "militar, fuerzas armadas"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-043",
+      "category": "Sistema de gobierno",
+      "question_en": "Who signs bills to become laws?",
+      "answers_en": [
+        "The President of the United States"
+      ],
+      "question_es": "¿Quién firma los proyectos de ley para convertirlos en leyes?",
+      "answers_es": [
+        "El Presidente de los Estados Unidos"
+      ],
+      "explanation_es": "Cuando ambas cámaras aprueban un proyecto, este pasa al presidente, que puede firmarlo para que entre en vigor o devolverlo con objeciones. La firma es el último paso del proceso legislativo. Si no actúa en el plazo previsto, el proyecto puede convertirse en norma sin ella.",
+      "vocabulary": [
+        {
+          "word": "signs",
+          "translation": "firma, firmar"
+        },
+        {
+          "word": "bills",
+          "translation": "proyectos de ley"
+        },
+        {
+          "word": "laws",
+          "translation": "leyes"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-044",
+      "category": "Sistema de gobierno",
+      "question_en": "Who vetoes bills?",
+      "answers_en": [
+        "The President of the United States"
+      ],
+      "question_es": "¿Quién veta los proyectos de ley?",
+      "answers_es": [
+        "El Presidente de los Estados Unidos"
+      ],
+      "explanation_es": "El rechazo presidencial frena un proyecto aprobado por el Congreso, pero no es definitivo: las cámaras pueden insistir y sacarlo adelante con dos tercios de sus miembros. Así se evita que una sola persona bloquee siempre la voluntad legislativa. Es una de las formas de control entre poderes.",
+      "vocabulary": [
+        {
+          "word": "vetoes",
+          "translation": "veta, rechaza"
+        },
+        {
+          "word": "bills",
+          "translation": "proyectos de ley"
+        },
+        {
+          "word": "Who",
+          "translation": "quién"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-045",
+      "category": "Sistema de gobierno",
+      "question_en": "Who appoints federal judges?",
+      "answers_en": [
+        "The President of the United States"
+      ],
+      "question_es": "¿Quién nombra a los jueces federales?",
+      "answers_es": [
+        "El Presidente de los Estados Unidos"
+      ],
+      "explanation_es": "Los nombramientos judiciales los propone el presidente, pero no entran en vigor sin la confirmación del Senado. Ese reparto busca que los jueces no dependan de una sola institución que los designa. Una vez en el cargo, tienen garantizada la independencia frente a presiones políticas.",
+      "vocabulary": [
+        {
+          "word": "appoints",
+          "translation": "nombra, designa"
+        },
+        {
+          "word": "federal",
+          "translation": "federal"
+        },
+        {
+          "word": "judges",
+          "translation": "jueces"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-046",
+      "category": "Sistema de gobierno",
+      "question_en": "The executive branch has many parts. Name one.",
+      "answers_en": [
+        "President of the United States",
+        "Cabinet",
+        "Federal departments and agencies"
+      ],
+      "question_es": "La rama ejecutiva tiene muchas partes. Nombre una.",
+      "answers_es": [
+        "El Presidente de los Estados Unidos",
+        "El Gabinete",
+        "Los departamentos y agencias federales"
+      ],
+      "explanation_es": "Esa rama no la forma solo quien gobierna: también la integran los ministerios y organismos que aplican las políticas públicas en todo el país. Cada uno se ocupa de un área concreta, como defensa, salud o impuestos. Todos dependen jerárquicamente del presidente.",
+      "vocabulary": [
+        {
+          "word": "executive",
+          "translation": "ejecutiva"
+        },
+        {
+          "word": "Cabinet",
+          "translation": "Gabinete"
+        },
+        {
+          "word": "agencies",
+          "translation": "agencias, organismos"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-047",
+      "category": "Sistema de gobierno",
+      "question_en": "What does the President's Cabinet do?",
+      "answers_en": [
+        "Advises the President of the United States"
+      ],
+      "question_es": "¿Qué hace el Gabinete del Presidente?",
+      "answers_es": [
+        "Asesora al Presidente de los Estados Unidos"
+      ],
+      "explanation_es": "Lo forman los responsables de cada ministerio y otros altos cargos, que se reúnen con el presidente para orientar las decisiones de gobierno. No aprueba leyes ni tiene voto propio: su papel es aconsejar. También coordina la ejecución de las políticas entre departamentos.",
+      "vocabulary": [
+        {
+          "word": "Cabinet",
+          "translation": "Gabinete"
+        },
+        {
+          "word": "Advises",
+          "translation": "asesora, aconseja"
+        },
+        {
+          "word": "President",
+          "translation": "Presidente"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-048",
+      "category": "Sistema de gobierno",
+      "question_en": "What are two Cabinet-level positions?",
+      "answers_en": [
+        "Attorney General",
+        "Secretary of Agriculture",
+        "Secretary of Commerce",
+        "Secretary of Education",
+        "Secretary of Energy",
+        "Secretary of Health and Human Services",
+        "Secretary of Homeland Security",
+        "Secretary of Housing and Urban Development",
+        "Secretary of the Interior",
+        "Secretary of Labor",
+        "Secretary of State",
+        "Secretary of Transportation",
+        "Secretary of the Treasury",
+        "Secretary of Veterans Affairs",
+        "Secretary of Defense",
+        "Vice-President",
+        "Administrator of the Environmental Protection Agency",
+        "Administrator of the Small Business Administration",
+        "Director of the Central Intelligence Agency",
+        "Director of the Office of Management and Budget",
+        "Director of National Intelligence",
+        "United States Trade Representative"
+      ],
+      "question_es": "¿Cuáles son dos puestos a nivel de Gabinete?",
+      "answers_es": [
+        "Fiscal General",
+        "Secretario de Agricultura",
+        "Secretario de Comercio",
+        "Secretario de Educación",
+        "Secretario de Energía",
+        "Secretario de Salud y Servicios Humanos",
+        "Secretario de Seguridad Nacional",
+        "Secretario de Vivienda y Desarrollo Urbano",
+        "Secretario del Interior",
+        "Secretario de Trabajo",
+        "Secretario de Estado",
+        "Secretario de Transporte",
+        "Secretario del Tesoro",
+        "Secretario de Asuntos de Veteranos",
+        "Secretario de Defensa",
+        "Vicepresidente",
+        "Administrador de la Agencia de Protección Ambiental",
+        "Administrador de la Administración de Pequeños Negocios",
+        "Director de la Agencia Central de Inteligencia",
+        "Director de la Oficina de Administración y Presupuesto",
+        "Director de Inteligencia Nacional",
+        "Representante Comercial de los Estados Unidos"
+      ],
+      "explanation_es": "Estos puestos encabezan los ministerios federales y otras oficinas clave, desde asuntos exteriores hasta medio ambiente o inteligencia. Sus titulares forman el equipo asesor del presidente y el Senado debe confirmarlos. No todos tienen el mismo rango: algunos dirigen agencias, no departamentos.",
+      "vocabulary": [
+        {
+          "word": "Cabinet",
+          "translation": "gabinete"
+        },
+        {
+          "word": "Secretary",
+          "translation": "secretario, secretaria (de un ministerio)"
+        },
+        {
+          "word": "Attorney",
+          "translation": "abogado; Attorney General = Fiscal General"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-049",
+      "category": "Sistema de gobierno",
+      "question_en": "Why is the Electoral College important?",
+      "answers_en": [
+        "It decides who is elected president.",
+        "It provides a compromise between the popular election of the president and congressional selection."
+      ],
+      "question_es": "¿Por qué es importante el Colegio Electoral?",
+      "answers_es": [
+        "Decide quién es elegido presidente.",
+        "Proporciona un compromiso entre la elección popular del presidente y la selección por el Congreso."
+      ],
+      "explanation_es": "Es el mecanismo que convierte los votos ciudadanos en votos electorales por estado: gana quien reúne la mayoría. Nació como acuerdo entre quienes querían una votación directa y quienes preferían que eligiera el Congreso. Por eso puede ganar quien no logró más votos populares en el país.",
+      "vocabulary": [
+        {
+          "word": "Electoral",
+          "translation": "electoral"
+        },
+        {
+          "word": "compromise",
+          "translation": "compromiso, acuerdo"
+        },
+        {
+          "word": "popular",
+          "translation": "popular, del pueblo"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-050",
+      "category": "Sistema de gobierno",
+      "question_en": "What is one part of the judicial branch?",
+      "answers_en": [
+        "Supreme Court",
+        "Federal Courts"
+      ],
+      "question_es": "¿Cuál es una parte de la rama judicial?",
+      "answers_es": [
+        "La Corte Suprema",
+        "Los tribunales federales"
+      ],
+      "explanation_es": "La forman los tribunales donde se resuelven los conflictos: uno de máximo nivel, los de apelación y los de primera instancia del sistema federal. Sus jueces conservan el cargo mientras tengan buena conducta, lo que refuerza su independencia. Revisan pleitos entre particulares y actos del gobierno.",
+      "vocabulary": [
+        {
+          "word": "judicial",
+          "translation": "judicial"
+        },
+        {
+          "word": "Supreme",
+          "translation": "suprema"
+        },
+        {
+          "word": "Federal",
+          "translation": "federal, federales"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-051",
+      "category": "Sistema de gobierno",
+      "question_en": "What does the judicial branch do?",
+      "answers_en": [
+        "Reviews laws",
+        "Explains laws",
+        "Resolves disputes about the law",
+        "Decides if a law goes against the U.S. Constitution"
+      ],
+      "question_es": "¿Qué hace la rama judicial?",
+      "answers_es": [
+        "Revisa las leyes",
+        "Explica las leyes",
+        "Resuelve disputas sobre la ley",
+        "Decide si una ley va en contra de la Constitución de EE. UU."
+      ],
+      "explanation_es": "Su función es interpretar las normas y resolver las controversias entre personas, empresas o instituciones del Estado. También puede anular una norma cuando contradice la Constitución, que es la de mayor jerarquía. Sus decisiones fijan criterios que obligan a todos los tribunales del país.",
+      "vocabulary": [
+        {
+          "word": "Resolves",
+          "translation": "resuelve"
+        },
+        {
+          "word": "disputes",
+          "translation": "disputas, controversias"
+        },
+        {
+          "word": "Reviews",
+          "translation": "revisa, examina"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-052",
+      "category": "Sistema de gobierno",
+      "question_en": "What is the highest court in the United States?",
+      "answers_en": [
+        "Supreme Court"
+      ],
+      "question_es": "¿Cuál es el tribunal más alto de los Estados Unidos?",
+      "answers_es": [
+        "La Corte Suprema"
+      ],
+      "explanation_es": "Es la última instancia del sistema judicial federal: sus fallos no admiten recurso y fijan el sentido definitivo de la ley. Sus magistrados ejercen el cargo de por vida, lo que refuerza su independencia frente al poder político. Acepta solo una pequeña parte de los casos que se le presentan.",
+      "vocabulary": [
+        {
+          "word": "highest",
+          "translation": "más alto, supremo"
+        },
+        {
+          "word": "court",
+          "translation": "tribunal, corte"
+        },
+        {
+          "word": "United",
+          "translation": "unido (United States = Estados Unidos)"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-053",
+      "category": "Sistema de gobierno",
+      "question_en": "How many seats are on the Supreme Court?",
+      "answers_en": [
+        "Nine (9)"
+      ],
+      "question_es": "¿Cuántos asientos hay en la Corte Suprema?",
+      "answers_es": [
+        "Nueve (9)"
+      ],
+      "explanation_es": "La cifra no figura en la Constitución: la fijó el Congreso por ley y ha cambiado varias veces a lo largo de la historia. Desde 1869 se mantiene estable. El presidente nombra a cada magistrado y el Senado los confirma.",
+      "vocabulary": [
+        {
+          "word": "seats",
+          "translation": "escaños, puestos"
+        },
+        {
+          "word": "Court",
+          "translation": "Corte, tribunal"
+        },
+        {
+          "word": "many",
+          "translation": "cuántos (how many = cuántos)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-054",
+      "category": "Sistema de gobierno",
+      "question_en": "How many Supreme Court justices are usually needed to decide a case?",
+      "answers_en": [
+        "Five (5)"
+      ],
+      "question_es": "¿Cuántos jueces de la Corte Suprema se necesitan normalmente para decidir un caso?",
+      "answers_es": [
+        "Cinco (5)"
+      ],
+      "explanation_es": "Como el tribunal tiene un número impar de miembros, basta con que coincidan cinco para que haya decisión y no empate. Ese umbral se alcanza con la mayoría simple de quienes participan en el caso. Si hay empate, se mantiene el fallo del tribunal inferior.",
+      "vocabulary": [
+        {
+          "word": "justices",
+          "translation": "jueces, magistrados"
+        },
+        {
+          "word": "needed",
+          "translation": "necesarios, requeridos"
+        },
+        {
+          "word": "usually",
+          "translation": "normalmente, por lo general"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-055",
+      "category": "Sistema de gobierno",
+      "question_en": "How long do Supreme Court justices serve?",
+      "answers_en": [
+        "For life",
+        "Lifetime appointment",
+        "Until retirement"
+      ],
+      "question_es": "¿Cuánto tiempo sirven los jueces de la Corte Suprema?",
+      "answers_es": [
+        "De por vida",
+        "Nombramiento vitalicio",
+        "Hasta la jubilación"
+      ],
+      "explanation_es": "Su cargo no tiene fecha de caducidad: lo conservan mientras mantengan buena conducta, es decir, hasta su jubilación o fallecimiento. Este diseño los protege de las presiones políticas y de los cambios de gobierno. Solo una destitución en el Congreso puede removerlos.",
+      "vocabulary": [
+        {
+          "word": "justices",
+          "translation": "jueces, magistrados"
+        },
+        {
+          "word": "serve",
+          "translation": "ejercer (el cargo), servir"
+        },
+        {
+          "word": "Lifetime",
+          "translation": "vitalicio, de por vida"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-056",
+      "category": "Sistema de gobierno",
+      "question_en": "Supreme Court justices serve for life. Why?",
+      "answers_en": [
+        "To be independent of politics",
+        "To limit outside political influence"
+      ],
+      "question_es": "Los jueces de la Corte Suprema sirven de por vida. ¿Por qué?",
+      "answers_es": [
+        "Para ser independientes de la política",
+        "Para limitar la influencia política externa"
+      ],
+      "explanation_es": "Con un puesto vitalicio, los magistrados no necesitan agradar a ningún partido ni buscar votos para conservar su empleo. Así pueden decidir casos impopulares sin temer represalias. La permanencia también da coherencia a la interpretación de la ley con los años.",
+      "vocabulary": [
+        {
+          "word": "life",
+          "translation": "vida (for life = de por vida)"
+        },
+        {
+          "word": "politics",
+          "translation": "política"
+        },
+        {
+          "word": "influence",
+          "translation": "influencia"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-057",
+      "category": "Sistema de gobierno",
+      "question_en": "Who is the Chief Justice of the United States now?",
+      "answers_en": [],
+      "question_es": "¿Quién es el Presidente de la Corte Suprema de los Estados Unidos actualmente?",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende de quién presida el tribunal en este momento: el puesto cambia cuando la persona se jubila, fallece o deja el cargo. Por eso la app no guarda un nombre fijo y lo consulta en fuentes vigentes. Verifica el nombre actual antes del examen.",
+      "vocabulary": [
+        {
+          "word": "Justice",
+          "translation": "juez, magistrado"
+        },
+        {
+          "word": "Chief",
+          "translation": "jefe, principal (Chief Justice = Presidente del Tribunal Supremo)"
+        },
+        {
+          "word": "now",
+          "translation": "actualmente, ahora"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": "chiefJustice"
+    },
+    {
+      "id": "gov-058",
+      "category": "Sistema de gobierno",
+      "question_en": "Name one power that is only for the federal government.",
+      "answers_en": [
+        "Print paper money",
+        "Mint coins",
+        "Declare war",
+        "Create an army",
+        "Make treaties",
+        "Set foreign policy"
+      ],
+      "question_es": "Nombre un poder que es solo del gobierno federal.",
+      "answers_es": [
+        "Imprimir papel moneda",
+        "Acuñar monedas",
+        "Declarar la guerra",
+        "Crear un ejército",
+        "Hacer tratados",
+        "Establecer la política exterior"
+      ],
+      "explanation_es": "Son competencias que un estado no puede ejercer por su cuenta porque afectan al conjunto del país. La Constitución las reserva al gobierno central: solo él acuña dinero, firma tratados o decide ir a la guerra. Si cada estado actuara por su cuenta, habría políticas contradictorias.",
+      "vocabulary": [
+        {
+          "word": "Print",
+          "translation": "imprimir"
+        },
+        {
+          "word": "Mint",
+          "translation": "acuñar (monedas)"
+        },
+        {
+          "word": "treaties",
+          "translation": "tratados"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-059",
+      "category": "Sistema de gobierno",
+      "question_en": "Name one power that is only for the states.",
+      "answers_en": [
+        "Provide schooling and education",
+        "Provide protection (police)",
+        "Provide safety (fire departments)",
+        "Give a driver's license",
+        "Approve zoning and land use"
+      ],
+      "question_es": "Nombre un poder que es solo de los estados.",
+      "answers_es": [
+        "Proveer educación y escuelas",
+        "Proveer protección (policía)",
+        "Proveer seguridad (departamentos de bomberos)",
+        "Dar licencias de conducir",
+        "Aprobar zonificación y uso de tierras"
+      ],
+      "explanation_es": "Estas tareas se gestionan más cerca del ciudadano y responden a necesidades locales distintas en cada lugar. Por eso no las asume el gobierno central: cada estado organiza sus escuelas, su policía y sus servicios, y decide cómo usar el suelo. Es el reparto que deja la Constitución a los estados.",
+      "vocabulary": [
+        {
+          "word": "schooling",
+          "translation": "escolarización, educación"
+        },
+        {
+          "word": "license",
+          "translation": "licencia, permiso"
+        },
+        {
+          "word": "zoning",
+          "translation": "zonificación, uso del suelo"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-060",
+      "category": "Sistema de gobierno",
+      "question_en": "What is the purpose of the 10th Amendment?",
+      "answers_en": [
+        "Powers not given to the federal government belong to the states or to the people."
+      ],
+      "question_es": "¿Cuál es el propósito de la Enmienda 10?",
+      "answers_es": [
+        "Los poderes no otorgados al gobierno federal pertenecen a los estados o al pueblo."
+      ],
+      "explanation_es": "Es la cláusula que reparte lo que no está escrito: lo que la Constitución no atribuye al gobierno central queda en manos de los estados o del pueblo. Este principio, llamado federalismo, limita la expansión del poder central y protege la autonomía local. Así se reparten muchas competencias.",
+      "vocabulary": [
+        {
+          "word": "Powers",
+          "translation": "poderes, facultades"
+        },
+        {
+          "word": "belong",
+          "translation": "pertenecen, corresponden"
+        },
+        {
+          "word": "Amendment",
+          "translation": "enmienda"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "gov-061",
+      "category": "Sistema de gobierno",
+      "question_en": "Who is the governor of your state now?",
+      "answers_en": [],
+      "question_es": "¿Quién es el gobernador de su estado actualmente?",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende del estado donde vivas y del momento, porque cada estado elige a su propia persona en elecciones que no coinciden con las presidenciales. El cargo se renueva cada cierto número de años según las normas de cada estado. Consulta el nombre vigente antes del examen.",
+      "vocabulary": [
+        {
+          "word": "governor",
+          "translation": "gobernador, gobernadora"
+        },
+        {
+          "word": "your",
+          "translation": "tu, su"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": true,
+      "officialField": "governor"
+    },
+    {
+      "id": "gov-062",
+      "category": "Sistema de gobierno",
+      "question_en": "What is the capital of your state?",
+      "answers_en": [],
+      "question_es": "¿Cuál es la capital de su estado?",
+      "answers_es": [],
+      "explanation_es": "La respuesta depende de en qué estado residas: cada uno tiene su propia ciudad sede del gobierno, y ninguna de ellas es Washington, D.C., que es la capital del país. Conviene memorizar la de tu estado antes de la entrevista. Algunas son ciudades pequeñas y fáciles de confundir.",
+      "vocabulary": [
+        {
+          "word": "capital",
+          "translation": "capital"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        },
+        {
+          "word": "your",
+          "translation": "tu, su"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": true,
+      "officialField": "capital"
+    },
+    {
+      "id": "civ-063",
+      "category": "Derechos y responsabilidades",
+      "question_en": "There are four amendments to the U.S. Constitution about who can vote. Describe one of them.",
+      "answers_en": [
+        "Citizens eighteen (18) and older can vote.",
+        "You don't have to pay a poll tax to vote.",
+        "Any citizen can vote. Women and men can vote.",
+        "A male citizen of any race can vote."
+      ],
+      "question_es": "Hay cuatro enmiendas a la Constitución de EE. UU. sobre quién puede votar. Describa una de ellas.",
+      "answers_es": [
+        "Los ciudadanos de dieciocho (18) años o más pueden votar.",
+        "No se tiene que pagar un impuesto de votación para votar.",
+        "Cualquier ciudadano puede votar. Mujeres y hombres pueden votar.",
+        "Un ciudadano varón de cualquier raza puede votar."
+      ],
+      "explanation_es": "Estas enmiendas ampliaron el derecho al voto por etapas: primero a los hombres de cualquier raza, luego a las mujeres, después se eliminó el pago como requisito y al final se fijó una edad mínima. Juntas garantizan que nadie quede excluido por su origen, su sexo o su dinero.",
+      "vocabulary": [
+        {
+          "word": "amendments",
+          "translation": "enmiendas"
+        },
+        {
+          "word": "vote",
+          "translation": "votar, voto"
+        },
+        {
+          "word": "poll tax",
+          "translation": "impuesto por votar (para poder votar)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-064",
+      "category": "Derechos y responsabilidades",
+      "question_en": "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?",
+      "answers_en": [
+        "Citizens",
+        "Citizens of the United States",
+        "U.S. citizens"
+      ],
+      "question_es": "¿Quién puede votar en elecciones federales, postularse para cargos federales y servir en un jurado en los Estados Unidos?",
+      "answers_es": [
+        "Los ciudadanos",
+        "Los ciudadanos de los Estados Unidos",
+        "Los ciudadanos estadounidenses"
+      ],
+      "explanation_es": "Solo quienes tienen ese vínculo legal con el país pueden elegir a sus gobernantes, presentarse a cargos federales o formar parte de un jurado. Son derechos reservados a los nacionales del país. Los residentes permanentes pueden trabajar o estudiar, pero no ejercer esas funciones.",
+      "vocabulary": [
+        {
+          "word": "vote",
+          "translation": "votar, voto"
+        },
+        {
+          "word": "jury",
+          "translation": "jurado"
+        },
+        {
+          "word": "federal",
+          "translation": "federal"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-065",
+      "category": "Derechos y responsabilidades",
+      "question_en": "What are three rights of everyone living in the United States?",
+      "answers_en": [
+        "Freedom of expression",
+        "Freedom of speech",
+        "Freedom of assembly",
+        "Freedom to petition the government",
+        "Freedom of religion",
+        "The right to bear arms"
+      ],
+      "question_es": "¿Cuáles son tres derechos de todas las personas que viven en los Estados Unidos?",
+      "answers_es": [
+        "Libertad de expresión",
+        "Libertad de palabra",
+        "Libertad de reunión",
+        "Libertad de petición al gobierno",
+        "Libertad de religión",
+        "El derecho a portar armas"
+      ],
+      "explanation_es": "Varias garantías de la Carta de Derechos no distinguen según la nacionalidad: proteger la palabra o la reunión pacífica beneficia a toda la sociedad. Por eso los tribunales las han extendido a quienes residen en el país sin ser ciudadanos. El voto, en cambio, sí exige la nacionalidad.",
+      "vocabulary": [
+        {
+          "word": "assembly",
+          "translation": "reunión, asamblea"
+        },
+        {
+          "word": "petition",
+          "translation": "petición; solicitar"
+        },
+        {
+          "word": "arms",
+          "translation": "armas (to bear arms = portar armas)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-066",
+      "category": "Derechos y responsabilidades",
+      "question_en": "What do we show loyalty to when we say the Pledge of Allegiance?",
+      "answers_en": [
+        "The United States",
+        "The flag"
+      ],
+      "question_es": "¿A qué mostramos lealtad cuando decimos el Juramento de Lealtad?",
+      "answers_es": [
+        "A los Estados Unidos",
+        "A la bandera"
+      ],
+      "explanation_es": "El juramento recitado en actos públicos y escuelas recuerda que la lealtad se dirige a la nación y a los principios que representa, simbolizados en su emblema. Se usa desde 1892 como ritual de unidad cívica. La ley permite no participar por motivos religiosos o de conciencia.",
+      "vocabulary": [
+        {
+          "word": "Pledge",
+          "translation": "promesa, juramento (Pledge of Allegiance = juramento a la bandera)"
+        },
+        {
+          "word": "Allegiance",
+          "translation": "lealtad"
+        },
+        {
+          "word": "flag",
+          "translation": "bandera"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-067",
+      "category": "Derechos y responsabilidades",
+      "question_en": "Name two promises that new citizens make in the Oath of Allegiance.",
+      "answers_en": [
+        "Give up loyalty to other countries",
+        "Defend the U.S. Constitution",
+        "Obey the laws of the United States",
+        "Serve in the military if needed",
+        "Serve the nation if needed",
+        "Be loyal to the United States"
+      ],
+      "question_es": "Nombre dos promesas que hacen los nuevos ciudadanos en el Juramento de Lealtad.",
+      "answers_es": [
+        "Renunciar a la lealtad a otros países",
+        "Defender la Constitución de EE. UU.",
+        "Obedecer las leyes de los Estados Unidos",
+        "Servir en las fuerzas armadas si es necesario",
+        "Servir a la nación si es necesario",
+        "Ser leal a los Estados Unidos"
+      ],
+      "explanation_es": "Al asumir ese compromiso, la persona acepta romper vínculos de lealtad con otros países y asumir deberes frente a su nueva nación. Debe respetar la ley suprema y las leyes del país, y prestar servicio militar o civil si la ley lo exige. Es el último paso de la ceremonia de naturalización.",
+      "vocabulary": [
+        {
+          "word": "Oath",
+          "translation": "juramento"
+        },
+        {
+          "word": "Allegiance",
+          "translation": "lealtad"
+        },
+        {
+          "word": "Defend",
+          "translation": "defender"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-068",
+      "category": "Derechos y responsabilidades",
+      "question_en": "How can people become United States citizens?",
+      "answers_en": [
+        "Be born in the United States, under the conditions set by the 14th Amendment",
+        "Naturalize",
+        "Derive citizenship under conditions set by Congress"
+      ],
+      "question_es": "¿Cómo pueden las personas convertirse en ciudadanos de los Estados Unidos?",
+      "answers_es": [
+        "Nacer en los Estados Unidos, bajo las condiciones establecidas por la Enmienda 14",
+        "Naturalizarse",
+        "Derivar la ciudadanía bajo las condiciones establecidas por el Congreso"
+      ],
+      "explanation_es": "Existen tres vías: nacer en el territorio, obtenerla por el proceso legal de naturalización tras cumplir requisitos de residencia, idioma y examen, o recibirla de un progenitor ciudadano según las normas del Congreso. Cada una exige condiciones y documentos propios.",
+      "vocabulary": [
+        {
+          "word": "Naturalize",
+          "translation": "naturalizarse, obtener la nacionalidad"
+        },
+        {
+          "word": "born",
+          "translation": "nacido, nacida"
+        },
+        {
+          "word": "Derive",
+          "translation": "derivar, obtener de otra persona"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-069",
+      "category": "Derechos y responsabilidades",
+      "question_en": "What are two examples of civic participation in the United States?",
+      "answers_en": [
+        "Vote",
+        "Run for office",
+        "Join a political party",
+        "Help with a campaign",
+        "Join a civic group",
+        "Join a community group",
+        "Give an elected official your opinion on an issue",
+        "Contact elected officials",
+        "Support or oppose an issue or policy",
+        "Write to a newspaper"
+      ],
+      "question_es": "¿Cuáles son dos ejemplos de participación cívica en los Estados Unidos?",
+      "answers_es": [
+        "Votar",
+        "Postularse para un cargo",
+        "Unirse a un partido político",
+        "Ayudar en una campaña",
+        "Unirse a un grupo cívico",
+        "Unirse a un grupo comunitario",
+        "Dar a un funcionario electo su opinión sobre un tema",
+        "Contactar a funcionarios electos",
+        "Apoyar u oponerse a un tema o política",
+        "Escribir a un periódico"
+      ],
+      "explanation_es": "Además de votar, la ciudadanía se ejerce participando en partidos y campañas, uniéndose a organizaciones del barrio y haciendo llegar opiniones a quienes ocupan cargos públicos. Cuanta más gente participa, más representativas son las políticas.",
+      "vocabulary": [
+        {
+          "word": "participation",
+          "translation": "participación"
+        },
+        {
+          "word": "civic",
+          "translation": "cívica, ciudadana"
+        },
+        {
+          "word": "campaign",
+          "translation": "campaña"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-070",
+      "category": "Derechos y responsabilidades",
+      "question_en": "What is one way Americans can serve their country?",
+      "answers_en": [
+        "Vote",
+        "Pay taxes",
+        "Obey the law",
+        "Serve in the military",
+        "Run for office",
+        "Work for local, state, or federal government"
+      ],
+      "question_es": "¿Cuál es una forma en que los estadounidenses pueden servir a su país?",
+      "answers_es": [
+        "Votar",
+        "Pagar impuestos",
+        "Obedecer la ley",
+        "Servir en las fuerzas armadas",
+        "Postularse para un cargo",
+        "Trabajar para el gobierno local, estatal o federal"
+      ],
+      "explanation_es": "Servir al país no requiere uniforme: cumplir con las obligaciones fiscales, respetar la ley, votar o trabajar en la administración pública también contribuye al bien común. Esas conductas sostienen el funcionamiento del Estado y la convivencia. El servicio militar es solo una opción entre varias.",
+      "vocabulary": [
+        {
+          "word": "Obey",
+          "translation": "obedecer, cumplir"
+        },
+        {
+          "word": "taxes",
+          "translation": "impuestos"
+        },
+        {
+          "word": "serve",
+          "translation": "servir, prestar servicio"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-071",
+      "category": "Derechos y responsabilidades",
+      "question_en": "Why is it important to pay federal taxes?",
+      "answers_en": [
+        "Required by law",
+        "All people pay to fund the federal government",
+        "Required by the U.S. Constitution (16th Amendment)",
+        "Civic duty"
+      ],
+      "question_es": "¿Por qué es importante pagar impuestos federales?",
+      "answers_es": [
+        "Es requerido por la ley",
+        "Todas las personas pagan para financiar el gobierno federal",
+        "Es requerido por la Constitución de EE. UU. (Enmienda 16)",
+        "Deber cívico"
+      ],
+      "explanation_es": "Con ese dinero se financian carreteras, escuelas, defensa, atención médica y programas sociales que benefician a todos. Por eso es una obligación legal y también un deber ciudadano: sin esos fondos el gobierno no podría funcionar. Quien no los paga puede enfrentar sanciones.",
+      "vocabulary": [
+        {
+          "word": "taxes",
+          "translation": "impuestos"
+        },
+        {
+          "word": "fund",
+          "translation": "financiar, costear"
+        },
+        {
+          "word": "duty",
+          "translation": "deber (civic duty = deber cívico)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-072",
+      "category": "Derechos y responsabilidades",
+      "question_en": "It is important for all men age 18 through 25 to register for the Selective Service. Name one reason why.",
+      "answers_en": [
+        "Required by law",
+        "Civic duty",
+        "Makes the draft fair, if needed"
+      ],
+      "question_es": "Es importante que todos los hombres de 18 a 25 años se registren en el Servicio Selectivo. Nombre una razón.",
+      "answers_es": [
+        "Es requerido por la ley",
+        "Deber cívico",
+        "Hace que el reclutamiento sea justo, si es necesario"
+      ],
+      "explanation_es": "El registro es una lista que permitiría convocar a personas en caso de emergencia nacional, si el Congreso restableciera el servicio obligatorio. Al ser universal para ese grupo de edad, evita que unos pocos carguen con el deber mientras otros lo eluden.",
+      "vocabulary": [
+        {
+          "word": "register",
+          "translation": "registrarse, inscribirse"
+        },
+        {
+          "word": "Selective Service",
+          "translation": "Servicio Selectivo"
+        },
+        {
+          "word": "draft",
+          "translation": "reclutamiento (militar)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-073",
+      "category": "Período colonial e independencia",
+      "question_en": "The colonists came to America for many reasons. Name one.",
+      "answers_en": [
+        "Freedom",
+        "Political liberty",
+        "Religious freedom",
+        "Economic opportunity",
+        "Escape persecution"
+      ],
+      "question_es": "Los colonos vinieron a América por muchas razones. Nombre una.",
+      "answers_es": [
+        "Libertad",
+        "Libertad política",
+        "Libertad religiosa",
+        "Oportunidad económica",
+        "Escapar de la persecución"
+      ],
+      "explanation_es": "Quienes emigraron a América buscaban mejorar su vida y, en muchos casos, huir de restricciones que sufrían en Europa. Unos querían tierras y trabajo, otros profesar su fe sin castigos o participar en decisiones políticas. Por eso las colonias crecieron con poblaciones muy diversas.",
+      "vocabulary": [
+        {
+          "word": "colonists",
+          "translation": "colonos"
+        },
+        {
+          "word": "persecution",
+          "translation": "persecución"
+        },
+        {
+          "word": "opportunity",
+          "translation": "oportunidad"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-074",
+      "category": "Período colonial e independencia",
+      "question_en": "Who lived in America before the Europeans arrived?",
+      "answers_en": [
+        "American Indians",
+        "Native Americans"
+      ],
+      "question_es": "¿Quién vivía en América antes de que llegaran los europeos?",
+      "answers_es": [
+        "Los indígenas americanos",
+        "Los nativos americanos"
+      ],
+      "explanation_es": "Muchos pueblos originarios habitaban el continente desde miles de años antes, organizados en naciones con lenguas, gobiernos y formas de vida propias. Su presencia es anterior a la llegada de los europeos y su legado forma parte de la historia nacional. Hoy se los reconoce como pueblos indígenas.",
+      "vocabulary": [
+        {
+          "word": "Indians",
+          "translation": "indios (American Indians = indígenas americanos)"
+        },
+        {
+          "word": "arrived",
+          "translation": "llegaron, arribaron"
+        },
+        {
+          "word": "before",
+          "translation": "antes de"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-075",
+      "category": "Período colonial e independencia",
+      "question_en": "What group of people was taken and sold as slaves?",
+      "answers_en": [
+        "Africans",
+        "People from Africa"
+      ],
+      "question_es": "¿Qué grupo de personas fue capturado y vendido como esclavos?",
+      "answers_es": [
+        "Los africanos",
+        "Personas de África"
+      ],
+      "explanation_es": "Desde el siglo XVII millones de personas fueron arrancadas de sus comunidades en África y trasladadas por la fuerza al continente americano para trabajar sin libertad. Ese comercio sostuvo un sistema de esclavitud que duró siglos. Su abolición exigió una guerra civil.",
+      "vocabulary": [
+        {
+          "word": "taken",
+          "translation": "llevadas, tomadas"
+        },
+        {
+          "word": "sold",
+          "translation": "vendidas"
+        },
+        {
+          "word": "group",
+          "translation": "grupo"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-076",
+      "category": "Período colonial e independencia",
+      "question_en": "What war did the Americans fight to win independence from Britain?",
+      "answers_en": [
+        "American Revolution",
+        "The American Revolutionary War",
+        "War for American Independence"
+      ],
+      "question_es": "¿Qué guerra pelearon los estadounidenses para ganar la independencia de Gran Bretaña?",
+      "answers_es": [
+        "La Revolución Americana",
+        "La Guerra de Independencia de los Estados Unidos",
+        "La Guerra por la Independencia Americana"
+      ],
+      "explanation_es": "El conflicto comenzó en 1775 con enfrentamientos entre colonos y tropas británicas y terminó en 1783 con el reconocimiento de la independencia. Durante esos años las trece colonias coordinaron su lucha y crearon un ejército común. El tratado de paz confirmó el nacimiento de una nación nueva.",
+      "vocabulary": [
+        {
+          "word": "fight",
+          "translation": "luchar, pelear"
+        },
+        {
+          "word": "win",
+          "translation": "ganar, obtener"
+        },
+        {
+          "word": "independence",
+          "translation": "independencia"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-077",
+      "category": "Período colonial e independencia",
+      "question_en": "Name one reason why the Americans declared independence from Britain.",
+      "answers_en": [
+        "High taxes",
+        "Taxation without representation",
+        "British soldiers stayed in Americans' houses",
+        "They did not have self-government",
+        "Boston Massacre",
+        "Boston Tea Party (Tea Act)",
+        "Stamp Act",
+        "Sugar Act",
+        "Townshend Acts",
+        "Intolerable Acts"
+      ],
+      "question_es": "Nombre una razón por la que los estadounidenses declararon la independencia de Gran Bretaña.",
+      "answers_es": [
+        "Impuestos altos",
+        "Impuestos sin representación",
+        "Los soldados británicos se alojaban en las casas de los estadounidenses",
+        "No tenían autogobierno",
+        "La Masacre de Boston",
+        "El Motín del Té de Boston (Ley del Té)",
+        "La Ley del Timbre",
+        "La Ley del Azúcar",
+        "Las Leyes de Townshend",
+        "Las Leyes Intolerables"
+      ],
+      "explanation_es": "Los colonos consideraban injusto pagar impuestos decididos en Londres sin tener representantes en el Parlamento. A eso se sumaron leyes que restringían su comercio, la presencia de tropas y la falta de autogobierno. Las protestas coloniales llevaron finalmente a la ruptura.",
+      "vocabulary": [
+        {
+          "word": "Taxation",
+          "translation": "tributación, impuestos"
+        },
+        {
+          "word": "representation",
+          "translation": "representación"
+        },
+        {
+          "word": "self-government",
+          "translation": "autogobierno"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-078",
+      "category": "Período colonial e independencia",
+      "question_en": "Who wrote the Declaration of Independence?",
+      "answers_en": [
+        "Thomas Jefferson"
+      ],
+      "question_es": "¿Quién escribió la Declaración de Independencia?",
+      "answers_es": [
+        "Thomas Jefferson"
+      ],
+      "explanation_es": "El principal redactor fue un abogado y plantador de Virginia, encargado por el comité designado en 1776 de preparar el borrador del texto. Su versión, con cambios acordados por los demás delegados, fue la que se aprobó. Después fue el tercer presidente del país.",
+      "vocabulary": [
+        {
+          "word": "wrote",
+          "translation": "escribió"
+        },
+        {
+          "word": "Declaration",
+          "translation": "Declaración"
+        },
+        {
+          "word": "independence",
+          "translation": "independencia"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-079",
+      "category": "Período colonial e independencia",
+      "question_en": "When was the Declaration of Independence adopted?",
+      "answers_en": [
+        "July 4, 1776"
+      ],
+      "question_es": "¿Cuándo fue adoptada la Declaración de Independencia?",
+      "answers_es": [
+        "4 de julio de 1776"
+      ],
+      "explanation_es": "Ese día los delegados reunidos en Filadelfia aprobaron el texto que rompía los vínculos con la corona británica. La fecha quedó como el nacimiento oficial del país y se celebra cada año con desfiles y fuegos artificiales. La firma de la mayoría de los delegados se completó semanas después.",
+      "vocabulary": [
+        {
+          "word": "adopted",
+          "translation": "aprobado, adoptado"
+        },
+        {
+          "word": "When",
+          "translation": "cuándo"
+        },
+        {
+          "word": "Independence",
+          "translation": "Independencia"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-080",
+      "category": "Período colonial e independencia",
+      "question_en": "The American Revolution had many important events. Name one.",
+      "answers_en": [
+        "Battle of Bunker Hill",
+        "Declaration of Independence",
+        "Washington Crossing the Delaware (Battle of Trenton)",
+        "Battle of Saratoga",
+        "Valley Forge Encampment",
+        "Battle of Yorktown (British surrender at Yorktown)"
+      ],
+      "question_es": "La Revolución Americana tuvo muchos eventos importantes. Nombre uno.",
+      "answers_es": [
+        "La Batalla de Bunker Hill",
+        "La Declaración de Independencia",
+        "Washington cruzando el Delaware (Batalla de Trenton)",
+        "La Batalla de Saratoga",
+        "El Campamento de Valley Forge",
+        "La Batalla de Yorktown (Rendición británica en Yorktown)"
+      ],
+      "explanation_es": "Entre los episodios decisivos están los primeros choques armados cerca de Boston, el duro invierno que sufrió el ejército en Valley Forge y la victoria final en Yorktown, donde se rindió el mando británico. Con esa rendición terminaron las operaciones principales.",
+      "vocabulary": [
+        {
+          "word": "Battle",
+          "translation": "batalla"
+        },
+        {
+          "word": "surrender",
+          "translation": "rendición, rendirse"
+        },
+        {
+          "word": "Encampment",
+          "translation": "campamento"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-081",
+      "category": "Período colonial e independencia",
+      "question_en": "There were 13 original states. Name five.",
+      "answers_en": [
+        "New Hampshire",
+        "Massachusetts",
+        "Rhode Island",
+        "Connecticut",
+        "New York",
+        "New Jersey",
+        "Pennsylvania",
+        "Delaware",
+        "Maryland",
+        "Virginia",
+        "North Carolina",
+        "South Carolina",
+        "Georgia"
+      ],
+      "question_es": "Había 13 estados originales. Nombre cinco.",
+      "answers_es": [
+        "New Hampshire",
+        "Massachusetts",
+        "Rhode Island",
+        "Connecticut",
+        "Nueva York",
+        "Nueva Jersey",
+        "Pensilvania",
+        "Delaware",
+        "Maryland",
+        "Virginia",
+        "Carolina del Norte",
+        "Carolina del Sur",
+        "Georgia"
+      ],
+      "explanation_es": "Eran las colonias que declararon la independencia y luego ratificaron la Constitución, ubicadas a lo largo de la costa atlántica. Con el tiempo se fueron sumando nuevos estados hasta llegar a los cincuenta actuales. Por eso las trece primeras se conocen como las originales.",
+      "vocabulary": [
+        {
+          "word": "states",
+          "translation": "estados"
+        },
+        {
+          "word": "original",
+          "translation": "originales, primigenios"
+        },
+        {
+          "word": "Name",
+          "translation": "nombre, mencione (verbo)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-082",
+      "category": "Período colonial e independencia",
+      "question_en": "What founding document was written in 1787?",
+      "answers_en": [
+        "U.S. Constitution"
+      ],
+      "question_es": "¿Qué documento fundacional fue escrito en 1787?",
+      "answers_es": [
+        "La Constitución de EE. UU."
+      ],
+      "explanation_es": "Ese año se reunieron en Filadelfia los delegados de los estados para reemplazar el sistema anterior, que había resultado demasiado débil. Tras meses de debate redactaron el texto que crea las tres ramas del gobierno y reparte sus poderes. Después debía ser ratificado estado por estado.",
+      "vocabulary": [
+        {
+          "word": "founding",
+          "translation": "fundacional, fundador"
+        },
+        {
+          "word": "written",
+          "translation": "escrito, redactado"
+        },
+        {
+          "word": "document",
+          "translation": "documento"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-083",
+      "category": "Período colonial e independencia",
+      "question_en": "The Federalist Papers supported the passage of the U.S. Constitution. Name one of the writers.",
+      "answers_en": [
+        "James Madison",
+        "Alexander Hamilton",
+        "John Jay",
+        "Publius"
+      ],
+      "question_es": "Los Documentos Federalistas apoyaron la aprobación de la Constitución de EE. UU. Nombre uno de los escritores.",
+      "answers_es": [
+        "James Madison",
+        "Alexander Hamilton",
+        "John Jay",
+        "Publius"
+      ],
+      "explanation_es": "Los artículos se publicaron en periódicos de Nueva York entre 1787 y 1788 para convencer a los votantes de que aprobaran el nuevo texto. Se firmaban con un seudónimo común, así que el público no sabía quién escribía cada uno. Dos de sus autores llegaron a la presidencia.",
+      "vocabulary": [
+        {
+          "word": "Papers",
+          "translation": "artículos, documentos"
+        },
+        {
+          "word": "writers",
+          "translation": "autores, escritores"
+        },
+        {
+          "word": "passage",
+          "translation": "aprobación, trámite"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-084",
+      "category": "Período colonial e independencia",
+      "question_en": "Why were the Federalist Papers important?",
+      "answers_en": [
+        "They helped people understand the U.S. Constitution.",
+        "They supported passing the U.S. Constitution."
+      ],
+      "question_es": "¿Por qué fueron importantes los Documentos Federalistas?",
+      "answers_es": [
+        "Ayudaron a las personas a entender la Constitución de EE. UU.",
+        "Apoyaron la aprobación de la Constitución de EE. UU."
+      ],
+      "explanation_es": "Explicaron en lenguaje accesible cómo funcionaría el nuevo sistema de gobierno y respondieron a los temores de quienes creían que el poder central sería abusivo. Se convirtieron así en una herramienta clave para lograr la ratificación. Hoy se citan para interpretar la intención de los fundadores.",
+      "vocabulary": [
+        {
+          "word": "understand",
+          "translation": "entender, comprender"
+        },
+        {
+          "word": "supported",
+          "translation": "apoyaron, respaldaron"
+        },
+        {
+          "word": "Papers",
+          "translation": "artículos, ensayos"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-085",
+      "category": "Período colonial e independencia",
+      "question_en": "Benjamin Franklin is famous for many things. Name one.",
+      "answers_en": [
+        "Founded the first free public libraries",
+        "First Postmaster General of the United States",
+        "Helped write the Declaration of Independence",
+        "Inventor",
+        "U.S. diplomat"
+      ],
+      "question_es": "Benjamin Franklin es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "Fundó las primeras bibliotecas públicas gratuitas",
+        "Primer Director General de Correos de los Estados Unidos",
+        "Ayudó a escribir la Declaración de Independencia",
+        "Inventor",
+        "Diplomático de EE. UU."
+      ],
+      "explanation_es": "Fue impresor, científico y diplomático, y sus aportes van de la electricidad a las instituciones comunitarias. También representó a los estados en Europa y participó en la redacción de los documentos fundacionales. Es uno de los pocos que firmó los tres textos clave.",
+      "vocabulary": [
+        {
+          "word": "famous",
+          "translation": "famoso, célebre"
+        },
+        {
+          "word": "diplomat",
+          "translation": "diplomático"
+        },
+        {
+          "word": "Inventor",
+          "translation": "inventor"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-086",
+      "category": "Período colonial e independencia",
+      "question_en": "George Washington is famous for many things. Name one.",
+      "answers_en": [
+        "\"Father of Our Country\"",
+        "First president of the United States",
+        "General of the Continental Army",
+        "President of the Constitutional Convention"
+      ],
+      "question_es": "George Washington es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "\"Padre de Nuestra Nación\"",
+        "Primer presidente de los Estados Unidos",
+        "General del Ejército Continental",
+        "Presidente de la Convención Constitucional"
+      ],
+      "explanation_es": "Dirigió el ejército colonial durante la guerra de independencia y presidió la convención que redactó la Constitución en 1787. Al ser elegido gobernante por unanimidad, estableció prácticas que siguen vigentes, como limitarse a dos mandatos. Por eso se lo considera la figura fundadora por excelencia.",
+      "vocabulary": [
+        {
+          "word": "General",
+          "translation": "general"
+        },
+        {
+          "word": "famous",
+          "translation": "famoso, célebre"
+        },
+        {
+          "word": "Father",
+          "translation": "padre (Father of Our Country = Padre de la Patria)"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-087",
+      "category": "Período colonial e independencia",
+      "question_en": "Thomas Jefferson is famous for many things. Name one.",
+      "answers_en": [
+        "Writer of the Declaration of Independence",
+        "Third president of the United States",
+        "Doubled the size of the United States (Louisiana Purchase)",
+        "First Secretary of State",
+        "Founded the University of Virginia",
+        "Writer of the Virginia Statute on Religious Freedom"
+      ],
+      "question_es": "Thomas Jefferson es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "Escritor de la Declaración de Independencia",
+        "Tercer presidente de los Estados Unidos",
+        "Duplicó el tamaño de los Estados Unidos (Compra de Luisiana)",
+        "Primer Secretario de Estado",
+        "Fundó la Universidad de Virginia",
+        "Escritor del Estatuto de Virginia sobre la Libertad Religiosa"
+      ],
+      "explanation_es": "Además de redactar la declaración de 1776, ocupó el cargo más alto del país y en 1803 negoció la compra de un enorme territorio a Francia, lo que casi duplicó la superficie nacional. Fundó una universidad y defendió la libertad religiosa. Su figura resume el paso de colonia a nación.",
+      "vocabulary": [
+        {
+          "word": "Writer",
+          "translation": "redactor, escritor"
+        },
+        {
+          "word": "Third",
+          "translation": "tercero"
+        },
+        {
+          "word": "Doubled",
+          "translation": "duplicó, dobló"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-088",
+      "category": "Período colonial e independencia",
+      "question_en": "James Madison is famous for many things. Name one.",
+      "answers_en": [
+        "\"Father of the Constitution\"",
+        "Fourth president of the United States",
+        "President during the War of 1812",
+        "One of the writers of the Federalist Papers"
+      ],
+      "question_es": "James Madison es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "\"Padre de la Constitución\"",
+        "Cuarto presidente de los Estados Unidos",
+        "Presidente durante la Guerra de 1812",
+        "Uno de los escritores de los Documentos Federalistas"
+      ],
+      "explanation_es": "Fue el principal arquitecto del texto de 1787: propuso el diseño de un gobierno con poderes separados y tomó notas de los debates de la convención. También difundió esas ideas en artículos periodísticos y luego gobernó el país en tiempos de guerra.",
+      "vocabulary": [
+        {
+          "word": "Father",
+          "translation": "padre (Father of the Constitution = Padre de la Constitución)"
+        },
+        {
+          "word": "writers",
+          "translation": "autores, escritores"
+        },
+        {
+          "word": "Fourth",
+          "translation": "cuarto"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-089",
+      "category": "Período colonial e independencia",
+      "question_en": "Alexander Hamilton is famous for many things. Name one.",
+      "answers_en": [
+        "First Secretary of the Treasury",
+        "One of the writers of the Federalist Papers",
+        "Helped establish the First Bank of the United States",
+        "Aide to General George Washington",
+        "Member of the Continental Congress"
+      ],
+      "question_es": "Alexander Hamilton es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "Primer Secretario del Tesoro",
+        "Uno de los escritores de los Documentos Federalistas",
+        "Ayudó a establecer el Primer Banco de los Estados Unidos",
+        "Ayudante del General George Washington",
+        "Miembro del Congreso Continental"
+      ],
+      "explanation_es": "Diseñó el sistema financiero del país nuevo: organizó las finanzas públicas, impulsó un banco nacional y defendió una industria fuerte frente a una economía agrícola. Fue uno de los autores de los artículos que ayudaron a aprobar la Constitución. Antes fue ayudante de campo del comandante en jefe.",
+      "vocabulary": [
+        {
+          "word": "Treasury",
+          "translation": "Tesoro, Hacienda (Secretary of the Treasury = Secretario del Tesoro)"
+        },
+        {
+          "word": "Aide",
+          "translation": "ayudante"
+        },
+        {
+          "word": "establish",
+          "translation": "establecer, fundar"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-090",
+      "category": "Los años 1800",
+      "question_en": "What territory did the United States buy from France in 1803?",
+      "answers_en": [
+        "Louisiana Territory",
+        "Louisiana"
+      ],
+      "question_es": "¿Qué territorio compró Estados Unidos a Francia en 1803?",
+      "answers_es": [
+        "El Territorio de Luisiana",
+        "Luisiana"
+      ],
+      "explanation_es": "La compra añadió unos dos millones de kilómetros cuadrados al país por un precio muy bajo, porque el gobernante francés necesitaba dinero para sus guerras en Europa. Con ese territorio se abrieron rutas hacia el oeste y se duplicó la superficie nacional.",
+      "vocabulary": [
+        {
+          "word": "territory",
+          "translation": "territorio"
+        },
+        {
+          "word": "buy",
+          "translation": "comprar"
+        },
+        {
+          "word": "France",
+          "translation": "Francia"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-091",
+      "category": "Los años 1800",
+      "question_en": "Name one war fought by the United States in the 1800s.",
+      "answers_en": [
+        "War of 1812",
+        "Mexican-American War",
+        "Civil War",
+        "Spanish-American War"
+      ],
+      "question_es": "Nombre una guerra en la que luchó Estados Unidos en los años 1800.",
+      "answers_es": [
+        "La Guerra de 1812",
+        "La Guerra México-Americana",
+        "La Guerra Civil",
+        "La Guerra Hispano-Americana"
+      ],
+      "explanation_es": "En ese siglo el país libró varios conflictos: uno contra la antigua metrópoli, otro que le permitió anexar territorios del sur y una guerra interna entre los estados del norte y del sur. Al final de la centuria también combatió a España. Cada conflicto cambió fronteras o amplió su papel en el mundo.",
+      "vocabulary": [
+        {
+          "word": "fought",
+          "translation": "luchó, librada (participio de fight)"
+        },
+        {
+          "word": "War",
+          "translation": "guerra"
+        },
+        {
+          "word": "1800s",
+          "translation": "los años 1800 (el siglo XIX)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-092",
+      "category": "Los años 1800",
+      "question_en": "Name the U.S. war between the North and the South.",
+      "answers_en": [
+        "The Civil War"
+      ],
+      "question_es": "Nombre la guerra de EE. UU. entre el Norte y el Sur.",
+      "answers_es": [
+        "La Guerra Civil"
+      ],
+      "explanation_es": "El enfrentamiento duró de 1861 a 1865 y opuso a los estados que querían mantener la esclavitud con los que se oponían a su expansión. La victoria del norte preservó la unión y abrió el camino a la abolición. Fue el conflicto con más muertos en la historia del país.",
+      "vocabulary": [
+        {
+          "word": "war",
+          "translation": "guerra"
+        },
+        {
+          "word": "North",
+          "translation": "norte"
+        },
+        {
+          "word": "South",
+          "translation": "sur"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-093",
+      "category": "Los años 1800",
+      "question_en": "The Civil War had many important events. Name one.",
+      "answers_en": [
+        "Battle of Fort Sumter",
+        "Emancipation Proclamation",
+        "Battle of Vicksburg",
+        "Battle of Gettysburg",
+        "Sherman's March",
+        "Surrender at Appomattox",
+        "Battle of Antietam/Sharpsburg",
+        "Lincoln was assassinated."
+      ],
+      "question_es": "La Guerra Civil tuvo muchos eventos importantes. Nombre uno.",
+      "answers_es": [
+        "La Batalla de Fort Sumter",
+        "La Proclamación de Emancipación",
+        "La Batalla de Vicksburg",
+        "La Batalla de Gettysburg",
+        "La Marcha de Sherman",
+        "La Rendición en Appomattox",
+        "La Batalla de Antietam/Sharpsburg",
+        "Lincoln fue asesinado."
+      ],
+      "explanation_es": "Entre los episodios clave están el primer ataque que inició el conflicto, la declaración que liberó a los esclavos de los estados rebeldes y la batalla que marcó el punto de giro en 1863. La guerra terminó con la rendición del ejército del sur en 1865. Semanas después el presidente fue asesinado.",
+      "vocabulary": [
+        {
+          "word": "Battle",
+          "translation": "batalla"
+        },
+        {
+          "word": "Surrender",
+          "translation": "rendición"
+        },
+        {
+          "word": "assassinated",
+          "translation": "asesinado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-094",
+      "category": "Los años 1800",
+      "question_en": "Abraham Lincoln is famous for many things. Name one.",
+      "answers_en": [
+        "Freed the slaves (Emancipation Proclamation)",
+        "Saved the Union",
+        "Led the United States during the Civil War",
+        "16th president of the United States",
+        "Delivered the Gettysburg Address"
+      ],
+      "question_es": "Abraham Lincoln es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "Liberó a los esclavos (Proclamación de Emancipación)",
+        "Salvó la Unión",
+        "Dirigió a los Estados Unidos durante la Guerra Civil",
+        "16.° presidente de los Estados Unidos",
+        "Pronunció el Discurso de Gettysburg"
+      ],
+      "explanation_es": "Gobernó el país durante la guerra civil y usó sus facultades para declarar libres a los esclavos de los estados en rebeldía. Su discurso de Gettysburg redefinió el sentido de la nación. Fue asesinado pocos días después del final del conflicto.",
+      "vocabulary": [
+        {
+          "word": "Saved",
+          "translation": "salvó"
+        },
+        {
+          "word": "Led",
+          "translation": "dirigió, lideró (pasado de lead)"
+        },
+        {
+          "word": "Delivered",
+          "translation": "pronunció, entregó"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-095",
+      "category": "Los años 1800",
+      "question_en": "What did the Emancipation Proclamation do?",
+      "answers_en": [
+        "Freed the slaves",
+        "Freed slaves in the Confederacy",
+        "Freed slaves in the Confederate states",
+        "Freed slaves in most Southern states"
+      ],
+      "question_es": "¿Qué hizo la Proclamación de Emancipación?",
+      "answers_es": [
+        "Liberó a los esclavos",
+        "Liberó a los esclavos en la Confederación",
+        "Liberó a los esclavos en los estados confederados",
+        "Liberó a los esclavos en la mayoría de los estados del sur"
+      ],
+      "explanation_es": "Fue una orden presidencial de 1863 que declaró libres a las personas esclavizadas en los territorios en rebeldía contra la unión. Cambió el sentido de la guerra y permitió el alistamiento de soldados negros. Abrió el camino a la abolición definitiva en 1865.",
+      "vocabulary": [
+        {
+          "word": "Proclamation",
+          "translation": "proclamación"
+        },
+        {
+          "word": "Freed",
+          "translation": "liberó (pasado de free)"
+        },
+        {
+          "word": "Confederacy",
+          "translation": "Confederación"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-096",
+      "category": "Los años 1800",
+      "question_en": "What U.S. war ended slavery?",
+      "answers_en": [
+        "The Civil War"
+      ],
+      "question_es": "¿Qué guerra de EE. UU. terminó con la esclavitud?",
+      "answers_es": [
+        "La Guerra Civil"
+      ],
+      "explanation_es": "El conflicto de 1861 a 1865 enfrentó a los estados del sur, que dependían del trabajo esclavo, con los del norte. Su resultado permitió aprobar una enmienda que prohibió la esclavitud en todo el país. Sin esa victoria militar, la abolición no habría sido posible.",
+      "vocabulary": [
+        {
+          "word": "ended",
+          "translation": "acabó con, puso fin a"
+        },
+        {
+          "word": "slavery",
+          "translation": "esclavitud"
+        },
+        {
+          "word": "war",
+          "translation": "guerra"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-097",
+      "category": "Los años 1800",
+      "question_en": "What amendment says all persons born or naturalized in the United States, and subject to the jurisdiction thereof, are U.S. citizens?",
+      "answers_en": [
+        "14th Amendment"
+      ],
+      "question_es": "¿Qué enmienda dice que todas las personas nacidas o naturalizadas en los Estados Unidos, y sujetas a su jurisdicción, son ciudadanos de EE. UU.?",
+      "answers_es": [
+        "La Enmienda 14"
+      ],
+      "explanation_es": "Aprobada después de la guerra civil, anuló la doctrina que negaba la ciudadanía a los descendientes de esclavos y garantizó la igual protección de las leyes. Es la base del derecho de nacimiento en el territorio y de las leyes de derechos civiles. Se cita en casi todos los debates sobre ciudadanía.",
+      "vocabulary": [
+        {
+          "word": "amendment",
+          "translation": "enmienda"
+        },
+        {
+          "word": "born",
+          "translation": "nacido, nacida"
+        },
+        {
+          "word": "naturalized",
+          "translation": "naturalizado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-098",
+      "category": "Los años 1800",
+      "question_en": "When did all men get the right to vote?",
+      "answers_en": [
+        "After the Civil War",
+        "During Reconstruction",
+        "With the 15th Amendment",
+        "1870"
+      ],
+      "question_es": "¿Cuándo obtuvieron todos los hombres el derecho al voto?",
+      "answers_es": [
+        "Después de la Guerra Civil",
+        "Durante la Reconstrucción",
+        "Con la Enmienda 15",
+        "1870"
+      ],
+      "explanation_es": "Tras el conflicto de 1861-1865 se aprobó una enmienda que prohibió negar el voto por motivos de raza o de servidumbre previa. Durante décadas, muchos estados del sur lo impidieron con requisitos y obstáculos. Esos abusos se prohibieron con las leyes de derechos civiles del siglo siguiente.",
+      "vocabulary": [
+        {
+          "word": "vote",
+          "translation": "votar, voto"
+        },
+        {
+          "word": "Reconstruction",
+          "translation": "Reconstrucción (período posterior a la guerra civil)"
+        },
+        {
+          "word": "Amendment",
+          "translation": "enmienda"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-099",
+      "category": "Los años 1800",
+      "question_en": "Name one leader of the women's rights movement in the 1800s.",
+      "answers_en": [
+        "Susan B. Anthony",
+        "Elizabeth Cady Stanton",
+        "Sojourner Truth",
+        "Harriet Tubman",
+        "Lucretia Mott",
+        "Lucy Stone"
+      ],
+      "question_es": "Nombre una líder del movimiento por los derechos de la mujer en los años 1800.",
+      "answers_es": [
+        "Susan B. Anthony",
+        "Elizabeth Cady Stanton",
+        "Sojourner Truth",
+        "Harriet Tubman",
+        "Lucretia Mott",
+        "Lucy Stone"
+      ],
+      "explanation_es": "En 1848 se celebró en Nueva York la primera convención que exigió públicamente el voto femenino, y luego se formaron organizaciones de mujeres en todo el país. Muchas líderes también participaron en la lucha contra la esclavitud y en campañas por la educación. El derecho al voto llegaría en 1920.",
+      "vocabulary": [
+        {
+          "word": "rights",
+          "translation": "derechos"
+        },
+        {
+          "word": "leader",
+          "translation": "líder, dirigente"
+        },
+        {
+          "word": "movement",
+          "translation": "movimiento"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-100",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Name one war fought by the United States in the 1900s.",
+      "answers_en": [
+        "World War I",
+        "World War II",
+        "Korean War",
+        "Vietnam War",
+        "Persian Gulf War"
+      ],
+      "question_es": "Nombre una guerra en la que luchó Estados Unidos en los años 1900.",
+      "answers_es": [
+        "La Primera Guerra Mundial",
+        "La Segunda Guerra Mundial",
+        "La Guerra de Corea",
+        "La Guerra de Vietnam",
+        "La Guerra del Golfo Pérsico"
+      ],
+      "explanation_es": "En ese siglo el país combatió en dos guerras mundiales, en dos conflictos de Asia y en una campaña en el golfo Pérsico. La mayoría se libró lejos de su territorio y varias respondieron a alianzas o amenazas globales. Esos enfrentamientos definieron su papel como potencia mundial.",
+      "vocabulary": [
+        {
+          "word": "fought",
+          "translation": "luchó, librada (participio de fight)"
+        },
+        {
+          "word": "War",
+          "translation": "guerra"
+        },
+        {
+          "word": "1900s",
+          "translation": "los años 1900 (el siglo XX)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-101",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Why did the United States enter World War I?",
+      "answers_en": [
+        "Because Germany attacked U.S. civilian ships",
+        "To support the Allied Powers (England, France, Italy, and Russia)",
+        "To oppose the Central Powers (Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria)"
+      ],
+      "question_es": "¿Por qué entró Estados Unidos en la Primera Guerra Mundial?",
+      "answers_es": [
+        "Porque Alemania atacó barcos civiles de EE. UU.",
+        "Para apoyar a las Potencias Aliadas (Inglaterra, Francia, Italia y Rusia)",
+        "Para oponerse a las Potencias Centrales (Alemania, Austria-Hungría, el Imperio Otomano y Bulgaria)"
+      ],
+      "explanation_es": "El país se mantuvo neutral varios años, pero los ataques a barcos con civiles a bordo y los intentos de alianza contra México cambiaron la opinión pública. En 1917 declaró la guerra al bloque enemigo y se sumó a los aliados. Su intervención inclinó el resultado del conflicto.",
+      "vocabulary": [
+        {
+          "word": "attacked",
+          "translation": "atacó"
+        },
+        {
+          "word": "civilian",
+          "translation": "civil, civiles"
+        },
+        {
+          "word": "support",
+          "translation": "apoyar, respaldar"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-102",
+      "category": "Historia estadounidense reciente",
+      "question_en": "When did all women get the right to vote?",
+      "answers_en": [
+        "1920",
+        "After World War I",
+        "With the 19th Amendment"
+      ],
+      "question_es": "¿Cuándo obtuvieron todas las mujeres el derecho al voto?",
+      "answers_es": [
+        "1920",
+        "Después de la Primera Guerra Mundial",
+        "Con la Enmienda 19"
+      ],
+      "explanation_es": "La enmienda que prohibió negar el sufragio por razón de sexo se ratificó en 1920, tras décadas de campañas y protestas sufragistas. El contexto de la guerra, con las mujeres ocupando trabajos industriales, ayudó a cambiar la opinión pública. Fue el avance más amplio desde entonces.",
+      "vocabulary": [
+        {
+          "word": "women",
+          "translation": "mujeres"
+        },
+        {
+          "word": "vote",
+          "translation": "votar, voto"
+        },
+        {
+          "word": "Amendment",
+          "translation": "enmienda"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-103",
+      "category": "Historia estadounidense reciente",
+      "question_en": "What was the Great Depression?",
+      "answers_en": [
+        "Longest economic recession in modern history"
+      ],
+      "question_es": "¿Qué fue la Gran Depresión?",
+      "answers_es": [
+        "La recesión económica más larga de la historia moderna"
+      ],
+      "explanation_es": "Fue una crisis económica que comenzó tras el derrumbe de la bolsa en 1929 y se prolongó durante los años treinta, con bancos quebrados y millones de personas sin trabajo. Solo la producción industrial para la guerra siguiente la revirtió del todo.",
+      "vocabulary": [
+        {
+          "word": "recession",
+          "translation": "recesión, crisis económica"
+        },
+        {
+          "word": "economic",
+          "translation": "económica"
+        },
+        {
+          "word": "Longest",
+          "translation": "la más larga, la más prolongada"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-104",
+      "category": "Historia estadounidense reciente",
+      "question_en": "When did the Great Depression start?",
+      "answers_en": [
+        "The Great Crash (1929)",
+        "Stock market crash of 1929"
+      ],
+      "question_es": "¿Cuándo comenzó la Gran Depresión?",
+      "answers_es": [
+        "El Gran Desplome (1929)",
+        "El desplome bursátil de 1929"
+      ],
+      "explanation_es": "En octubre de 1929 el valor de las acciones se desplomó en pocos días y arrastró a los inversores que habían comprado a crédito. Las quiebras bancarias que siguieron cortaron el financiamiento de las empresas. Ese episodio marca el inicio de la crisis más profunda del siglo.",
+      "vocabulary": [
+        {
+          "word": "Stock",
+          "translation": "bolsa, acciones"
+        },
+        {
+          "word": "crash",
+          "translation": "crac, desplome"
+        },
+        {
+          "word": "market",
+          "translation": "mercado"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-105",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Who was president during the Great Depression and World War II?",
+      "answers_en": [
+        "Franklin Roosevelt"
+      ],
+      "question_es": "¿Quién fue presidente durante la Gran Depresión y la Segunda Guerra Mundial?",
+      "answers_es": [
+        "Franklin Roosevelt"
+      ],
+      "explanation_es": "Gobernó desde 1933 hasta su muerte en 1945 y fue elegido cuatro veces, algo que hoy sería imposible. Puso en marcha programas públicos para dar empleo y reactivar la economía, y dirigió al país durante la mayor parte de la guerra. Su figura se asocia a la expansión del gobierno federal.",
+      "vocabulary": [
+        {
+          "word": "president",
+          "translation": "presidente"
+        },
+        {
+          "word": "Depression",
+          "translation": "Depresión (crisis económica)"
+        },
+        {
+          "word": "during",
+          "translation": "durante"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-106",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Why did the United States enter World War II?",
+      "answers_en": [
+        "Bombing of Pearl Harbor",
+        "Japanese attacked Pearl Harbor",
+        "To support the Allied Powers (England, France, and Russia)",
+        "To oppose the Axis Powers (Germany, Italy, and Japan)"
+      ],
+      "question_es": "¿Por qué entró Estados Unidos en la Segunda Guerra Mundial?",
+      "answers_es": [
+        "El bombardeo de Pearl Harbor",
+        "Japón atacó Pearl Harbor",
+        "Para apoyar a las Potencias Aliadas (Inglaterra, Francia y Rusia)",
+        "Para oponerse a las Potencias del Eje (Alemania, Italia y Japón)"
+      ],
+      "explanation_es": "El ataque aéreo a una base naval en Hawái en diciembre de 1941 provocó que el Congreso declarara la guerra casi por unanimidad. Hasta entonces el país había ayudado a los aliados sin combatir directamente. Ese mismo mes entraron también en el conflicto los bloques enfrentados.",
+      "vocabulary": [
+        {
+          "word": "Bombing",
+          "translation": "bombardeo"
+        },
+        {
+          "word": "attacked",
+          "translation": "atacó"
+        },
+        {
+          "word": "Allied",
+          "translation": "aliado (Allied Powers = potencias aliadas)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-107",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Dwight Eisenhower is famous for many things. Name one.",
+      "answers_en": [
+        "General during World War II",
+        "President at the end of the Korean War",
+        "34th president of the United States",
+        "Signed the Federal-Aid Highway Act of 1956 (Created the Interstate System)"
+      ],
+      "question_es": "Dwight Eisenhower es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "General durante la Segunda Guerra Mundial",
+        "Presidente al final de la Guerra de Corea",
+        "34.° presidente de los Estados Unidos",
+        "Firmó la Ley Federal de Carreteras de 1956 (Creó el Sistema Interestatal)"
+      ],
+      "explanation_es": "Fue comandante militar en Europa durante la guerra y años después gobernó el país cuando terminaba el conflicto de Corea. Impulsó la ley que creó la red de autopistas interestatales, clave para el comercio y los viajes. Su prestigio militar le dio un apoyo enorme en las urnas.",
+      "vocabulary": [
+        {
+          "word": "General",
+          "translation": "general"
+        },
+        {
+          "word": "Signed",
+          "translation": "firmó"
+        },
+        {
+          "word": "Highway",
+          "translation": "autopista, carretera"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-108",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Who was the United States' main rival during the Cold War?",
+      "answers_en": [
+        "Soviet Union",
+        "USSR",
+        "Russia"
+      ],
+      "question_es": "¿Quién fue el principal rival de Estados Unidos durante la Guerra Fría?",
+      "answers_es": [
+        "La Unión Soviética",
+        "La URSS",
+        "Rusia"
+      ],
+      "explanation_es": "Tras la segunda guerra mundial el mundo quedó dividido en dos bloques, y el enfrentamiento con la potencia comunista duró más de cuatro décadas. No hubo choque directo entre ambos, sino carrera de armamento y espionaje. Terminó con la disolución de ese bloque rival en 1991.",
+      "vocabulary": [
+        {
+          "word": "rival",
+          "translation": "rival, adversario"
+        },
+        {
+          "word": "main",
+          "translation": "principal"
+        },
+        {
+          "word": "Cold",
+          "translation": "fría (Cold War = Guerra Fría)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-109",
+      "category": "Historia estadounidense reciente",
+      "question_en": "During the Cold War, what was one main concern of the United States?",
+      "answers_en": [
+        "Communism",
+        "Nuclear war"
+      ],
+      "question_es": "Durante la Guerra Fría, ¿cuál fue una preocupación principal de los Estados Unidos?",
+      "answers_es": [
+        "El comunismo",
+        "La guerra nuclear"
+      ],
+      "explanation_es": "El temor central era que la ideología rival se expandiera por otros países y que un enfrentamiento con armas atómicas destruyera el mundo. Por eso el gobierno invirtió en defensa, en espionaje y en programas espaciales, y buscó contener esa influencia en Europa, Asia y América Latina.",
+      "vocabulary": [
+        {
+          "word": "Cold",
+          "translation": "fría (Cold War = Guerra Fría)"
+        },
+        {
+          "word": "Concern",
+          "translation": "preocupación, asunto"
+        },
+        {
+          "word": "Nuclear",
+          "translation": "nuclear"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-110",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Why did the United States enter the Korean War?",
+      "answers_en": [
+        "To stop the spread of communism"
+      ],
+      "question_es": "¿Por qué entró Estados Unidos en la Guerra de Corea?",
+      "answers_es": [
+        "Para detener la expansión del comunismo"
+      ],
+      "explanation_es": "Tras la segunda guerra mundial la península quedó dividida en dos zonas, y en 1950 el norte invadió el sur. El país lideró una coalición internacional para frenar esa ofensiva y evitar que la ideología rival ganara terreno. La guerra terminó en un armisticio, sin un tratado de paz definitivo.",
+      "vocabulary": [
+        {
+          "word": "spread",
+          "translation": "propagación, expansión"
+        },
+        {
+          "word": "communism",
+          "translation": "comunismo"
+        },
+        {
+          "word": "stop",
+          "translation": "detener, frenar"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-111",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Why did the United States enter the Vietnam War?",
+      "answers_en": [
+        "To stop the spread of communism"
+      ],
+      "question_es": "¿Por qué entró Estados Unidos en la Guerra de Vietnam?",
+      "answers_es": [
+        "Para detener la expansión del comunismo"
+      ],
+      "explanation_es": "La intervención buscó evitar que el sur de ese país cayera bajo el control de un gobierno alineado con el bloque comunista, siguiendo la misma lógica que en otros conflictos de la época. Empezó como asesoría militar y se volvió una guerra larga e impopular. Terminó en 1975 con la retirada.",
+      "vocabulary": [
+        {
+          "word": "enter",
+          "translation": "entrar, intervenir en"
+        },
+        {
+          "word": "spread",
+          "translation": "propagación, expansión"
+        },
+        {
+          "word": "communism",
+          "translation": "comunismo"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-112",
+      "category": "Historia estadounidense reciente",
+      "question_en": "What did the civil rights movement do?",
+      "answers_en": [
+        "Fought to end racial discrimination"
+      ],
+      "question_es": "¿Qué logró el movimiento por los derechos civiles?",
+      "answers_es": [
+        "Luchó para acabar con la discriminación racial"
+      ],
+      "explanation_es": "Fue un movimiento social de mediados del siglo XX que exigió el fin de las leyes y prácticas que separaban a las personas por su origen racial. Mediante protestas pacíficas y demandas judiciales logró cambios legales históricos. Su presión condujo a las leyes de derechos civiles de 1964 y 1965.",
+      "vocabulary": [
+        {
+          "word": "Fought",
+          "translation": "luchó (pasado de fight)"
+        },
+        {
+          "word": "discrimination",
+          "translation": "discriminación"
+        },
+        {
+          "word": "racial",
+          "translation": "racial"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-113",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Martin Luther King, Jr. is famous for many things. Name one.",
+      "answers_en": [
+        "Fought for civil rights",
+        "Worked for equality for all Americans",
+        "Worked to ensure that people would not be judged by the color of their skin, but by the content of their character"
+      ],
+      "question_es": "Martin Luther King, Jr. es famoso por muchas cosas. Nombre una.",
+      "answers_es": [
+        "Luchó por los derechos civiles",
+        "Trabajó por la igualdad de todos los estadounidenses",
+        "Trabajó para asegurar que las personas no fueran juzgadas por el color de su piel, sino por el contenido de su carácter"
+      ],
+      "explanation_es": "Lideró protestas pacíficas contra la segregación y dio discursos que marcaron la lucha por la igualdad en los años sesenta. Su mensaje insistía en juzgar a las personas por sus actos y su carácter, no por su apariencia. Fue asesinado en 1968 y años después se creó un feriado nacional en su honor.",
+      "vocabulary": [
+        {
+          "word": "Fought",
+          "translation": "luchó (pasado de fight)"
+        },
+        {
+          "word": "equality",
+          "translation": "igualdad"
+        },
+        {
+          "word": "character",
+          "translation": "carácter"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-114",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Why did the United States enter the Persian Gulf War?",
+      "answers_en": [
+        "To force the Iraqi military from Kuwait"
+      ],
+      "question_es": "¿Por qué entró Estados Unidos en la Guerra del Golfo Pérsico?",
+      "answers_es": [
+        "Para obligar al ejército iraquí a salir de Kuwait"
+      ],
+      "explanation_es": "En 1990 un ejército vecino invadió y ocupó un pequeño país productor de petróleo, y una coalición internacional respondió con una campaña de pocas semanas. El objetivo era restablecer la situación anterior y proteger los suministros energéticos. Terminó con la retirada de las fuerzas invasoras.",
+      "vocabulary": [
+        {
+          "word": "force",
+          "translation": "forzar, expulsar"
+        },
+        {
+          "word": "Iraqi",
+          "translation": "iraquí"
+        },
+        {
+          "word": "Kuwait",
+          "translation": "Kuwait"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-115",
+      "category": "Historia estadounidense reciente",
+      "question_en": "What major event happened on September 11, 2001 in the United States?",
+      "answers_en": [
+        "Terrorists attacked the United States",
+        "Terrorists took over two planes and crashed them into the World Trade Center in New York City",
+        "Terrorists took over a plane and crashed into the Pentagon in Arlington, Virginia",
+        "Terrorists took over a plane originally aimed at Washington, D.C., and crashed in a field in Pennsylvania"
+      ],
+      "question_es": "¿Qué evento importante ocurrió el 11 de septiembre de 2001 en los Estados Unidos?",
+      "answers_es": [
+        "Terroristas atacaron los Estados Unidos",
+        "Terroristas secuestraron dos aviones y los estrellaron contra el World Trade Center en la ciudad de Nueva York",
+        "Terroristas secuestraron un avión y lo estrellaron contra el Pentágono en Arlington, Virginia",
+        "Terroristas secuestraron un avión originalmente dirigido a Washington, D.C., y se estrelló en un campo en Pensilvania"
+      ],
+      "explanation_es": "Ese día un grupo terrorista secuestró cuatro aviones comerciales y los estrelló contra edificios emblemáticos, causando miles de muertes. Fue el ataque más grave sufrido en su territorio continental y cambió por completo las políticas de seguridad.",
+      "vocabulary": [
+        {
+          "word": "Terrorists",
+          "translation": "terroristas"
+        },
+        {
+          "word": "attacked",
+          "translation": "atacaron"
+        },
+        {
+          "word": "crashed",
+          "translation": "estrellaron, chocaron"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-116",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Name one U.S. military conflict after the September 11, 2001 attacks.",
+      "answers_en": [
+        "Global War on Terror",
+        "War in Afghanistan",
+        "War in Iraq"
+      ],
+      "question_es": "Nombre un conflicto militar de EE. UU. después de los ataques del 11 de septiembre de 2001.",
+      "answers_es": [
+        "La Guerra Global contra el Terrorismo",
+        "La Guerra en Afganistán",
+        "La Guerra en Irak"
+      ],
+      "explanation_es": "Tras los atentados de 2001 el país lanzó una campaña militar contra grupos extremistas y sus bases, que comenzó en Afganistán y luego se extendió a Irak. Fue el conflicto armado más largo de su historia, con tropas desplegadas durante casi veinte años. Terminó con la retirada de 2021.",
+      "vocabulary": [
+        {
+          "word": "conflict",
+          "translation": "conflicto"
+        },
+        {
+          "word": "attacks",
+          "translation": "atentados, ataques"
+        },
+        {
+          "word": "War",
+          "translation": "guerra"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-117",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Name one American Indian tribe in the United States.",
+      "answers_en": [
+        "Apache",
+        "Blackfeet",
+        "Cayuga",
+        "Cherokee",
+        "Cheyenne",
+        "Chippewa",
+        "Choctaw",
+        "Creek",
+        "Crow",
+        "Hopi",
+        "Huron",
+        "Inupiat",
+        "Lakota",
+        "Mohawk",
+        "Mohegan",
+        "Navajo",
+        "Oneida",
+        "Onondaga",
+        "Pueblo",
+        "Seminole",
+        "Seneca",
+        "Shawnee",
+        "Sioux",
+        "Teton",
+        "Tuscarora"
+      ],
+      "question_es": "Nombre una tribu indígena americana en los Estados Unidos.",
+      "answers_es": [
+        "Apache",
+        "Blackfeet",
+        "Cayuga",
+        "Cherokee",
+        "Cheyenne",
+        "Chippewa",
+        "Choctaw",
+        "Creek",
+        "Crow",
+        "Hopi",
+        "Huron",
+        "Inupiat",
+        "Lakota",
+        "Mohawk",
+        "Mohegan",
+        "Navajo",
+        "Oneida",
+        "Onondaga",
+        "Pueblo",
+        "Seminole",
+        "Seneca",
+        "Shawnee",
+        "Sioux",
+        "Teton",
+        "Tuscarora"
+      ],
+      "explanation_es": "Existen cientos de naciones indígenas reconocidas por el gobierno federal, cada una con su propio nombre, territorio y forma de gobierno. Muchas conservan sus lenguas y tradiciones, y algunas gestionan sus propias reservas y empresas. La lista oficial del examen incluye solo algunos ejemplos.",
+      "vocabulary": [
+        {
+          "word": "tribe",
+          "translation": "tribu"
+        },
+        {
+          "word": "Indian",
+          "translation": "indio (American Indian tribe = tribu indígena)"
+        },
+        {
+          "word": "American",
+          "translation": "estadounidense, americano"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "his-118",
+      "category": "Historia estadounidense reciente",
+      "question_en": "Name one example of an American innovation.",
+      "answers_en": [
+        "Light bulb",
+        "Automobile (cars, internal combustion engine)",
+        "Skyscrapers",
+        "Airplane",
+        "Assembly line",
+        "Landing on the moon",
+        "Integrated circuit (IC)"
+      ],
+      "question_es": "Nombre un ejemplo de una innovación estadounidense.",
+      "answers_es": [
+        "La bombilla eléctrica",
+        "El automóvil (carros, motor de combustión interna)",
+        "Los rascacielos",
+        "El avión",
+        "La línea de ensamblaje",
+        "El alunizaje",
+        "El circuito integrado (CI)"
+      ],
+      "explanation_es": "Los ejemplos abarcan inventos que transformaron la vida cotidiana, como la producción en cadena que abarató los automóviles, y logros como la llegada del ser humano a la Luna o los circuitos que hicieron posibles las computadoras. Muchos surgieron de empresas y universidades del país.",
+      "vocabulary": [
+        {
+          "word": "innovation",
+          "translation": "innovación"
+        },
+        {
+          "word": "Assembly",
+          "translation": "montaje, ensamblaje (assembly line = cadena de montaje)"
+        },
+        {
+          "word": "Skyscrapers",
+          "translation": "rascacielos"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-119",
+      "category": "Símbolos y días festivos",
+      "question_en": "What is the capital of the United States?",
+      "answers_en": [
+        "Washington, D.C."
+      ],
+      "question_es": "¿Cuál es la capital de los Estados Unidos?",
+      "answers_es": [
+        "Washington, D.C."
+      ],
+      "explanation_es": "La ciudad se construyó a finales del siglo XVIII en un distrito federal creado para albergar al gobierno, separado de cualquier estado. Su diseño, con avenidas amplias y edificios públicos, se planeó desde el principio con esa función. Allí están la Casa Blanca, el Congreso y el tribunal más alto.",
+      "vocabulary": [
+        {
+          "word": "capital",
+          "translation": "capital"
+        },
+        {
+          "word": "States",
+          "translation": "estados (United States = Estados Unidos)"
+        },
+        {
+          "word": "D.C.",
+          "translation": "Distrito de Columbia (District of Columbia, sede del gobierno federal)"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-120",
+      "category": "Símbolos y días festivos",
+      "question_en": "Where is the Statue of Liberty?",
+      "answers_en": [
+        "New York Harbor",
+        "Liberty Island",
+        "New Jersey",
+        "Near New York City",
+        "On the Hudson River"
+      ],
+      "question_es": "¿Dónde está la Estatua de la Libertad?",
+      "answers_es": [
+        "En el puerto de Nueva York",
+        "En la Isla de la Libertad",
+        "En Nueva Jersey",
+        "Cerca de la ciudad de Nueva York",
+        "En el río Hudson"
+      ],
+      "explanation_es": "La estatua fue un regalo de Francia en 1886 y se colocó en una isla en la desembocadura del río que separa dos estados. Su ubicación frente a la costa la convirtió en el primer símbolo que veían los inmigrantes al llegar. Durante décadas funcionó allí la estación de recepción de inmigrantes.",
+      "vocabulary": [
+        {
+          "word": "Harbor",
+          "translation": "puerto"
+        },
+        {
+          "word": "Island",
+          "translation": "isla"
+        },
+        {
+          "word": "River",
+          "translation": "río"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-121",
+      "category": "Símbolos y días festivos",
+      "question_en": "Why does the flag have 13 stripes?",
+      "answers_en": [
+        "Because there were 13 original colonies",
+        "Because the stripes represent the original colonies"
+      ],
+      "question_es": "¿Por qué la bandera tiene 13 franjas?",
+      "answers_es": [
+        "Porque había 13 colonias originales",
+        "Porque las franjas representan las colonias originales"
+      ],
+      "explanation_es": "Las franjas recuerdan a las colonias que declararon la independencia y formaron el país inicial. Al añadirse nuevos estados se optó por sumar estrellas en vez de franjas, para no alterar el diseño. Por eso el número de franjas quedó fijo y solo cambia el de estrellas.",
+      "vocabulary": [
+        {
+          "word": "stripes",
+          "translation": "franjas"
+        },
+        {
+          "word": "flag",
+          "translation": "bandera"
+        },
+        {
+          "word": "colonies",
+          "translation": "colonias"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-122",
+      "category": "Símbolos y días festivos",
+      "question_en": "Why does the flag have 50 stars?",
+      "answers_en": [
+        "Because there is one star for each state",
+        "Because each star represents a state",
+        "Because there are 50 states"
+      ],
+      "question_es": "¿Por qué la bandera tiene 50 estrellas?",
+      "answers_es": [
+        "Porque hay una estrella por cada estado",
+        "Porque cada estrella representa un estado",
+        "Porque hay 50 estados"
+      ],
+      "explanation_es": "Cada estrella corresponde a uno de los estados de la unión, de modo que el diseño cambia cuando ingresa uno nuevo. La última incorporación fue en 1959 y desde entonces el número no ha variado. Ese conteo refleja el principio de igualdad entre los estados como partes del país.",
+      "vocabulary": [
+        {
+          "word": "stars",
+          "translation": "estrellas"
+        },
+        {
+          "word": "state",
+          "translation": "estado"
+        },
+        {
+          "word": "represents",
+          "translation": "representa"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-123",
+      "category": "Símbolos y días festivos",
+      "question_en": "What is the name of the national anthem?",
+      "answers_en": [
+        "The Star-Spangled Banner"
+      ],
+      "question_es": "¿Cuál es el nombre del himno nacional?",
+      "answers_es": [
+        "The Star-Spangled Banner (La Bandera Tachonada de Estrellas)"
+      ],
+      "explanation_es": "El poema que le dio origen se escribió en 1814, durante un bombardeo, al comprobar que la bandera seguía ondeando al amanecer. Después se le puso música y se adoptó oficialmente como himno en 1931. Se canta antes de los eventos deportivos y de los actos oficiales.",
+      "vocabulary": [
+        {
+          "word": "anthem",
+          "translation": "himno"
+        },
+        {
+          "word": "national",
+          "translation": "nacional"
+        },
+        {
+          "word": "name",
+          "translation": "nombre"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-124",
+      "category": "Símbolos y días festivos",
+      "question_en": "The Nation's first motto was \"E Pluribus Unum.\" What does that mean?",
+      "answers_en": [
+        "Out of many, one",
+        "We all become one"
+      ],
+      "question_es": "El primer lema de la Nación fue \"E Pluribus Unum\". ¿Qué significa?",
+      "answers_es": [
+        "De muchos, uno",
+        "Todos nos convertimos en uno"
+      ],
+      "explanation_es": "Es una frase en latín que aparece en el sello nacional y resume la idea de que muchos estados y orígenes forman una sola nación. Se eligió en 1782, cuando el país acababa de unirse bajo un gobierno común. Durante años fue el lema oficial antes de que se añadiera otro.",
+      "vocabulary": [
+        {
+          "word": "motto",
+          "translation": "lema, divisa"
+        },
+        {
+          "word": "mean",
+          "translation": "significar, querer decir"
+        },
+        {
+          "word": "Nation's",
+          "translation": "de la nación"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-125",
+      "category": "Símbolos y días festivos",
+      "question_en": "What is Independence Day?",
+      "answers_en": [
+        "A holiday to celebrate U.S. independence from Britain",
+        "The country's birthday"
+      ],
+      "question_es": "¿Qué es el Día de la Independencia?",
+      "answers_es": [
+        "Un día festivo para celebrar la independencia de EE. UU. de Gran Bretaña",
+        "El cumpleaños del país"
+      ],
+      "explanation_es": "Se celebra cada 4 de julio para recordar la fecha en que se aprobó el texto que rompió los vínculos con la corona británica en 1776. Es la fiesta nacional por excelencia, con desfiles, actos públicos y fuegos artificiales. Muchos consideran esa fecha el nacimiento del país.",
+      "vocabulary": [
+        {
+          "word": "holiday",
+          "translation": "día festivo, feriado"
+        },
+        {
+          "word": "celebrate",
+          "translation": "celebrar"
+        },
+        {
+          "word": "birthday",
+          "translation": "cumpleaños"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-126",
+      "category": "Símbolos y días festivos",
+      "question_en": "Name three national U.S. holidays.",
+      "answers_en": [
+        "New Year's Day",
+        "Martin Luther King, Jr. Day",
+        "Presidents Day (Washington's Birthday)",
+        "Memorial Day",
+        "Juneteenth",
+        "Independence Day",
+        "Labor Day",
+        "Columbus Day",
+        "Veterans Day",
+        "Thanksgiving Day",
+        "Christmas Day"
+      ],
+      "question_es": "Nombre tres días festivos nacionales de EE. UU.",
+      "answers_es": [
+        "Día de Año Nuevo",
+        "Día de Martin Luther King, Jr.",
+        "Día de los Presidentes (Cumpleaños de Washington)",
+        "Día de los Caídos",
+        "Juneteenth",
+        "Día de la Independencia",
+        "Día del Trabajo",
+        "Día de la Raza",
+        "Día de los Veteranos",
+        "Día de Acción de Gracias",
+        "Día de Navidad"
+      ],
+      "explanation_es": "El calendario federal incluye fechas que recuerdan a fundadores, a quienes sirvieron en las fuerzas armadas y a la abolición de la esclavitud, además de festividades de agradecimiento y de fin de año. En esos días cierran oficinas públicas y bancos.",
+      "vocabulary": [
+        {
+          "word": "holidays",
+          "translation": "días festivos, feriados"
+        },
+        {
+          "word": "Veterans",
+          "translation": "veteranos"
+        },
+        {
+          "word": "Thanksgiving",
+          "translation": "Día de Acción de Gracias"
+        }
+      ],
+      "is_65_20": true,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-127",
+      "category": "Símbolos y días festivos",
+      "question_en": "What is Memorial Day?",
+      "answers_en": [
+        "A holiday to honor soldiers who died in military service"
+      ],
+      "question_es": "¿Qué es el Día de los Caídos?",
+      "answers_es": [
+        "Un día festivo para honrar a los soldados que murieron en servicio militar"
+      ],
+      "explanation_es": "Es un día de recuerdo dedicado a quienes perdieron la vida mientras servían en las fuerzas armadas. Nació después de la guerra civil, cuando las comunidades empezaron a adornar las tumbas de los caídos. Se celebra el último lunes de mayo con ceremonias y visitas a los cementerios.",
+      "vocabulary": [
+        {
+          "word": "Memorial",
+          "translation": "conmemorativo, de memoria"
+        },
+        {
+          "word": "honor",
+          "translation": "honrar, rendir homenaje"
+        },
+        {
+          "word": "died",
+          "translation": "murieron, fallecieron"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    },
+    {
+      "id": "civ-128",
+      "category": "Símbolos y días festivos",
+      "question_en": "What is Veterans Day?",
+      "answers_en": [
+        "A holiday to honor people in the U.S. military",
+        "A holiday to honor people who have served in the U.S. military"
+      ],
+      "question_es": "¿Qué es el Día de los Veteranos?",
+      "answers_es": [
+        "Un día festivo para honrar a las personas en las fuerzas armadas de EE. UU.",
+        "Un día festivo para honrar a las personas que han servido en las fuerzas armadas de EE. UU."
+      ],
+      "explanation_es": "Se dedica a reconocer a todas las personas que han servido en las fuerzas armadas, hayan combatido o no, y sigan vivas. La fecha recuerda el fin de la primera guerra mundial y se celebra cada 11 de noviembre. Se diferencia del día dedicado a los caídos en combate.",
+      "vocabulary": [
+        {
+          "word": "Veterans",
+          "translation": "veteranos"
+        },
+        {
+          "word": "served",
+          "translation": "sirvieron, prestaron servicio"
+        },
+        {
+          "word": "military",
+          "translation": "militar, fuerzas armadas"
+        }
+      ],
+      "is_65_20": false,
+      "stateSpecific": false,
+      "officialField": null
+    }
+  ]
+}
