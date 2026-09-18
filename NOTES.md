@@ -108,7 +108,8 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 ## 6. Roadmap y fases
 
 - [x] Fase 1–4: contenido, algoritmo, flashcards, datos oficiales.
-- [ ] **Fase 5** (en curso): quiz.tsx → progress.tsx → modo revisión.
+- [x] **Fase 5** (cerrada el 2026-09-18): quiz.tsx → progress.tsx → modo revisión
+      (`src/components/SessionReview.tsx`, compartido por flashcards y quiz).
 - [ ] Fase 6: entrevista con voz (grabación + AssemblyAI vía proxy Vercel + comparación difusa + feedback de pronunciación).
 - [ ] Fase 7: disclaimers, Play Billing, EAS Build, publicación gratis, luego paywall.
 - [ ] Fase 8: examen de lectura/escritura, práctica N-400, evaluación de Supabase, estructura 501(c)(3).
@@ -142,8 +143,15 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       (`export {};`). NO implementar hasta tener 3+ usos reales que justifiquen
       la abstracción. Ahora sería optimización prematura.
 
-- [ ] Modo Revisión (volver a preguntas anteriores en la sesión). Última pieza
-      de Fase 5 antes de Fase 6.
+- [x] ~~Modo Revisión (volver a preguntas anteriores en la sesión). Última pieza
+      de Fase 5 antes de Fase 6.~~ Ya implementado el 2026-09-18 en
+      `src/components/SessionReview.tsx`, integrado en flashcards.tsx y quiz.tsx.
+- [x] Deduplicar re-encoladas en la revisión de flashcards: implementado el 2026-09-18.
+      Se conserva la ÚLTIMA aparición por `question.id` (posición y resultado). La
+      deduplicación vive en flashcards.tsx con `useMemo`; SessionReview se mantiene
+      presentacional.
+- [x] Contador del quiz en fase review cambió de "X de N" a "N falladas de 20" por
+      consistencia con la vista unificada (decisión del 2026-09-18).
 - [ ] Eliminar scaffold muerto: `App.tsx` e `index.ts` (entry es
       `expo-router/entry`, no se usan). Borrar en Fase 7 antes de publicar
       para no confundir a futuros chats.

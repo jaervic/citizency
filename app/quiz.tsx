@@ -12,7 +12,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import SpeakerButton from '@/components/SpeakerButton';
+import SessionReview from '@/components/SessionReview';
+import type { SessionReviewFilter, SessionReviewItem } from '@/components/SessionReview';
 import questionsJson from '@/data/questions.json';
 import { useStore } from '@/store/useStore';
 import type { Category, Question, QuestionsFile } from '@/types';
@@ -228,7 +229,7 @@ export default function QuizScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
-  const [reviewIndex, setReviewIndex] = useState(0);
+  const [reviewFilter, setReviewFilter] = useState<SessionReviewFilter>('incorrect');
 
   useEffect(() => {
     const markHydrated = () => setHydrated(true);
@@ -248,6 +249,12 @@ export default function QuizScreen() {
 
   const correctCount = userAnswers.filter((answer) => answer.isCorrect).length;
   const incorrectAnswers = userAnswers.filter((answer) => !answer.isCorrect);
+  // Intentos en orden cronológico, con la opción elegida, para la vista de revisión.
+  const reviewItems: SessionReviewItem[] = userAnswers.map((answer) => ({
+    question: answer.item.question,
+    wasCorrect: answer.isCorrect,
+    userChoice: answer.item.options.find((option) => option.id === answer.selectedOptionId)?.en,
+  }));
   const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
   const passed = correctCount >= PASS_THRESHOLD;
 
@@ -301,13 +308,14 @@ export default function QuizScreen() {
     setCurrentIndex(0);
     setSelectedOptionId(null);
     setUserAnswers([]);
-    setReviewIndex(0);
+    setReviewFilter('incorrect');
     setPhase('quiz');
   }, []);
 
   /** Pasa al repaso de las preguntas falladas. */
   const handleReview = useCallback(() => {
-    setReviewIndex(0);
+    // Se entra al repaso con el filtro de falladas (el comportamiento de siempre).
+    setReviewFilter('incorrect');
     setPhase('review');
   }, []);
 
@@ -315,16 +323,6 @@ export default function QuizScreen() {
   const handleHome = useCallback(() => {
     router.push('/');
   }, [router]);
-
-  /** Repaso: pregunta anterior (se queda en la primera). */
-  const handlePreviousReview = useCallback(() => {
-    setReviewIndex((index) => Math.max(index - 1, 0));
-  }, []);
-
-  /** Repaso: pregunta siguiente (se queda en la última). */
-  const handleNextReview = useCallback(() => {
-    setReviewIndex((index) => Math.min(index + 1, Math.max(incorrectAnswers.length - 1, 0)));
-  }, [incorrectAnswers.length]);
 
   if (!hydrated) {
     return (
@@ -395,113 +393,28 @@ export default function QuizScreen() {
   }
 
   if (phase === 'review') {
-    const reviewAnswer = incorrectAnswers[reviewIndex];
-
-    // Sin falladas (o índice fuera de rango): de vuelta a los resultados.
-    if (reviewAnswer === undefined) {
-      return (
-        <SafeAreaView style={styles.centered}>
-          <Text style={styles.emptyTitle}>No hay preguntas falladas que repasar.</Text>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => setPhase('results')}
-            style={styles.primaryButton}
-          >
-            <Text style={styles.primaryButtonText}>Volver a resultados</Text>
-          </Pressable>
-        </SafeAreaView>
-      );
-    }
-
-    const isLastReview = reviewIndex >= incorrectAnswers.length - 1;
-
     return (
       <SafeAreaView style={styles.screen} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
           <Text style={styles.counter}>
-            Repaso · {reviewIndex + 1} de {incorrectAnswers.length}
+            Repaso · {incorrectAnswers.length} falladas de {totalQuestions}
           </Text>
           <Pressable accessibilityRole="button" onPress={handleHome} style={styles.exitButton}>
             <Text style={styles.exitText}>Salir</Text>
           </Pressable>
         </View>
 
-        <ScrollView contentContainerStyle={styles.content}>
-          <View style={styles.questionRow}>
-            <Text style={styles.questionEn}>{reviewAnswer.item.question.question_en}</Text>
-            <SpeakerButton text={reviewAnswer.item.question.question_en} size="large" />
-          </View>
-          <Text style={styles.questionEs}>{reviewAnswer.item.question.question_es}</Text>
+        <SessionReview items={reviewItems} filter={reviewFilter} onFilterChange={setReviewFilter} />
 
-          <View style={styles.optionsBlock}>
-            {reviewAnswer.item.options.map((option) => {
-              const wasSelected = option.id === reviewAnswer.selectedOptionId;
-
-              return (
-                <View
-                  key={option.id}
-                  style={[
-                    styles.optionCard,
-                    option.isCorrect && styles.optionCardCorrect,
-                    wasSelected && !option.isCorrect && styles.optionCardWrong,
-                  ]}
-                >
-                  <View style={styles.optionTextBlock}>
-                    <Text style={styles.optionEn}>{option.en}</Text>
-                    <Text style={styles.optionEs}>{option.es}</Text>
-                  </View>
-                  {option.isCorrect && (
-                    <>
-                      <Text style={styles.markCorrect}>✓</Text>
-                      <SpeakerButton text={option.en} size="small" />
-                    </>
-                  )}
-                  {wasSelected && !option.isCorrect && <Text style={styles.markWrong}>✗</Text>}
-                </View>
-              );
-            })}
-          </View>
-
-          {reviewAnswer.item.question.explanation_es !== '' && (
-            <Text style={styles.explanation}>{reviewAnswer.item.question.explanation_es}</Text>
-          )}
-
-          <View style={styles.navRow}>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityState={{ disabled: reviewIndex === 0 }}
-              disabled={reviewIndex === 0}
-              onPress={handlePreviousReview}
-              style={[styles.navButton, reviewIndex === 0 && styles.navButtonDisabled]}
-            >
-              <Text style={[styles.navButtonText, reviewIndex === 0 && styles.navButtonTextDisabled]}>
-                Anterior
-              </Text>
-            </Pressable>
-
-            <Pressable
-              accessibilityRole="button"
-              accessibilityState={{ disabled: isLastReview }}
-              disabled={isLastReview}
-              onPress={handleNextReview}
-              style={[styles.navButton, isLastReview && styles.navButtonDisabled]}
-            >
-              <Text style={[styles.navButtonText, isLastReview && styles.navButtonTextDisabled]}>
-                Siguiente
-              </Text>
-            </Pressable>
-          </View>
-
-          {isLastReview && (
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => setPhase('results')}
-              style={styles.secondaryButton}
-            >
-              <Text style={styles.secondaryButtonText}>Volver a resultados</Text>
-            </Pressable>
-          )}
-        </ScrollView>
+        <View style={styles.reviewFooter}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => setPhase('results')}
+            style={styles.secondaryButton}
+          >
+            <Text style={styles.secondaryButtonText}>Volver a resultados</Text>
+          </Pressable>
+        </View>
       </SafeAreaView>
     );
   }
@@ -609,26 +522,12 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     gap: 14,
   },
-  // En el repaso el enunciado va en fila con su botón de pronunciación.
-  questionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginTop: 8,
-  },
   questionEn: {
     fontSize: 21,
     fontWeight: '600',
     color: '#1a3a6b',
     textAlign: 'center',
-    // Puede encogerse si el enunciado es largo: el botón nunca se aplasta.
-    flexShrink: 1,
-  },
-  questionEs: {
-    fontSize: 16,
-    color: '#666666',
-    textAlign: 'center',
+    marginTop: 8,
   },
   optionsBlock: {
     gap: 10,
@@ -652,14 +551,6 @@ const styles = StyleSheet.create({
     borderColor: '#1a3a6b',
     backgroundColor: '#f0f4f9',
   },
-  optionCardCorrect: {
-    borderColor: '#2e7d32',
-    backgroundColor: '#eef7ee',
-  },
-  optionCardWrong: {
-    borderColor: '#c62828',
-    backgroundColor: '#fdeeee',
-  },
   optionTextBlock: {
     flex: 1,
     gap: 2,
@@ -672,16 +563,6 @@ const styles = StyleSheet.create({
   optionEs: {
     fontSize: 14,
     color: '#666666',
-  },
-  markCorrect: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#2e7d32',
-  },
-  markWrong: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#c62828',
   },
   nextButton: {
     backgroundColor: '#1a3a6b',
@@ -753,37 +634,6 @@ const styles = StyleSheet.create({
     color: '#888888',
     textAlign: 'center',
   },
-  explanation: {
-    backgroundColor: '#f0f4f9',
-    padding: 12,
-    borderRadius: 8,
-    fontSize: 14,
-    color: '#555555',
-    lineHeight: 20,
-  },
-  navRow: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  navButton: {
-    flex: 1,
-    paddingVertical: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#1a3a6b',
-    alignItems: 'center',
-  },
-  navButtonDisabled: {
-    borderColor: '#d5dbe5',
-  },
-  navButtonText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#1a3a6b',
-  },
-  navButtonTextDisabled: {
-    color: '#b0b8c4',
-  },
   primaryButton: {
     alignSelf: 'stretch',
     backgroundColor: '#1a3a6b',
@@ -808,6 +658,12 @@ const styles = StyleSheet.create({
     color: '#1a3a6b',
     fontSize: 17,
     fontWeight: '700',
+  },
+  // Pie fijo de la fase de repaso: mantiene "Volver a resultados" siempre a la vista.
+  reviewFooter: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 20,
   },
   emptyTitle: {
     fontSize: 20,

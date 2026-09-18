@@ -15,10 +15,12 @@
 // Actualízalo manualmente cuando cambie el gobierno (elecciones, renuncias, etc.).
 import { useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import SessionReview from '@/components/SessionReview';
+import type { SessionReviewFilter, SessionReviewItem } from '@/components/SessionReview';
 import SpeakerButton from '@/components/SpeakerButton';
 import officialDataJson from '@/data/officialData.json';
 import questionsJson from '@/data/questions.json';
@@ -137,6 +139,12 @@ export default function FlashcardsScreen() {
   const [allMastered, setAllMastered] = useState(false);
   // Veces que cada pregunta se ha re-encolado por fallarla (clave = id de pregunta).
   const [requeueCount, setRequeueCount] = useState<Record<string, number>>({});
+  // Vista de revisión post-sesión: se abre desde la pantalla de fin y lista todos los intentos.
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewFilter, setReviewFilter] = useState<SessionReviewFilter>('all');
+  // Intentos de la sesión en orden cronológico. Una pregunta re-encolada se guarda otra vez: la
+  // revisión refleja lo que pasó realmente en la sesión (fallo y luego acierto, por ejemplo).
+  const [sessionReviewItems, setSessionReviewItems] = useState<SessionReviewItem[]>([]);
 
   /** Cola de la sesión normal: 20 preguntas por prioridad, con el progreso ya hidratado. */
   const buildSessionQueue = useCallback(
@@ -191,6 +199,9 @@ export default function FlashcardsScreen() {
     setAllMastered(false);
     // "Estudiar otra vez" (y el resto de modos) empiezan con el contador de re-encolados limpio.
     setRequeueCount({});
+    setReviewOpen(false);
+    setReviewFilter('all');
+    setSessionReviewItems([]);
   }, []);
 
   /** Sesión normal: 20 preguntas por prioridad, con el progreso actual del store. */
@@ -235,6 +246,9 @@ export default function FlashcardsScreen() {
       const questionId = currentQuestion.id;
       useStore.getState().recordAnswer(questionId, wasCorrect);
 
+      // Se guarda el intento para la revisión post-sesión (orden cronológico).
+      setSessionReviewItems((items) => [...items, { question: currentQuestion, wasCorrect }]);
+
       // El resultado solo cuenta en la FASE A: acertar una re-encolada en la fase de refuerzo
       // no debe maquillar el porcentaje de la sesión original.
       if (currentIndex < originalSessionSize) {
@@ -270,6 +284,22 @@ export default function FlashcardsScreen() {
     [currentIndex, currentQuestion, originalSessionSize, queue.length, requeueCount],
   );
 
+  /**
+   * Intentos que se listan en la revisión. Una pregunta fallada se guarda varias veces en
+   * `sessionReviewItems` (el fallo y cada re-encolada), así que aquí se conserva SOLO su
+   * ÚLTIMA aparición, con su posición y su resultado: la revisión muestra cómo se cerró la
+   * sesión y no el recorrido completo. El estado sigue siendo el registro cronológico íntegro
+   * y `SessionReview` no sabe nada de esto (sigue siendo presentacional).
+   */
+  const reviewItems = useMemo(() => {
+    const lastIndexById = new Map<string, number>();
+    sessionReviewItems.forEach((item, index) => lastIndexById.set(item.question.id, index));
+
+    return sessionReviewItems.filter(
+      (item, index) => lastIndexById.get(item.question.id) === index,
+    );
+  }, [sessionReviewItems]);
+
   // Mientras el progreso persistido no esté hidratado no se puede decidir qué estudiar.
   if (!hydrated) {
     return (
@@ -302,6 +332,32 @@ export default function FlashcardsScreen() {
     );
   }
 
+  // Revisión post-sesión: todos los intentos de la sesión, con filtro "Todas" / "Solo falladas".
+  if (reviewOpen) {
+    return (
+      <SafeAreaView style={styles.screen} edges={['top', 'left', 'right']}>
+        <View style={styles.topBar}>
+          {/* Cuenta los items listados (únicos): cuadra con la lista deduplicada de arriba. */}
+          <Text style={styles.counter}>Revisión · {reviewItems.length} respuestas</Text>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push('/')}
+            style={styles.exitButton}
+          >
+            <Text style={styles.exitText}>Ir al inicio</Text>
+          </Pressable>
+        </View>
+
+        <SessionReview
+          items={reviewItems}
+          filter={reviewFilter}
+          onFilterChange={setReviewFilter}
+          showFilter
+        />
+      </SafeAreaView>
+    );
+  }
+
   if (sessionFinished || currentQuestion === undefined) {
     // El porcentaje se calcula SOLO con la FASE A: si se acertaron 15 de las 20 originales es
     // 75%, sin importar cuántas preguntas se re-encolaron ni cómo se resolvieran después.
@@ -329,6 +385,16 @@ export default function FlashcardsScreen() {
           style={styles.primaryButton}
         >
           <Text style={styles.primaryButtonText}>Volver al inicio</Text>
+        </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => {
+            setReviewFilter('all');
+            setReviewOpen(true);
+          }}
+          style={styles.secondaryButton}
+        >
+          <Text style={styles.secondaryButtonText}>Revisar todas las respuestas</Text>
         </Pressable>
         <Pressable accessibilityRole="button" onPress={startSession} style={styles.secondaryButton}>
           <Text style={styles.secondaryButtonText}>Estudiar otra vez</Text>
