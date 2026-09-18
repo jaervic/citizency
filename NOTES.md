@@ -155,9 +155,12 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 - [ ] Eliminar scaffold muerto: `App.tsx` e `index.ts` (entry es
       `expo-router/entry`, no se usan). Borrar en Fase 7 antes de publicar
       para no confundir a futuros chats.
-- [ ] Unificar paleta: `_layout.tsx` e `index.tsx` usan `#0B3D91`/`#F5F7FA`/`#334155`,
-      el resto usa `#1a3a6b`/`#f0f4f9`/`#666`. Migrar a una sola paleta
-      (probablemente la de `#1a3a6b`) o crear `src/theme.ts` con las constantes.
+- [x] Unificar paleta (2026-09-18): creado `src/theme.ts` con la paleta única
+      (azul principal `#1a3a6b`). Migrados `_layout.tsx` e `index.tsx`. El resto
+      de las pantallas (`flashcards.tsx`, `quiz.tsx`, `progress.tsx`,
+      `SpeakerButton.tsx`, `ProgressBar.tsx`, `SessionReview.tsx`) tienen
+      colores hardcoded equivalentes; se migrarán a `colors.*` cuando se toquen
+      por otro motivo, no como tarea aparte.
       
 ---
 

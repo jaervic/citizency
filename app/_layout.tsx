@@ -6,16 +6,18 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { colors } from '@/theme';
+
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: '#0B3D91' },
-          headerTintColor: '#FFFFFF',
+          headerStyle: { backgroundColor: colors.primary },
+          headerTintColor: colors.onPrimary,
           headerTitleStyle: { fontWeight: '600' },
-          contentStyle: { backgroundColor: '#F5F7FA' },
+          contentStyle: { backgroundColor: colors.background },
         }}
       >
         <Stack.Screen name="index" options={{ title: 'USCIS Ciudadanía' }} />

@@ -5,6 +5,7 @@ import { Link } from 'expo-router';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useStore } from '@/store/useStore';
+import { colors } from '@/theme';
 
 type MenuItem = {
   href: '/flashcards' | '/quiz' | '/progress';
@@ -68,30 +69,32 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: '#F7F9FC' },
+  screen: { flex: 1, backgroundColor: colors.background },
   content: { padding: 20, gap: 14 },
-  subtitle: { fontSize: 14, color: '#666', marginBottom: 20 },
+  subtitle: { fontSize: 14, color: colors.textSecondary, marginBottom: 20 },
   statsCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: '#D6E0EE',
+    borderColor: colors.border,
     borderRadius: 14,
     padding: 16,
     gap: 6,
     marginBottom: 4,
   },
-  stat: { fontSize: 18, fontWeight: '600', color: '#334155' },
+  stat: { fontSize: 18, fontWeight: '600', color: colors.textPrimary },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: '#D6E0EE',
+    borderColor: colors.border,
     borderRadius: 14,
     padding: 18,
     gap: 4,
   },
-  cardPressed: { backgroundColor: '#EEF4FF', borderColor: '#9BB7E8' },
-  cardTitle: { fontSize: 18, fontWeight: '700', color: '#0B3D91' },
-  cardSubtitle: { fontSize: 14, color: '#64748B' },
+  // `borderColor` queda hardcoded: no hay token para un borde azul medio y no aporta
+  // un valor reutilizable (solo lo usa este estado pressed).
+  cardPressed: { backgroundColor: colors.pressed, borderColor: '#9BB7E8' },
+  cardTitle: { fontSize: 18, fontWeight: '700', color: colors.primary },
+  cardSubtitle: { fontSize: 14, color: colors.textSecondary },
   resetButton: { alignSelf: 'center', marginTop: 8, paddingVertical: 8, paddingHorizontal: 14 },
-  resetText: { fontSize: 14, fontWeight: '600', color: '#B02A37' },
+  resetText: { fontSize: 14, fontWeight: '600', color: colors.error },
 });
