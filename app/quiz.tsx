@@ -9,7 +9,7 @@
 // se registra con `recordAnswer` para que cuente en el progreso y en el repaso espaciado.
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SessionReview from '@/components/SessionReview';
@@ -413,6 +413,17 @@ export default function QuizScreen() {
     router.push('/');
   }, [router]);
 
+  /**
+   * Confirma antes de abandonar el examen EN CURSO. En 'results' y 'review' el examen ya terminó
+   * (el botón "Salir" del repaso sigue navegando directo, sin confirmación).
+   */
+  const handleExitExam = useCallback(() => {
+    Alert.alert('Salir del examen', '¿Estás seguro? Perderás el progreso de este examen.', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Salir', style: 'destructive', onPress: () => router.push('/') },
+    ]);
+  }, [router]);
+
   if (!hydrated) {
     return (
       <SafeAreaView style={styles.centered}>
@@ -427,7 +438,7 @@ export default function QuizScreen() {
       <SafeAreaView style={styles.centered}>
         <Text style={styles.emptyTitle}>No hay preguntas disponibles para el examen.</Text>
         <Pressable accessibilityRole="button" onPress={handleHome} style={styles.primaryButton}>
-          <Text style={styles.primaryButtonText}>Volver al inicio</Text>
+          <Text style={styles.primaryButtonText}>Ir al inicio</Text>
         </Pressable>
       </SafeAreaView>
     );
@@ -460,7 +471,7 @@ export default function QuizScreen() {
           {incorrectAnswers.length > 0 && (
             <Pressable accessibilityRole="button" onPress={handleReview} style={styles.primaryButton}>
               <Text style={styles.primaryButtonText}>
-                Revisar falladas ({incorrectAnswers.length})
+                Revisar respuestas ({incorrectAnswers.length} falladas)
               </Text>
             </Pressable>
           )}
@@ -474,7 +485,7 @@ export default function QuizScreen() {
           </Pressable>
 
           <Pressable accessibilityRole="button" onPress={handleHome} style={styles.secondaryButton}>
-            <Text style={styles.secondaryButtonText}>Volver al inicio</Text>
+            <Text style={styles.secondaryButtonText}>Ir al inicio</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>
@@ -514,7 +525,7 @@ export default function QuizScreen() {
         <Text style={styles.counter}>
           Pregunta {currentIndex + 1} de {totalQuestions}
         </Text>
-        <Pressable accessibilityRole="button" onPress={handleHome} style={styles.exitButton}>
+        <Pressable accessibilityRole="button" onPress={handleExitExam} style={styles.exitButton}>
           <Text style={styles.exitText}>Salir</Text>
         </Pressable>
       </View>

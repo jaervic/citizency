@@ -169,6 +169,28 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       `SpeakerButton.tsx`, `ProgressBar.tsx`, `SessionReview.tsx`) tienen
       colores hardcoded equivalentes; se migrarán a `colors.*` cuando se toquen
       por otro motivo, no como tarea aparte.
+- [x] Microcopy unificado (2026-09-18): vocabulario único en toda la app
+      ('Ir al inicio', 'Salir', 'Repetir', 'Revisar respuestas', 'Empezar',
+      'Repaso intensivo', 'Repaso completo'). Confirmación al salir del
+      examen en curso (fase 'quiz' de quiz.tsx) y de la sesión de flashcards
+      en curso. 'Repetir' queda reservado para reiniciar una sesión EN CURSO
+      y hoy ningún botón lo usa (el quiz dice "Nuevo examen" a propósito:
+      son preguntas nuevas, no las mismas repetidas).
+
+- [ ] Modo Práctica vs Modo Examen en quiz.tsx (Fase 6): ofrecer ambos
+      modos desde la pantalla inicial del quiz. Examen = comportamiento
+      actual (sin feedback hasta el final, simula el examen real).
+      Práctica = feedback inmediato por pregunta (selección → botón
+      'Comprobar' → opción pintada verde/roja + respuesta correcta si
+      falló → botón 'Siguiente'). Razón: la app necesita un simulador de
+      examen (para aprobar) y un modo de refuerzo (para aprender); son
+      productos distintos y no conviene mezclarlos.
+
+- [ ] Componente reutilizable AnswerFeedback (Fase 6): patrón visual
+      verde/rojo + mensaje contextual + delay configurable (default
+      ~800ms, no auto-avanzar: el usuario decide cuándo pasa a la
+      siguiente). Lo usarán el Modo Práctica del quiz y la entrevista con
+      voz. Definir una sola vez antes de implementar cualquiera de los dos.
       
 ---
 

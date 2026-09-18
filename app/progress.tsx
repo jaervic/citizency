@@ -184,9 +184,9 @@ export default function ProgressScreen() {
           );
         })}
 
-        {/* 3. Volver al inicio */}
+        {/* 3. Ir al inicio */}
         <Pressable accessibilityRole="button" onPress={handleHome} style={styles.primaryButton}>
-          <Text style={styles.primaryButtonText}>Volver al inicio</Text>
+          <Text style={styles.primaryButtonText}>Ir al inicio</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

@@ -17,7 +17,7 @@
 import { useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SessionReview from '@/components/SessionReview';
@@ -198,7 +198,7 @@ export default function FlashcardsScreen() {
     setOriginalSessionSize(nextQueue.length);
     setSessionFinished(false);
     setAllMastered(false);
-    // "Estudiar otra vez" (y el resto de modos) empiezan con el contador de re-encolados limpio.
+    // "Empezar" (y el resto de modos) empiezan con el contador de re-encolados limpio.
     setRequeueCount({});
     setReviewOpen(false);
     setReviewFilter('all');
@@ -234,6 +234,17 @@ export default function FlashcardsScreen() {
   const startFullReview = useCallback(() => {
     resetSessionState([...QUESTIONS]);
   }, [resetSessionState]);
+
+  /**
+   * Confirma antes de abandonar la sesión EN CURSO. Las pantallas de fin de sesión y de "todo
+   * dominado" salen al inicio sin preguntar: allí no hay progreso que perder.
+   */
+  const handleExitSession = useCallback(() => {
+    Alert.alert('Salir de la sesión', '¿Estás seguro? Perderás el progreso de esta sesión.', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Salir', style: 'destructive', onPress: () => router.push('/') },
+    ]);
+  }, [router]);
 
   const currentQuestion: Question | undefined = queue[currentIndex];
 
@@ -319,14 +330,14 @@ export default function FlashcardsScreen() {
           onPress={() => router.push('/')}
           style={styles.primaryButton}
         >
-          <Text style={styles.primaryButtonText}>Volver al inicio</Text>
+          <Text style={styles.primaryButtonText}>Ir al inicio</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
           onPress={startFullReview}
           style={styles.secondaryButton}
         >
-          <Text style={styles.secondaryButtonText}>Repasar de todas formas</Text>
+          <Text style={styles.secondaryButtonText}>Repaso completo</Text>
         </Pressable>
       </SafeAreaView>
     );
@@ -384,7 +395,7 @@ export default function FlashcardsScreen() {
           onPress={() => router.push('/')}
           style={styles.primaryButton}
         >
-          <Text style={styles.primaryButtonText}>Volver al inicio</Text>
+          <Text style={styles.primaryButtonText}>Ir al inicio</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -394,10 +405,10 @@ export default function FlashcardsScreen() {
           }}
           style={styles.secondaryButton}
         >
-          <Text style={styles.secondaryButtonText}>Revisar todas las respuestas</Text>
+          <Text style={styles.secondaryButtonText}>Revisar respuestas</Text>
         </Pressable>
         <Pressable accessibilityRole="button" onPress={startSession} style={styles.secondaryButton}>
-          <Text style={styles.secondaryButtonText}>Estudiar otra vez</Text>
+          <Text style={styles.secondaryButtonText}>Empezar</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -461,7 +472,7 @@ export default function FlashcardsScreen() {
         </Text>
         <Pressable
           accessibilityRole="button"
-          onPress={() => router.push('/')}
+          onPress={handleExitSession}
           style={styles.exitButton}
         >
           <Text style={styles.exitText}>Salir</Text>
