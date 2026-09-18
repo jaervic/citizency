@@ -1,6 +1,6 @@
 // app/index.tsx
-// Propósito: pantalla de inicio. Muestra la racha y el XP del usuario, los tres
-// accesos principales (estudiar, quiz y progreso) y el reinicio de progreso.
+// Propósito: pantalla de inicio. Muestra la racha y el XP del usuario, los cuatro
+// accesos principales (estudiar, quiz, entrevista y progreso) y el reinicio de progreso.
 import { Link } from 'expo-router';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
@@ -8,7 +8,7 @@ import { useStore } from '@/store/useStore';
 import { colors } from '@/theme';
 
 type MenuItem = {
-  href: '/flashcards' | '/quiz' | '/progress';
+  href: '/flashcards' | '/quiz' | '/interview' | '/progress';
   title: string;
   subtitle: string;
 };
@@ -20,6 +20,11 @@ const MENU: MenuItem[] = [
     subtitle: 'Recuerdo activo, pregunta a pregunta',
   },
   { href: '/quiz', title: '📝 Hacer un Quiz', subtitle: 'Examen de práctica de 20 preguntas' },
+  {
+    href: '/interview',
+    title: '🎤 Simulacro de entrevista',
+    subtitle: 'Practica la respuesta hablada',
+  },
   {
     href: '/progress',
     title: '📊 Ver mi progreso',

@@ -186,11 +186,17 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       examen (para aprobar) y un modo de refuerzo (para aprender); son
       productos distintos y no conviene mezclarlos.
 
-- [ ] Componente reutilizable AnswerFeedback (Fase 6): patrón visual
-      verde/rojo + mensaje contextual + delay configurable (default
-      ~800ms, no auto-avanzar: el usuario decide cuándo pasa a la
-      siguiente). Lo usarán el Modo Práctica del quiz y la entrevista con
-      voz. Definir una sola vez antes de implementar cualquiera de los dos.
+- [x] Entrevista mockeada (2026-09-18): `app/interview.tsx` con 5
+      preguntas aleatorias (excluye las stateSpecific), TextInput para
+      escribir lo que se 'diría', y `fuzzyMatch` para validar. Reutiliza
+      `SessionReview` y `SpeakerButton`; introduce `AnswerFeedback`.
+      Sin micrófono ni AssemblyAI todavía.
+
+- [x] Componente reutilizable AnswerFeedback (2026-09-18):
+      `src/components/AnswerFeedback.tsx`. Props: state (correct/
+      incorrect), score, correctAnswer, userAnswer. Sin auto-avance: el
+      usuario decide cuándo avanzar con el botón 'Siguiente'. Reutilizable
+      por el Modo Práctica del quiz, que sigue pendiente.
 
 - [x] Alineación TTS/matcher (2026-09-18): `normalize` (fuzzyMatch.ts) borra el
       contenido entre paréntesis y corchetes como PRIMER paso, igual que

@@ -23,6 +23,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ title: 'USCIS Ciudadanía' }} />
         <Stack.Screen name="flashcards" options={{ title: 'Estudiar' }} />
         <Stack.Screen name="quiz" options={{ title: 'Examen de práctica' }} />
+        <Stack.Screen name="interview" options={{ title: 'Entrevista' }} />
         <Stack.Screen name="progress" options={{ title: 'Progreso' }} />
       </Stack>
     </SafeAreaProvider>
