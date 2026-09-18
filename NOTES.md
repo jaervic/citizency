@@ -191,6 +191,20 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       ~800ms, no auto-avanzar: el usuario decide cuándo pasa a la
       siguiente). Lo usarán el Modo Práctica del quiz y la entrevista con
       voz. Definir una sola vez antes de implementar cualquiera de los dos.
+
+- [x] Alineación TTS/matcher (2026-09-18): `normalize` (fuzzyMatch.ts) borra el
+      contenido entre paréntesis y corchetes como PRIMER paso, igual que
+      `sanitizeForSpeech` (SpeakerButton) antes del TTS. Sin esto, 25 de las 30
+      respuestas con paréntesis no matcheaban justo la versión que la propia app
+      pronuncia ("Freed the slaves" contra "Freed the slaves (Emancipation
+      Proclamation)" daba 0.381). El cambio va del lado del matcher, no del TTS.
+
+- [ ] Años >100 en answers_en (Fase 6, al montar la pantalla de
+      entrevista): 7 respuestas tienen números >100 (435, 1776, 1812, 1870,
+      1920, 1929, 1956) que hoy quedan en dígitos. Decir 'seventeen
+      seventy six' contra '1776' no matchea. Evaluar si duele en pruebas
+      reales antes de implementar una regla de lectura de años (no es
+      urgente: el usuario también puede decir '1776' en dígitos).
       
 ---
 
