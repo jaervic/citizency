@@ -122,7 +122,11 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 
 - [ ] Precio final del desbloqueo premium.
 - [ ] ¿El simulacro de entrevista tiene límite de intentos en la versión gratis? (tentativo: 1 intento gratis, ilimitado en premium).
-- [ ] ¿Agregar modo oscuro? (bajo esfuerzo, alto impacto en reviews).
+- [ ] Modo oscuro en Fase 7 antes de publicar (subido desde
+      'evaluar'): el theme.ts ya lo hace fácil. La primera versión
+      en Play Store pesa mucho en reviews y el modo oscuro es una de
+      las peticiones más comunes. No es un 'nice to have' diferible:
+      es parte del lanzamiento.
 - [ ] ¿Idioma inglés para la UI además de español? (para usuarios que quieren practicar inmersión).
 - [ ] Política de reembolsos (Play Store la maneja, pero documentar el flujo).
 - [x] Racha (2026-09-18): `computeNextStreak` extraída a `src/utils/streak.ts`
@@ -197,6 +201,12 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       incorrect), score, correctAnswer, userAnswer. Sin auto-avance: el
       usuario decide cuándo avanzar con el botón 'Siguiente'. Reutilizable
       por el Modo Práctica del quiz, que sigue pendiente.
+
+- [x] Hook `useSpeechRecognition` (2026-09-18): `src/hooks/useSpeechRecognition.ts`
+      envuelve `expo-speech-recognition` con 4 estados (idle/listening/processing/
+      error), transcripción en vivo y final, disponibilidad del motor, permisos y
+      errores del motor traducidos al español. Sin auto-arranque y sin UI: la
+      pantalla de entrevista lo consumirá en el sub-bloque 3.3.
 
 - [x] Alineación TTS/matcher (2026-09-18): `normalize` (fuzzyMatch.ts) borra el
       contenido entre paréntesis y corchetes como PRIMER paso, igual que
