@@ -144,6 +144,13 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 
 - [ ] Modo Revisión (volver a preguntas anteriores en la sesión). Última pieza
       de Fase 5 antes de Fase 6.
+- [ ] Eliminar scaffold muerto: `App.tsx` e `index.ts` (entry es
+      `expo-router/entry`, no se usan). Borrar en Fase 7 antes de publicar
+      para no confundir a futuros chats.
+- [ ] Unificar paleta: `_layout.tsx` e `index.tsx` usan `#0B3D91`/`#F5F7FA`/`#334155`,
+      el resto usa `#1a3a6b`/`#f0f4f9`/`#666`. Migrar a una sola paleta
+      (probablemente la de `#1a3a6b`) o crear `src/theme.ts` con las constantes.
+      
 ---
 
 ## 8. Referencias
@@ -162,7 +169,7 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
   Es recordatorio personal, no tarea.
 - **Tests en `.expo/selftest/`**: `requeue-check.js`, `answers-truncation-check.js`,
   `phase-official-check.js`, `quiz-build-check.js`. Gitignoreados pero útiles.
-  
+
 ## 10. Traspaso entre chats (protocolo)
 
 Cada vez que se migra a un chat nuevo, el traspaso debe incluir:
