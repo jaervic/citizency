@@ -11,6 +11,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "app.ciudadania.estudio",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -23,7 +24,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Permite a esta app usar el micrófono para el simulacro de entrevista.",
+          "speechRecognitionPermission": "Permite a esta app transcribir tu respuesta hablada para el simulacro de entrevista."
+        }
+      ]
     ]
   }
 }
