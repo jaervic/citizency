@@ -134,6 +134,16 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 - [ ] Pantalla "Mi estado" (Grupo B de las 8 dinámicas): permitir al usuario elegir
       su estado de residencia para resolver senadores, representante, gobernador y capital.
       Preguntas afectadas: gov-023, gov-029, gov-061, gov-062. Fase 5 o 6.
+      - [ ] Refactor post-Fase 5: migrar flashcards.tsx y quiz.tsx a `ProgressBar`
+      reutilizable. Ya se hizo en progress.tsx el 2026-09-18. Mismo patrón:
+      import + `<ProgressBar progress={...} />` + borrar `progressTrack`/`progressFill`.
+
+- [ ] Implementar `Card.tsx` y `Button.tsx`. Siguen como placeholders vacíos
+      (`export {};`). NO implementar hasta tener 3+ usos reales que justifiquen
+      la abstracción. Ahora sería optimización prematura.
+
+- [ ] Modo Revisión (volver a preguntas anteriores en la sesión). Última pieza
+      de Fase 5 antes de Fase 6.
 ---
 
 ## 8. Referencias
@@ -152,3 +162,22 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
   Es recordatorio personal, no tarea.
 - **Tests en `.expo/selftest/`**: `requeue-check.js`, `answers-truncation-check.js`,
   `phase-official-check.js`, `quiz-build-check.js`. Gitignoreados pero útiles.
+  
+## 10. Traspaso entre chats (protocolo)
+
+Cada vez que se migra a un chat nuevo, el traspaso debe incluir:
+1. `NOTES.md` completo (este archivo).
+2. Resumen de la última sesión: qué se cerró, qué quedó pendiente.
+3. Estado actual de Fase (qué fases están completas, en qué punto va la actual).
+4. Pendientes inmediatos (1-3 tareas concretas).
+
+Decisiones que NO deben perderse (porque no se leen del código):
+- Los 4 niveles en progress.tsx (new/learning/reviewing/mastered) son
+  intencionales. NO simplificar a 3.
+- `USE_SIBLING_ANSWERS_AS_DISTRACTORS = false` en quiz.tsx es decisión
+  pedagógica, no bug. No cambiar a `true`.
+- El criterio de aceptar/rechazar propuestas de Cline: aceptar lo que
+  prepare para algo que ya sabemos que necesitaremos; rechazar lo que
+  complique sin beneficio claro.
+- Los self-checks en `.expo/selftest/` están gitignoreados. Si se pierden,
+  se rehacen pidiéndole a Cline que reconstruya los escenarios.
