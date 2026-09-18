@@ -3,13 +3,14 @@
 // (XP, racha, último día de estudio y estadísticas por pregunta) y lo persiste
 // automáticamente en AsyncStorage bajo la clave 'userProgress'.
 // El store no implementa reglas de negocio: delega en las funciones puras de
-// `src/utils/spacedRepetition.ts`.
+// `src/utils/spacedRepetition.ts` y `src/utils/streak.ts`.
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import type { UserProgress } from '@/types';
 import { recordAnswer as applyRecordAnswer } from '@/utils/spacedRepetition';
+import { computeNextStreak, getLocalDateString } from '@/utils/streak';
 
 /** Clave con la que se guarda el progreso en AsyncStorage. */
 const PERSIST_KEY = 'userProgress';
@@ -26,28 +27,16 @@ function createInitialProgress(): UserProgress {
 }
 
 /**
- * Fecha ISO (YYYY-MM-DD) del día LOCAL de un instante. Se usa el día local y no
- * el UTC para que la racha cambie cuando le cambia el día al usuario.
+ * Estado global: los datos de `UserProgress` más las acciones del store.
  */
-function toLocalIsoDate(date: Date): string {
-  const year = String(date.getFullYear());
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-/** Estado global: los datos de `UserProgress` más las acciones del store. */
 export type StoreState = UserProgress & {
   /**
    * Registra el resultado de un intento: actualiza `answeredQuestions` con la
-   * función pura `recordAnswer` de `spacedRepetition` y suma la XP del intento.
+   * función pura `recordAnswer` de `spacedRepetition`, suma la XP del intento y
+   * actualiza la racha del día con `computeNextStreak` (idempotente dentro del día,
+   * con reset automático si el último estudio fue anterior a ayer).
    */
   recordAnswer: (questionId: string, wasCorrect: boolean) => void;
-  /**
-   * Suma un día a la racha si hoy todavía no se había estudiado. Si
-   * `lastStudyDate` ya es hoy, no hace nada.
-   */
-  incrementStreak: () => void;
   /** Suma XP al total acumulado. */
   addXp: (amount: number) => void;
   /** Reinicia todo el progreso del usuario a sus valores por defecto. */
@@ -59,15 +48,6 @@ export const useStore = create<StoreState>()(
     (set, get) => ({
       ...createInitialProgress(),
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
-      incrementStreak: () => {
-        const today = toLocalIsoDate(new Date());
-
-        if (get().lastStudyDate === today) {
-          return;
-        }
-
-        set((state) => ({ streak: state.streak + 1, lastStudyDate: today }));
-      },
       recordAnswer: (questionId, wasCorrect) => {
         const { xp, streak, lastStudyDate, answeredQuestions } = get();
 
@@ -77,9 +57,17 @@ export const useStore = create<StoreState>()(
           wasCorrect,
         );
 
+        // Cualquier respuesta registrada (flashcards, quiz o pantallas futuras) marca hoy
+        // como día estudiado: la racha sube una sola vez al día y se reinicia si el último
+        // estudio fue anterior a ayer.
+        const today = getLocalDateString();
+        const nextStreak = computeNextStreak(lastStudyDate, today, streak);
+
         set({
           answeredQuestions: updated.answeredQuestions,
           xp: xp + (wasCorrect ? XP_PER_CORRECT : XP_PER_INCORRECT),
+          streak: nextStreak.streak,
+          lastStudyDate: nextStreak.lastStudyDate,
         });
       },
       reset: () => set(createInitialProgress()),

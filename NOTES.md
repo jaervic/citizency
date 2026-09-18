@@ -125,8 +125,11 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 - [ ] ¿Agregar modo oscuro? (bajo esfuerzo, alto impacto en reviews).
 - [ ] ¿Idioma inglés para la UI además de español? (para usuarios que quieren practicar inmersión).
 - [ ] Política de reembolsos (Play Store la maneja, pero documentar el flujo).
-- [ ] Racha: migrar a `markStudiedToday()` en useStore con lógica diaria idempotente.
-      Hoy solo flashcards la incrementa; quiz y futuras pantallas también deben hacerlo.
+- [x] Racha (2026-09-18): `computeNextStreak` extraída a `src/utils/streak.ts`
+      (lógica pura). El store la consume desde `recordAnswer`: cualquier
+      respuesta registrada actualiza la racha, en cualquier pantalla.
+      Reset automático si hay gap > 1 día. `incrementStreak` eliminada del
+      API del store; no quedan llamadas explícitas desde pantallas.
 
 - [ ] Banco de distractores curados (`src/data/quizDistractors.json`): eliminaría el
       riesgo residual de que una respuesta válida de OTRA pregunta aparezca como distractor.

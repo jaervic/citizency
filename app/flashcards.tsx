@@ -2,10 +2,11 @@
 // Propósito: pantalla principal de estudio con recuerdo activo. Espera a que Zustand
 // hidrate el progreso persistido (AsyncStorage) y entonces construye la cola de 20
 // preguntas con `buildStudyQueue`. Muestra solo el enunciado en inglés y, al pedirlo,
-// revela respuestas, explicación y vocabulario antes de autocorregirse. Al terminar
-// llama a `incrementStreak()` una única vez y re-encola las preguntas falladas (hasta
-// MAX_REQUEUES veces) para reforzarlas en la misma sesión. Incluye además un "Repaso
-// intensivo" (`excludeMastered: true`) para estudiar solo lo que queda por dominar. Todos
+// revela respuestas, explicación y vocabulario antes de autocorregirse. Cada respuesta pasa
+// por el store (`recordAnswer`: XP + racha del día, idempotente dentro del día) y las
+// preguntas falladas se re-encolan (hasta MAX_REQUEUES veces) para reforzarlas en la misma
+// sesión. Incluye además un "Repaso intensivo" (`excludeMastered: true`) para estudiar solo
+// lo que queda por dominar. Todos
 // los textos en inglés (enunciado, respuestas y vocabulario) llevan un botón 🔊 de
 // pronunciación, y las preguntas con más de MAX_VISIBLE_ANSWERS respuestas se pliegan para
 // no saturar la pantalla. El contador va en dos fases (la sesión original y el repaso de las
@@ -271,8 +272,7 @@ export default function FlashcardsScreen() {
       // El fin de sesión se calcula con la cola ya actualizada: si la pregunta se acaba
       // de re-encolar, la sesión continúa y esa pregunta quedará pendiente al final.
       if (currentIndex + 1 >= queue.length + (willRequeue ? 1 : 0)) {
-        // Última pregunta: se marca el día como estudiado una única vez.
-        useStore.getState().incrementStreak();
+        // La racha ya quedó actualizada por `recordAnswer` (store) en cada respuesta.
         setSessionFinished(true);
         return;
       }
