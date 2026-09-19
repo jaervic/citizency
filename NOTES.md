@@ -218,6 +218,15 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       errores del motor traducidos al español. Sin auto-arranque y sin UI: la
       pantalla de entrevista lo consumirá en el sub-bloque 3.3.
 
+- [x] Voz integrada en la entrevista (2026-09-18): `app/interview.tsx` usa
+      `useSpeechRecognition` (botón 🎤 Responder / ⏹ Detener / Procesando…),
+      vuelca la transcripción al TextInput y avisa cuando no hay motor de voz.
+
+- [x] Confirmaciones en web (2026-09-18): `src/utils/confirm.ts` usa
+      `window.confirm` en web porque RN Web no implementa `Alert.alert` con
+      botones; en nativo sigue con `Alert.alert`. Lo usan las 4 confirmaciones
+      (entrevista, flashcards, quiz y reiniciar progreso).
+
 - [x] Alineación TTS/matcher (2026-09-18): `normalize` (fuzzyMatch.ts) borra el
       contenido entre paréntesis y corchetes como PRIMER paso, igual que
       `sanitizeForSpeech` (SpeakerButton) antes del TTS. Sin esto, 25 de las 30
