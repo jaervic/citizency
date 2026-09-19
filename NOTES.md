@@ -62,7 +62,13 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 - Todo el progreso vive local en el dispositivo (AsyncStorage).
 - No hay login, no hay cuenta de usuario, no hay email obligatorio.
 - No hay analytics de terceros en v1.
-- Fase 6 (AssemblyAI para voz): la API key va detrás de un proxy en Vercel. El audio del usuario NO se almacena en servidores nuestros.
+- Fase 6 (voz): expo-speech-recognition usa el motor nativo del dispositivo
+  (SFSpeechRecognizer en iOS, SpeechRecognizer en Android, Web Speech API en
+  web). NO hay API key, NO hay proxy, NO hay envío de audio a servidores
+  propios. Nota: en web, Chrome SÍ envía el audio a los servidores de Google
+  para transcribir; en nativo, Android también usa Google Speech Services. En
+  iOS el motor de Apple puede ser on-device según la configuración del
+  dispositivo. La app no almacena ni retransmite el audio por su cuenta.
 - Si en el futuro se agrega Supabase: solo progreso anónimo, nunca datos personales ni audio.
 
 **Documentar en política de privacidad** (Fase 7):
@@ -110,7 +116,9 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 - [x] Fase 1–4: contenido, algoritmo, flashcards, datos oficiales.
 - [x] **Fase 5** (cerrada el 2026-09-18): quiz.tsx → progress.tsx → modo revisión
       (`src/components/SessionReview.tsx`, compartido por flashcards y quiz).
-- [ ] Fase 6: entrevista con voz (grabación + AssemblyAI vía proxy Vercel + comparación difusa + feedback de pronunciación).
+- [ ] Fase 6: entrevista con voz (expo-speech-recognition, motor del
+      dispositivo, sin API key ni proxy) + comparación difusa (fuzzyMatch.ts)
+      + feedback por respuesta (AnswerFeedback.tsx).
 - [ ] Fase 7: disclaimers, Play Billing, EAS Build, publicación gratis, luego paywall.
 - [ ] Fase 8: examen de lectura/escritura, práctica N-400, evaluación de Supabase, estructura 501(c)(3).
 
@@ -190,11 +198,13 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
       examen (para aprobar) y un modo de refuerzo (para aprender); son
       productos distintos y no conviene mezclarlos.
 
-- [x] Entrevista mockeada (2026-09-18): `app/interview.tsx` con 5
-      preguntas aleatorias (excluye las stateSpecific), TextInput para
-      escribir lo que se 'diría', y `fuzzyMatch` para validar. Reutiliza
-      `SessionReview` y `SpeakerButton`; introduce `AnswerFeedback`.
-      Sin micrófono ni AssemblyAI todavía.
+- [x] Entrevista con voz (2026-09-18): `app/interview.tsx` con 5 preguntas
+      aleatorias (excluye las stateSpecific), `fuzzyMatch` para validar y
+      `useSpeechRecognition` (expo-speech-recognition, motor del dispositivo)
+      para responder hablando, con el TextInput como alternativa y
+      `AnswerFeedback` para el feedback. Reutiliza `SessionReview` y
+      `SpeakerButton`. Nació como versión solo-TextInput y se completó con la
+      voz el mismo día: ya no queda nada mockeado.
 
 - [x] Componente reutilizable AnswerFeedback (2026-09-18):
       `src/components/AnswerFeedback.tsx`. Props: state (correct/
@@ -231,8 +241,25 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 
 ## 9. Recordatorios de contexto
 
-- **AssemblyAI (Fase 6)**: la API key NUNCA va en el bundle. Proxy obligatorio en
-  Vercel Edge Function. Usar `eas secret:create`, no `EXPO_PUBLIC_`.
+- **Voz (Fase 6)**: expo-speech-recognition usa el motor del dispositivo. No hay
+  API key que proteger, no hay proxy, no hay audio que la app almacene o
+  retransmita por su cuenta. Requiere Development Build (no funciona en Expo Go).
+
+  En Chrome desktop, Web Speech API funciona en http://localhost:8081 sin
+  --https (localhost es secure context por defecto en Chrome).
+
+  Si el micrófono falla con 'not-allowed' en Chrome, revisar EN ESTE ORDEN (el
+  primer caso es el que nos pasó a nosotros):
+    1. ¿Hay un micrófono funcional conectado y detectado por el sistema? Chrome
+       devuelve 'not-allowed' también cuando no hay ningún dispositivo de entrada
+       válido. En Windows, verificar en Configuración → Sistema → Sonido →
+       Entrada. Nos pasó: se conectaron audífonos con micrófono y funcionó de
+       inmediato.
+    2. Permisos de micrófono para localhost:8081 en
+       chrome://settings/content/microphone.
+    3. Extensiones de Chrome (probar en incógnito, que las desactiva).
+    4. Como último recurso: npx expo start --web --https (certificado
+       autofirmado; aceptar la advertencia de Chrome la primera vez).
 - **Branding (Fase 7)**: nombre definitivo, ícono, splash, colores de marca y
   tipografía aún sin decidir. No urgente.
 - **Subvenciones USCIS (Fase 8+)**: considerar estructura 501(c)(3) cuando haya
