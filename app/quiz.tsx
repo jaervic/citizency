@@ -9,7 +9,7 @@
 // se registra con `recordAnswer` para que cuente en el progreso y en el repaso espaciado.
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SessionReview from '@/components/SessionReview';
@@ -17,6 +17,7 @@ import type { SessionReviewFilter, SessionReviewItem } from '@/components/Sessio
 import questionsJson from '@/data/questions.json';
 import { useStore } from '@/store/useStore';
 import type { Category, Question, QuestionsFile } from '@/types';
+import { confirmAction } from '@/utils/confirm';
 
 /** Preguntas del examen de práctica (igual que el examen real). */
 const QUIZ_SIZE = 20;
@@ -418,10 +419,12 @@ export default function QuizScreen() {
    * (el botón "Salir" del repaso sigue navegando directo, sin confirmación).
    */
   const handleExitExam = useCallback(() => {
-    Alert.alert('Salir del examen', '¿Estás seguro? Perderás el progreso de este examen.', [
-      { text: 'Cancelar', style: 'cancel' },
-      { text: 'Salir', style: 'destructive', onPress: () => router.push('/') },
-    ]);
+    confirmAction(
+      'Salir del examen',
+      '¿Estás seguro? Perderás el progreso de este examen.',
+      'Salir',
+      () => router.push('/'),
+    );
   }, [router]);
 
   if (!hydrated) {

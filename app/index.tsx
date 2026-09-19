@@ -2,10 +2,11 @@
 // Propósito: pantalla de inicio. Muestra la racha y el XP del usuario, los cuatro
 // accesos principales (estudiar, quiz, entrevista y progreso) y el reinicio de progreso.
 import { Link } from 'expo-router';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useStore } from '@/store/useStore';
 import { colors } from '@/theme';
+import { confirmAction } from '@/utils/confirm';
 
 type MenuItem = {
   href: '/flashcards' | '/quiz' | '/interview' | '/progress';
@@ -38,10 +39,12 @@ export default function HomeScreen() {
   const reset = useStore((state) => state.reset);
 
   const handleReset = () => {
-    Alert.alert('Reiniciar progreso', 'Se pondrán a cero tu XP y tu racha. ¿Quieres continuar?', [
-      { text: 'Cancelar', style: 'cancel' },
-      { text: 'Reiniciar', style: 'destructive', onPress: reset },
-    ]);
+    confirmAction(
+      'Reiniciar progreso',
+      'Se pondrán a cero tu XP y tu racha. ¿Quieres continuar?',
+      'Reiniciar',
+      reset,
+    );
   };
 
   return (

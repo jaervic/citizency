@@ -17,7 +17,7 @@
 import { useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SessionReview from '@/components/SessionReview';
@@ -27,6 +27,7 @@ import officialDataJson from '@/data/officialData.json';
 import questionsJson from '@/data/questions.json';
 import { useStore } from '@/store/useStore';
 import type { OfficialData, OfficialField, Question, QuestionsFile } from '@/types';
+import { confirmAction } from '@/utils/confirm';
 import { buildStudyQueue } from '@/utils/spacedRepetition';
 
 /** Las 128 preguntas oficiales (el import de JSON ensancha los tipos: se afirma). */
@@ -240,10 +241,12 @@ export default function FlashcardsScreen() {
    * dominado" salen al inicio sin preguntar: allí no hay progreso que perder.
    */
   const handleExitSession = useCallback(() => {
-    Alert.alert('Salir de la sesión', '¿Estás seguro? Perderás el progreso de esta sesión.', [
-      { text: 'Cancelar', style: 'cancel' },
-      { text: 'Salir', style: 'destructive', onPress: () => router.push('/') },
-    ]);
+    confirmAction(
+      'Salir de la sesión',
+      '¿Estás seguro? Perderás el progreso de esta sesión.',
+      'Salir',
+      () => router.push('/'),
+    );
   }, [router]);
 
   const currentQuestion: Question | undefined = queue[currentIndex];

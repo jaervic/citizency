@@ -16,7 +16,6 @@ import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -37,6 +36,7 @@ import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { useStore } from '@/store/useStore';
 import { colors } from '@/theme';
 import type { Question, QuestionsFile } from '@/types';
+import { confirmAction } from '@/utils/confirm';
 import { fuzzyMatch } from '@/utils/fuzzyMatch';
 import type { FuzzyMatchResult } from '@/utils/fuzzyMatch';
 
@@ -168,15 +168,13 @@ export default function InterviewScreen() {
   const canCheck =
     userAnswer.trim() !== '' && speechState !== 'listening' && speechState !== 'processing';
 
-  /** Confirma antes de abandonar la entrevista en curso (mismo patrón que flashcards.tsx). */
+  /** Confirma antes de abandonar la entrevista (window.confirm en web, Alert.alert en nativo). */
   const handleExit = useCallback(() => {
-    Alert.alert(
+    confirmAction(
       'Salir de la entrevista',
       '¿Estás seguro? Perderás el progreso de esta entrevista.',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { text: 'Salir', style: 'destructive', onPress: () => router.push('/') },
-      ],
+      'Salir',
+      () => router.push('/'),
     );
   }, [router]);
 
