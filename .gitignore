@@ -1,58 +1,42 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
+# Dependencias
 node_modules/
 
-# Expo
-.expo/
+# Build de Vite
 dist/
-web-build/
-expo-env.d.ts
+dist-ssr/
+*.local
 
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
+# Vercel
+.vercel/
 
-# Metro
-.metro-health-check*
+# Cobertura de pruebas
+coverage/
 
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
-.DS_Store
-*.pem
-
-# local env files (NUNCA se versionan: pueden llevar claves reales)
+# Variables de entorno (NUNCA se versionan: pueden llevar valores reales).
+# Esta app no necesita ninguna, pero la regla se mantiene por higiene.
 .env
 .env.local
 .env*.local
 .env.*
-# la plantilla de ejemplo SÍ se versiona: no contiene valores reales
-!.env.example
 
-# credenciales y ficheros de firma
-*.keystore
-google-services.json
-GoogleService-Info.plist
+# TypeScript
+*.tsbuildinfo
 
-# logs
+# Logs
 *.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# Sistema
+.DS_Store
+*.pem
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
 
 # NOTA: src/data/officialData.json SÍ se versiona: la app lo importa para responder las
 # preguntas dinámicas (presidente, vicepresidente, speaker, chief justice...). Actualízalo a
 # mano cuando cambie el gobierno y sube también la fecha `lastUpdated`.
-
-# typescript
-*.tsbuildinfo
-
-# generated native folders
-/ios
-/android

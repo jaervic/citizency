@@ -11,7 +11,7 @@
 // 86 400 000 ms (un día local puede tener 23 o 25 horas por el cambio de horario): el día
 // anterior se calcula con `Date` + `setDate(getDate() - 1)`, que respeta el calendario local.
 //
-// Sin dependencias ni React: son funciones puras, verificadas por `.expo/selftest/streak-check.js`.
+// Sin dependencias ni React: son funciones puras, verificadas por `src/utils/streak.test.ts`.
 
 /**
  * Devuelve la fecha local en formato 'YYYY-MM-DD' (sin Intl: Hermes tiene comportamiento

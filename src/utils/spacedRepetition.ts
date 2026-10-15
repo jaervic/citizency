@@ -40,6 +40,13 @@ export type StudyQueueOptions = {
   excludeMastered?: boolean;
   /** Instante de referencia para el cálculo de prioridades (útil en pruebas). */
   now?: Date;
+  /**
+   * Fuente de aleatoriedad (por defecto `Math.random`). Solo se usa para barajar las
+   * preguntas que empatan en prioridad: sin esto, un usuario nuevo recibe siempre las
+   * mismas 20 preguntas en el orden oficial del examen. Inyectarla permite pruebas
+   * deterministas.
+   */
+  random?: () => number;
 };
 
 /** Progreso agregado de una categoría (para la pantalla de progreso). */
@@ -93,6 +100,39 @@ function getStats(progress: UserProgress, questionId: string): AnswerStats | und
 }
 
 /**
+ * Baraja (Fisher-Yates) cada tramo de elementos consecutivos con la MISMA prioridad, sin
+ * alterar el orden entre prioridades distintas. `Array.prototype.sort` es estable, así que
+ * sin este paso los empates (p. ej. todas las preguntas nuevas valen 100) conservarían el
+ * orden del JSON y la primera sesión sería siempre la misma.
+ */
+function shuffleEqualPriorities<T extends { priority: number }>(
+  items: T[],
+  random: () => number,
+): T[] {
+  const result = [...items];
+  let start = 0;
+
+  while (start < result.length) {
+    let end = start + 1;
+
+    while (end < result.length && result[end].priority === result[start].priority) {
+      end += 1;
+    }
+
+    for (let index = end - 1; index > start; index -= 1) {
+      const swapIndex = start + Math.floor(random() * (index - start + 1));
+      const current = result[index];
+      result[index] = result[swapIndex];
+      result[swapIndex] = current;
+    }
+
+    start = end;
+  }
+
+  return result;
+}
+
+/**
  * Calcula la prioridad de una pregunta: cuanto mayor es el número, antes debe
  * aparecer. Una pregunta nunca vista vale 100. Si ya se ha visto:
  * `(incorrect * 10) - (correct * 5) + días sin verla (máximo +30)`.
@@ -141,6 +181,7 @@ export function buildStudyQueue(
     onlyPending,
     excludeMastered,
     now = new Date(),
+    random = Math.random,
   } = options;
 
   const filtered = questions.filter((question) => {
@@ -173,7 +214,9 @@ export function buildStudyQueue(
 
   const max = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : scored.length;
 
-  return scored.slice(0, max).map((item) => item.question);
+  return shuffleEqualPriorities(scored, random)
+    .slice(0, max)
+    .map((item) => item.question);
 }
 
 /**

@@ -1,26 +1,30 @@
 // src/components/ProgressBar.tsx
-// Propósito: barra de progreso reutilizable (0-1) para mostrar el avance del examen y el
-// progreso por categoría.
-import { StyleSheet, View } from 'react-native';
-
+// Propósito: barra de progreso reutilizable (sesiones de estudio, quiz, categorías…).
+// Mobile-first: altura mínima visible y sin texto dentro (el texto va al lado).
 type ProgressBarProps = {
-  /** Progreso entre 0 y 1; los valores fuera de rango se recortan. */
-  progress: number;
-  /** Altura en píxeles (por defecto 8, como las barras actuales). */
+  /** Progreso de 0 a 1 (se recorta a ese rango). */
+  value: number;
+  /** Altura en píxeles (por defecto 8). */
   height?: number;
+  /** Etiqueta accesible que describe la barra. */
+  label?: string;
 };
 
-export default function ProgressBar({ progress, height = 8 }: ProgressBarProps) {
-  const clamped = Math.min(Math.max(progress, 0), 1);
+export default function ProgressBar({ value, height = 8, label }: ProgressBarProps) {
+  const clamped = Math.min(1, Math.max(0, Number.isFinite(value) ? value : 0));
+  const percentage = Math.round(clamped * 100);
 
   return (
-    <View style={[styles.track, { height, borderRadius: height / 2 }]}>
-      <View style={[styles.fill, { width: `${clamped * 100}%`, borderRadius: height / 2 }]} />
-    </View>
+    <div
+      className="progress-bar"
+      style={{ height }}
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={percentage}
+      aria-label={label}
+    >
+      <div className="progress-bar__fill" style={{ width: `${percentage}%` }} />
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  track: { backgroundColor: '#e4eaf2', overflow: 'hidden' },
-  fill: { height: '100%', backgroundColor: '#1a3a6b' },
-});

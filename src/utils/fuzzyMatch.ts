@@ -15,7 +15,7 @@
 // Lógica PURA y sin estado: nada de React, store, red ni disco. `normalize` y `similarity` se
 // pueden usar por separado (p. ej. para inspeccionar por qué falló una respuesta concreta) y
 // `fuzzyMatch` las combina con un umbral. Sin dependencias externas; verificada por
-// `.expo/selftest/fuzzy-match-check.js`.
+// `src/utils/fuzzyMatch.test.ts`.
 
 /**
  * Signos que se convierten en espacio (no se borran, para no pegar palabras: "one, two" son dos

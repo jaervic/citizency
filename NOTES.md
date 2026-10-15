@@ -1,8 +1,57 @@
 # NOTES.md — Decisiones de producto, monetización y legal
 
-Este archivo NO es código. Es la fuente de verdad para decisiones que no deben perderse entre sesiones de chat. Cada vez que tomemos una decisión importante de producto, monetización o legal, se documenta acá.
+Este archivo NO es código. Es la fuente de verdad para decisiones que no deben perderse entre
+sesiones de chat. Cada vez que tomemos una decisión importante de producto, monetización o legal,
+se documenta acá.
 
-Última actualización: 2026-09-18
+Última actualización: 2026-10-15 (**migración a webapp**).
+
+---
+
+## 0. Migración a webapp (2026-10-15)
+
+La app dejó de ser una app nativa de Expo/React Native y ahora es una **webapp estática**
+(React + Vite) desplegada en Vercel. Motivo: el uso real es mayoritariamente en el navegador del
+teléfono, y una web evita las tiendas de apps, las builds nativas y EAS.
+
+**Qué cambió**
+
+- Framework: Expo/React Native → **React 19 + Vite 8**; navegación con **React Router**.
+- Estado: Zustand con **`localStorage`** (antes AsyncStorage). Como `localStorage` es síncrono, ya
+  no hacen falta las esperas de hidratación que había por pantalla.
+- Voz: **Web Speech API** del navegador (`speechSynthesis` y `SpeechRecognition`) en lugar de
+  `expo-speech` / `expo-speech-recognition`. Sigue sin claves ni proxy.
+- Estilos: `src/theme.ts` (nativo) → tokens de CSS en `src/styles/global.css`. Paleta intacta
+  (azul principal `#1a3a6b`).
+- El código nativo (`app/`, `App.tsx`, `index.ts`, `eas.json`, `app.json`, `assets/`) se eliminó
+  del árbol de trabajo; sigue disponible en el historial de git.
+
+**Deuda técnica que se saldó de paso**
+
+- **Banco curado de distractores del quiz**: `src/data/quizDistractors.json` con 3 distractores
+  por pregunta para las 120 que entran al examen de práctica. Antes se generaban con una
+  heurística y salían opciones incoherentes (distractores de otro tema o de otra longitud). La
+  heurística queda solo como respaldo si algún día falta una entrada nueva.
+- **Cola de estudio**: `buildStudyQueue` ahora baraja las preguntas que empatan en prioridad. Con
+  el sort estable, un usuario nuevo recibía SIEMPRE las mismas 20 preguntas.
+- **El examen de práctica elige 20 preguntas al azar**, no las 20 de mayor prioridad (que serían
+  casi siempre las mismas).
+- **Pruebas reales**: `npm test` (Vitest) cubre la lógica pura y **renderiza todas las pantallas**
+  en el servidor, así que un fallo de render se detecta sin abrir el navegador.
+- **ProgressBar** se migró a componente reutilizable en las tres pantallas de sesión.
+- Se corrigió el `recordAnswer` de la entrevista, que podía romper la pantalla si el guardado
+  fallaba (ahora va envuelto en `try/catch`).
+- La pantalla de repaso muestra **todas las respuestas aceptadas**, no solo la primera.
+- **Datos que dependen del estado del solicitante** (2026-10-15): las 4 preguntas que dependen de
+  dónde vive el usuario (gov-023 senadores, gov-029 representante, gov-061 gobernador, gov-062
+  capital) ya tienen respuesta real. Se añadió la pantalla **Mi estado** (estado + distrito) y el
+  dataset `src/data/stateOfficials.json` con los 50 estados, generado por
+  `scripts/updateOfficials.mjs`. Ver la sección 5-bis para las fuentes y por qué se empaqueta en
+  vez de llamar a una API en caliente.
+- También entran en el examen de práctica las 8 preguntas dinámicas (antes se quedaban fuera las
+  8): las 4 nacionales siempre, y las 4 estatales cuando el usuario configura su estado y distrito.
+  Sus distractores se derivan de datos vigentes (los otros tres cargos nacionales u otros estados),
+  así que siguen siendo plausibles y claramente incorrectos sin quedar obsoletos.
 
 ---
 
@@ -13,45 +62,48 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 **Justificación**:
 - Público objetivo: inmigrantes hispanohablantes con presupuesto ajustado.
 - La suscripción mensual genera rechazo psicológico en este segmento.
-- El pago único "para prepararte hasta tu examen" encaja mejor: el usuario sabe cuándo termina su necesidad.
-- Google Play cobra 15% (no 30%) si estamos en el programa de pequeñas empresas (<$1M USD/año).
+- El pago único "para prepararte hasta tu examen" encaja mejor: el usuario sabe cuándo termina su
+  necesidad.
 
-**Precio tentativo**: $4.99 – $7.99 USD (definir en Fase 7 según pruebas con usuarios).
+**Precio tentativo**: $4.99 – $7.99 USD (definir en pruebas con usuarios).
 
 ### Qué queda GRATIS
 
 - Flashcards completas (128 preguntas, inglés + español).
 - Quiz sin cronómetro (20 preguntas aleatorias, corrección automática).
 - Progreso básico (racha, XP, categorías).
-- Botón 🔊 con expo-speech en todo el contenido.
+- Audio 🔊 en todo el contenido (Web Speech API).
 - Datos oficiales actualizados (presidente, VP, speaker, chief justice).
 
 ### Qué queda PREMIUM (pago único)
 
-- Simulacro de entrevista con voz (Fase 6).
+- Simulacro de entrevista con voz ilimitado (en web ya está construido; falta el muro de pago).
 - Modo "examen cronometrado" con límite de tiempo real.
 - Estadísticas avanzadas por categoría.
-- (Evaluar en su momento) Guía de audio descargable / offline.
 
 ### Qué NO vamos a hacer (por ahora)
 
 - **Suscripciones mensuales**: rechazado por UX y por el segmento.
-- **In-App Purchases fragmentados** ("Guía intensiva de entrevista", "Pack de N-400", etc.): complica UX, backend y lógica de validación. Un solo desbloqueo premium es suficiente.
-- **Supabase en v1**: no se necesita. Todo el estado vive local (Zustand + AsyncStorage). Supabase recién tiene sentido si sincronizamos progreso entre dispositivos (Fase 8+).
-- **Analytics invasivos**: cero. Si en algún momento se necesitan métricas, usar Plausible o Umami (privacy-first).
+- **In-App Purchases fragmentados**: un solo desbloqueo premium es suficiente.
+- **Backend/Supabase en v1**: no se necesita. Todo el estado vive local (`localStorage`).
+  Tendría sentido solo para sincronizar progreso entre dispositivos.
+- **Analytics invasivos**: cero. Si hicieran falta métricas, usar Plausible o Umami (privacy-first).
 
 ---
 
 ## 2. Estrategia de publicación
 
 **Orden**:
-1. Publicar en Google Play **gratis, sin paywall**, por 2–4 semanas.
-2. Objetivo: juntar reseñas positivas y datos de uso reales.
-3. Después: activar el paywall premium con Play Billing.
+1. Publicar la web **gratis, sin paywall**, por 2–4 semanas (Vercel + difusión directa).
+2. Objetivo: juntar reseñas/feedback y datos de uso reales.
+3. Después: activar el paywall premium.
 
-**Por qué**: lanzar con paywall sin base de reseñas mata el algoritmo de Play Store. Mejor entrar gratis, posicionar, y después monetizar a los que ya confían.
+**Nota web**: al no haber tienda de apps, la "prueba social" (reseñas) se sustituye por: dominio
+propio, compartir en grupos de la comunidad y un manifiesto instalable (PWA) para que el usuario
+la tenga en su pantalla de inicio.
 
-**Herramienta de billing**: Google Play Billing directo. Evaluar RevenueCat si la lógica se complica (tiene tier gratis hasta $2.5K USD/mes de ingresos).
+**Pago en web**: evaluar Stripe (pago único con Checkout) o Gumroad/Lemon Squeezy antes que Play
+Billing, que ya no aplica.
 
 ---
 
@@ -59,239 +111,157 @@ Este archivo NO es código. Es la fuente de verdad para decisiones que no deben 
 
 **Principio rector**: minimizar recolección de datos personales sensibles.
 
-- Todo el progreso vive local en el dispositivo (AsyncStorage).
-- No hay login, no hay cuenta de usuario, no hay email obligatorio.
-- No hay analytics de terceros en v1.
-- Fase 6 (voz): expo-speech-recognition usa el motor nativo del dispositivo
-  (SFSpeechRecognizer en iOS, SpeechRecognizer en Android, Web Speech API en
-  web). NO hay API key, NO hay proxy, NO hay envío de audio a servidores
-  propios. Nota: en web, Chrome SÍ envía el audio a los servidores de Google
-  para transcribir; en nativo, Android también usa Google Speech Services. En
-  iOS el motor de Apple puede ser on-device según la configuración del
-  dispositivo. La app no almacena ni retransmite el audio por su cuenta.
-- Si en el futuro se agrega Supabase: solo progreso anónimo, nunca datos personales ni audio.
+- Todo el progreso vive local en el dispositivo (`localStorage`).
+- No hay login, no hay cuenta, no hay email obligatorio.
+- No hay analytics de terceros.
+- **Voz**: `speechSynthesis` es 100% local en la mayoría de navegadores. En `SpeechRecognition`
+  (dictado), **Chrome envía el audio a los servidores de Google** para transcribir; Safari puede
+  transcribir on-device. La app no almacena ni retransmite el audio por su cuenta y avisa al
+  usuario de que el dictado es opcional (siempre puede escribir).
 
-**Documentar en política de privacidad** (Fase 7):
+**Documentar en política de privacidad**:
 - Qué datos se guardan (progreso local, nada más).
 - Qué NO se guarda (audio, ubicación, contactos, etc.).
-- Cómo eliminar los datos (desinstalar la app).
+- Cómo eliminar los datos (botón "Reiniciar progreso" en la pantalla de inicio).
 
 ---
 
 ## 4. Legal y disclaimers
 
-### Texto del disclaimer (para Home / pantalla "Acerca de")
+### Texto del disclaimer (pantalla de inicio, ya presente)
 
-> **Aviso importante**
->
-> Esta aplicación es una **herramienta de estudio independiente** para ayudar a prepararte para el examen de ciudadanía de los Estados Unidos. **No constituye asesoría legal** de ningún tipo ni sustituye la consulta con un abogado de inmigración.
->
-> El contenido se basa en materiales públicos del USCIS y se actualiza periódicamente, pero **no garantizamos la aprobación del examen** ni la exactitud absoluta de la información oficial. Verifica siempre con fuentes oficiales del USCIS antes de tomar decisiones legales.
->
-> Esta app no está afiliada, patrocinada ni respaldada por el USCIS ni por ninguna agencia del gobierno de los Estados Unidos.
-
-### Texto para la ficha de Google Play
-
-> Aplicación de estudio independiente para el examen de ciudadanía USCIS. No está afiliada al USCIS ni constituye asesoría legal.
+> App de estudio independiente basada en las 128 preguntas oficiales del examen de naturalización
+> de USCIS (versión 2025). No está afiliada a USCIS. Verifica siempre la información con las
+> fuentes oficiales.
 
 ### Dónde debe aparecer
 
-- [ ] Pantalla "Acerca de" o modal en Home (Fase 7).
-- [ ] Ficha de Google Play (Fase 7).
-- [ ] Pantalla inicial antes del primer uso (opcional, evaluar).
+- [x] Pantalla de inicio (texto breve).
+- [ ] Página "Acerca de" con el texto legal completo.
+- [ ] Política de privacidad enlazada desde el pie.
 
 ---
 
 ## 5. Contenido y actualización
 
 - El contenido se basa en el temario oficial del USCIS versión 2025 (128 preguntas).
-- `src/data/officialData.json` guarda los datos que cambian con el tiempo (presidente, VP, speaker, chief justice) con fecha de actualización visible.
-- **Revisión periódica**: cada cambio de administración o de figuras clave, actualizar `officialData.json`. Al menos 1 vez al año.
-- Las 4 preguntas que dependen del estado del usuario (senadores, representante, gobernador, capital) mantienen aviso genérico porque no podemos conocer el estado sin pedir ubicación.
+- `src/data/officialData.json` guarda los datos que cambian con el tiempo (presidente, VP,
+  speaker, chief justice) con fecha de actualización visible.
+- **Revisión periódica**: cada cambio de administración o de figuras clave, actualizar
+  `officialData.json`. Al menos 1 vez al año.
+
+## 5-bis. Las 4 preguntas que dependen del estado del solicitante (2026-10-15)
+
+Son gov-023 (senadores), gov-029 (representante), gov-061 (gobernador) y gov-062 (capital). El
+examen las pregunta a TODOS los solicitantes y no tienen respuesta fija: dependen de dónde vive la
+persona.
+
+**Decisión: empaquetar los datos, no llamar a una API en caliente.** Motivo: la app es estática y
+sin backend, y el principio del proyecto es no depender de claves ni de servicios externos (si el
+servicio cae o cambia de condiciones, la pregunta se queda sin respuesta). El día que haya backend,
+esto se puede sustituir por una consulta en vivo sin cambiar la UI.
+
+**Fuentes elegidas** (públicas, sin clave, verificadas el 2026-10-15):
+
+| Dato | Fuente | Notas |
+| --- | --- | --- |
+| Senadores y representantes | `unitedstates/congress-legislators` (JSON, vía `unitedstates.github.io`) | Proyecto de dominio público, se actualiza solo. Nota: el endpoint `theunitedstates.io` devuelve 403/404; el que funciona es el de GitHub Pages. |
+| Gobernadores | `openstates/people` (YAML por cargo) | Se actualiza a diario. Se elige el cargo `type: governor` con la fecha de fin más lejana (un gobernador saliente conserva su cargo histórico). |
+| Capitales | Constante del script | No cambian nunca. |
+
+**APIs descartadas** y por qué: `api.congress.gov` y `api.data.gov` requieren clave; la
+*Google Civic Information API* también y su endpoint de representantes está muy recortado desde
+2020; *Open States API v3* requiere clave (se usa su repositorio de datos, que es público);
+*LegiScan* requiere registro; los datasets de gobernadores en GitHub que se encontraron estaban sin
+mantener desde 2020.
+
+**Mantenimiento**: `npm run update-officials` regenera el fichero, y el workflow
+`.github/workflows/update-officials.yml` lo ejecuta el día 1 de cada mes y hace commit si algo
+cambió. El script valida antes de escribir (50 estados, 2 senadores por estado, capital y gobernador
+presentes) y falla sin tocar el fichero si algo falta: un fallo ruidoso es mejor que publicar una
+respuesta vacía. De hecho, la primera ejecución con pruebas descubrió que faltaba Oregón en el mapa
+de capitales, y `JSON.stringify` lo habría omitido en silencio.
+
+**Cómo lo ve el usuario**: pantalla **Mi estado**, donde elige estado y (si procede) distrito
+congresional. Se guarda en `localStorage`; los datos se le muestran como respuesta oficial, con
+botón de audio, y el repaso final los incluye. Si no ha configurado su estado, la app se lo pide en
+vez de inventar una respuesta.
 
 ---
 
 ## 6. Roadmap y fases
 
-- [x] Fase 1–4: contenido, algoritmo, flashcards, datos oficiales.
-- [x] **Fase 5** (cerrada el 2026-09-18): quiz.tsx → progress.tsx → modo revisión
-      (`src/components/SessionReview.tsx`, compartido por flashcards y quiz).
-- [ ] Fase 6: entrevista con voz (expo-speech-recognition, motor del
-      dispositivo, sin API key ni proxy) + comparación difusa (fuzzyMatch.ts)
-      + feedback por respuesta (AnswerFeedback.tsx).
-- [ ] Fase 7: disclaimers, Play Billing, EAS Build, publicación gratis, luego paywall.
-- [ ] Fase 8: examen de lectura/escritura, práctica N-400, evaluación de Supabase, estructura 501(c)(3).
+- [x] Fase 1–4: contenido, algoritmo de repetición espaciada, flashcards, datos oficiales.
+- [x] **Fase 5**: quiz, progreso y modo revisión (`SessionReview`).
+- [x] **Fase 6**: entrevista. En web con Web Speech API (dictado del navegador) + `fuzzyMatch` +
+  `AnswerFeedback`. Degrada a escribir cuando el navegador no soporta voz.
+- [x] **Fase 7 (parcial)**: migración a webapp Vite + despliegue en Vercel, banco curado de
+  distractores, tests, datos estatales al día y pantalla "Mi estado". Queda: paywall, página
+  "Acerca de", política de privacidad.
+- [ ] Fase 8: examen de lectura/escritura, práctica N-400, sincronización opcional entre
+  dispositivos, estructura 501(c)(3).
 
-**Regla**: no tocar monetización hasta terminar Fase 6. El paywall se define después de tener el producto premium construido.
+**Regla**: no tocar monetización hasta que el producto premium esté construido.
 
 ---
 
 ## 7. Decisiones pendientes (para revisar en su momento)
 
-- [ ] Precio final del desbloqueo premium.
-- [ ] ¿El simulacro de entrevista tiene límite de intentos en la versión gratis? (tentativo: 1 intento gratis, ilimitado en premium).
-- [ ] Modo oscuro en Fase 7 antes de publicar (subido desde
-      'evaluar'): el theme.ts ya lo hace fácil. La primera versión
-      en Play Store pesa mucho en reviews y el modo oscuro es una de
-      las peticiones más comunes. No es un 'nice to have' diferible:
-      es parte del lanzamiento.
-- [ ] ¿Idioma inglés para la UI además de español? (para usuarios que quieren practicar inmersión).
-- [ ] Política de reembolsos (Play Store la maneja, pero documentar el flujo).
-- [x] Racha (2026-09-18): `computeNextStreak` extraída a `src/utils/streak.ts`
-      (lógica pura). El store la consume desde `recordAnswer`: cualquier
-      respuesta registrada actualiza la racha, en cualquier pantalla.
-      Reset automático si hay gap > 1 día. `incrementStreak` eliminada del
-      API del store; no quedan llamadas explícitas desde pantallas.
+- [ ] Precio final del desbloqueo premium y proveedor de pago en web (Stripe vs Gumroad).
+- [ ] ¿El simulacro de entrevista tiene límite de intentos en la versión gratis?
+- [ ] Modo oscuro: el theme ya está en tokens CSS, así que es barato. Es una de las peticiones más
+      comunes en móvil; tratarlo como parte del lanzamiento, no como "nice to have".
+- [ ] ¿Idioma inglés para la UI además de español?
+- [x] Pantalla "Mi estado" (2026-10-15): el usuario elige su estado y su distrito para resolver
+      senadores, representante, gobernador y capital (gov-023, gov-029, gov-061, gov-062). Ver la
+      sección 5-bis.
+- [ ] Modo Práctica vs Modo Examen en el quiz: hoy el quiz ya da feedback inmediato por pregunta
+      (selección → Comprobar → verde/rojo + respuestas correctas → Siguiente). Falta el modo
+      "Examen" estricto (sin feedback hasta el final + cronómetro).
+- [ ] Años > 100 en `answers_en`: 7 respuestas tienen números > 100 (435, 1776, 1812, 1870, 1920,
+      1929, 1956) que hoy quedan en dígitos al comparar. Decir "seventeen seventy six" contra
+      "1776" no matchea. Evaluar si duele en pruebas reales antes de implementar una regla de
+      lectura de años.
 
-- [x] Heurística de coherencia de distractores (2026-09-18): cascada de 5
-      niveles en `buildOptions` (quiz.tsx) — misma categoría + paridad de
-      palabras estricta → relajada → cualquier categoría + estricta →
-      relajada → fallback actual. Garantiza 4 opciones siempre. Cubierto
-      por `quiz-build-check.js` (regla 'Vote-style': correcta ≥5 palabras
-      no admite distractor ≤2 palabras). El banco curado
-      `src/data/quizDistractors.json` (~360 entradas) sigue pendiente como
-      refuerzo para Fase 7, ya no como parche de un bug.
-
-- [ ] Pantalla "Mi estado" (Grupo B de las 8 dinámicas): permitir al usuario elegir
-      su estado de residencia para resolver senadores, representante, gobernador y capital.
-      Preguntas afectadas: gov-023, gov-029, gov-061, gov-062. Fase 5 o 6.
-      - [ ] Refactor post-Fase 5: migrar flashcards.tsx y quiz.tsx a `ProgressBar`
-      reutilizable. Ya se hizo en progress.tsx el 2026-09-18. Mismo patrón:
-      import + `<ProgressBar progress={...} />` + borrar `progressTrack`/`progressFill`.
-
-- [ ] Implementar `Card.tsx` y `Button.tsx`. Siguen como placeholders vacíos
-      (`export {};`). NO implementar hasta tener 3+ usos reales que justifiquen
-      la abstracción. Ahora sería optimización prematura.
-
-- [x] ~~Modo Revisión (volver a preguntas anteriores en la sesión). Última pieza
-      de Fase 5 antes de Fase 6.~~ Ya implementado el 2026-09-18 en
-      `src/components/SessionReview.tsx`, integrado en flashcards.tsx y quiz.tsx.
-- [x] Deduplicar re-encoladas en la revisión de flashcards: implementado el 2026-09-18.
-      Se conserva la ÚLTIMA aparición por `question.id` (posición y resultado). La
-      deduplicación vive en flashcards.tsx con `useMemo`; SessionReview se mantiene
-      presentacional.
-- [x] Contador del quiz en fase review cambió de "X de N" a "N falladas de 20" por
-      consistencia con la vista unificada (decisión del 2026-09-18).
-- [ ] Eliminar scaffold muerto: `App.tsx` e `index.ts` (entry es
-      `expo-router/entry`, no se usan). Borrar en Fase 7 antes de publicar
-      para no confundir a futuros chats.
-- [x] Unificar paleta (2026-09-18): creado `src/theme.ts` con la paleta única
-      (azul principal `#1a3a6b`). Migrados `_layout.tsx` e `index.tsx`. El resto
-      de las pantallas (`flashcards.tsx`, `quiz.tsx`, `progress.tsx`,
-      `SpeakerButton.tsx`, `ProgressBar.tsx`, `SessionReview.tsx`) tienen
-      colores hardcoded equivalentes; se migrarán a `colors.*` cuando se toquen
-      por otro motivo, no como tarea aparte.
-- [x] Microcopy unificado (2026-09-18): vocabulario único en toda la app
-      ('Ir al inicio', 'Salir', 'Repetir', 'Revisar respuestas', 'Empezar',
-      'Repaso intensivo', 'Repaso completo'). Confirmación al salir del
-      examen en curso (fase 'quiz' de quiz.tsx) y de la sesión de flashcards
-      en curso. 'Repetir' queda reservado para reiniciar una sesión EN CURSO
-      y hoy ningún botón lo usa (el quiz dice "Nuevo examen" a propósito:
-      son preguntas nuevas, no las mismas repetidas).
-
-- [ ] Modo Práctica vs Modo Examen en quiz.tsx (Fase 6): ofrecer ambos
-      modos desde la pantalla inicial del quiz. Examen = comportamiento
-      actual (sin feedback hasta el final, simula el examen real).
-      Práctica = feedback inmediato por pregunta (selección → botón
-      'Comprobar' → opción pintada verde/roja + respuesta correcta si
-      falló → botón 'Siguiente'). Razón: la app necesita un simulador de
-      examen (para aprobar) y un modo de refuerzo (para aprender); son
-      productos distintos y no conviene mezclarlos.
-
-- [x] Entrevista con voz (2026-09-18): `app/interview.tsx` con 5 preguntas
-      aleatorias (excluye las stateSpecific), `fuzzyMatch` para validar y
-      `useSpeechRecognition` (expo-speech-recognition, motor del dispositivo)
-      para responder hablando, con el TextInput como alternativa y
-      `AnswerFeedback` para el feedback. Reutiliza `SessionReview` y
-      `SpeakerButton`. Nació como versión solo-TextInput y se completó con la
-      voz el mismo día: ya no queda nada mockeado.
-
-- [x] Componente reutilizable AnswerFeedback (2026-09-18):
-      `src/components/AnswerFeedback.tsx`. Props: state (correct/
-      incorrect), score, correctAnswer, userAnswer. Sin auto-avance: el
-      usuario decide cuándo avanzar con el botón 'Siguiente'. Reutilizable
-      por el Modo Práctica del quiz, que sigue pendiente.
-
-- [x] Hook `useSpeechRecognition` (2026-09-18): `src/hooks/useSpeechRecognition.ts`
-      envuelve `expo-speech-recognition` con 4 estados (idle/listening/processing/
-      error), transcripción en vivo y final, disponibilidad del motor, permisos y
-      errores del motor traducidos al español. Sin auto-arranque y sin UI: la
-      pantalla de entrevista lo consumirá en el sub-bloque 3.3.
-
-- [x] Voz integrada en la entrevista (2026-09-18): `app/interview.tsx` usa
-      `useSpeechRecognition` (botón 🎤 Responder / ⏹ Detener / Procesando…),
-      vuelca la transcripción al TextInput y avisa cuando no hay motor de voz.
-
-- [x] Confirmaciones en web (2026-09-18): `src/utils/confirm.ts` usa
-      `window.confirm` en web porque RN Web no implementa `Alert.alert` con
-      botones; en nativo sigue con `Alert.alert`. Lo usan las 4 confirmaciones
-      (entrevista, flashcards, quiz y reiniciar progreso).
-
-- [x] Alineación TTS/matcher (2026-09-18): `normalize` (fuzzyMatch.ts) borra el
-      contenido entre paréntesis y corchetes como PRIMER paso, igual que
-      `sanitizeForSpeech` (SpeakerButton) antes del TTS. Sin esto, 25 de las 30
-      respuestas con paréntesis no matcheaban justo la versión que la propia app
-      pronuncia ("Freed the slaves" contra "Freed the slaves (Emancipation
-      Proclamation)" daba 0.381). El cambio va del lado del matcher, no del TTS.
-
-- [ ] Años >100 en answers_en (Fase 6, al montar la pantalla de
-      entrevista): 7 respuestas tienen números >100 (435, 1776, 1812, 1870,
-      1920, 1929, 1956) que hoy quedan en dígitos. Decir 'seventeen
-      seventy six' contra '1776' no matchea. Evaluar si duele en pruebas
-      reales antes de implementar una regla de lectura de años (no es
-      urgente: el usuario también puede decir '1776' en dígitos).
-      
 ---
 
-## 8. Referencias
+## 8. Decisiones que NO deben perderse (porque no se leen del código)
 
-- Repositorios y proyectos similares en GitHub: sirven como referencia de UX, no para copiar código.
-- Consejos recibidos sobre arquitectura privacy-first, módulo de audio y ética: en su mayoría ya están implementados o agendados. Lo único nuevo que aportaron fue la insistencia en **disclaimers legales visibles** y **contenido actualizado según USCIS**, ambos ya cubiertos.
+- Los **4 niveles de dominio** en Progreso (`new` / `learning` / `reviewing` / `mastered`) son
+  intencionales. NO simplificar a 3.
+- La respuesta correcta del quiz es SIEMPRE **`answers_en[0]`**: en `questions.json` las respuestas
+  más comunes van primero.
+- Los distractores del quiz salen del **banco curado** (`quizDistractors.json`), no de respuestas
+  de preguntas hermanas. El antiguo `USE_SIBLING_ANSWERS_AS_DISTRACTORS = false` ya no existe: la
+  decisión pedagógica que representaba (nada de distractores absurdos) se cumple ahora con el
+  banco curado.
+- El criterio para aceptar/rechazar propuestas de herramientas de IA: aceptar lo que prepare para
+  algo que ya sabemos que necesitaremos; rechazar lo que complique sin beneficio claro.
+- Los **datos de los 50 estados** (`stateOfficials.json`) se empaquetan en el repositorio y se
+  regeneran con `npm run update-officials` (y una tarea mensual en GitHub Actions). NO se llama a
+  una API en caliente: la app es estática y sin claves, y la pregunta no puede quedarse sin
+  respuesta porque un servicio externo falle. Ver la sección 5-bis.
+
+---
 
 ## 9. Recordatorios de contexto
 
-- **Voz (Fase 6)**: expo-speech-recognition usa el motor del dispositivo. No hay
-  API key que proteger, no hay proxy, no hay audio que la app almacene o
-  retransmita por su cuenta. Requiere Development Build (no funciona en Expo Go).
-
-  En Chrome desktop, Web Speech API funciona en http://localhost:8081 sin
-  --https (localhost es secure context por defecto en Chrome).
-
-  Si el micrófono falla con 'not-allowed' en Chrome, revisar EN ESTE ORDEN (el
-  primer caso es el que nos pasó a nosotros):
-    1. ¿Hay un micrófono funcional conectado y detectado por el sistema? Chrome
-       devuelve 'not-allowed' también cuando no hay ningún dispositivo de entrada
-       válido. En Windows, verificar en Configuración → Sistema → Sonido →
-       Entrada. Nos pasó: se conectaron audífonos con micrófono y funcionó de
-       inmediato.
-    2. Permisos de micrófono para localhost:8081 en
-       chrome://settings/content/microphone.
-    3. Extensiones de Chrome (probar en incógnito, que las desactiva).
-    4. Como último recurso: npx expo start --web --https (certificado
-       autofirmado; aceptar la advertencia de Chrome la primera vez).
-- **Branding (Fase 7)**: nombre definitivo, ícono, splash, colores de marca y
-  tipografía aún sin decidir. No urgente.
-- **Subvenciones USCIS (Fase 8+)**: considerar estructura 501(c)(3) cuando haya
-  tracción real. Programa CINAS: hasta $300K por organización en 2 años.
-  Es recordatorio personal, no tarea.
-- **Tests en `.expo/selftest/`**: `requeue-check.js`, `answers-truncation-check.js`,
-  `phase-official-check.js`, `quiz-build-check.js`. Gitignoreados pero útiles.
+- **Voz en web**: requiere HTTPS o `localhost`. Chrome/Edge/Safari la soportan; Firefox no. Si el
+  micrófono falla con `not-allowed` en Chrome, revisar EN ESTE ORDEN: (1) que haya un micrófono
+  conectado y detectado por el sistema (Chrome devuelve `not-allowed` también sin dispositivo de
+  entrada válido); (2) permisos de micrófono del sitio; (3) extensiones (probar en incógnito);
+  (4) usar otra red, porque algunos navegadores fallan si el servicio de voz no es alcanzable.
+- **Branding**: nombre definitivo, ícono y tipografía aún sin decidir. El favicon y el manifiesto
+  actuales son provisionales.
+- **Pruebas**: viven en `src/**/*.test.ts(x)` y se ejecutan con `npm test`. Las de render usan
+  `renderToString` con un stub de `localStorage` (`src/test/setup.ts`).
+- **Subvenciones USCIS**: considerar estructura 501(c)(3) cuando haya tracción real. Programa
+  CINAS. Es recordatorio personal, no tarea.
 
 ## 10. Traspaso entre chats (protocolo)
 
 Cada vez que se migra a un chat nuevo, el traspaso debe incluir:
 1. `NOTES.md` completo (este archivo).
 2. Resumen de la última sesión: qué se cerró, qué quedó pendiente.
-3. Estado actual de Fase (qué fases están completas, en qué punto va la actual).
+3. Estado actual de Fase.
 4. Pendientes inmediatos (1-3 tareas concretas).
-
-Decisiones que NO deben perderse (porque no se leen del código):
-- Los 4 niveles en progress.tsx (new/learning/reviewing/mastered) son
-  intencionales. NO simplificar a 3.
-- `USE_SIBLING_ANSWERS_AS_DISTRACTORS = false` en quiz.tsx es decisión
-  pedagógica, no bug. No cambiar a `true`.
-- El criterio de aceptar/rechazar propuestas de Cline: aceptar lo que
-  prepare para algo que ya sabemos que necesitaremos; rechazar lo que
-  complique sin beneficio claro.
-- Los self-checks en `.expo/selftest/` están gitignoreados. Si se pierden,
-  se rehacen pidiéndole a Cline que reconstruya los escenarios.

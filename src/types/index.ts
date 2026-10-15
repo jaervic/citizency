@@ -1,5 +1,5 @@
 // src/types/index.ts
-// Propósito: tipos compartidos de la app, alineados con el modelo de datos real
+// Propósito: tipos compartidos de la webapp, alineados con el modelo de datos real
 // de src/data/questions.json (generado por scripts/mergeQuestions.js a partir de
 // src/data/en.json y src/data/es.json).
 
@@ -156,6 +156,3 @@ export type UserProgress = {
     }
   >;
 };
-
-/** Modos de estudio disponibles en la app. */
-export type StudyMode = 'flashcard' | 'quiz' | 'audio' | 'voice';

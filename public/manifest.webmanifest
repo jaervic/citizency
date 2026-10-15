@@ -1,0 +1,20 @@
+{
+  "name": "USCIS Ciudadanía — Prepara tu examen",
+  "short_name": "Ciudadanía",
+  "description": "Flashcards, examen de práctica, simulacro de entrevista y progreso para el examen de ciudadanía de los Estados Unidos.",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f4f9",
+  "theme_color": "#1a3a6b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

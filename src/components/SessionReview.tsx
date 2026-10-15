@@ -1,323 +1,165 @@
 // src/components/SessionReview.tsx
-// Propósito: vista de revisión post-sesión reutilizable (flashcards y quiz). Lista en orden
-// cronológico todos los intentos de la sesión con su acierto (✓) o fallo (✗), y permite expandir
-// cada uno para ver la respuesta correcta, la explicación en español y el vocabulario de apoyo.
-// Es un componente CONTROLADO: el filtro ('all' | 'incorrect') lo guarda la pantalla que lo usa,
-// como el resto del estado del proyecto. Reutiliza `SpeakerButton` para la pronunciación y no
-// implementa lógica de sesión ni de dominio: solo filtra y pinta.
-import { useCallback, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+// Propósito: repaso de una sesión terminada (flashcards, quiz o entrevista). Antes solo
+// mostraba `answers_en[0]` como respuesta correcta; ahora lista TODAS las respuestas aceptadas
+// (en inglés y español), que es lo que el USCIS admite de verdad.
+import { useMemo, useState } from 'react';
 
+import OfficialAnswerCard from '@/components/OfficialAnswerCard';
 import SpeakerButton from '@/components/SpeakerButton';
 import type { Question } from '@/types';
 
-/** Una pregunta respondida en la sesión, con el resultado de ese intento. */
 export type SessionReviewItem = {
-  /** Pregunta oficial (bilingüe) que se respondió. */
   question: Question;
-  /** `true` si el usuario acertó. */
   wasCorrect: boolean;
-  /** Texto en inglés de la opción que eligió el usuario (solo quiz). */
-  userChoice?: string;
+  /** Respuesta del usuario, si la hubo (quiz o entrevista). */
+  userAnswer?: string;
 };
 
-/** Filtro de la lista: todas las preguntas de la sesión o solo las falladas. */
-export type SessionReviewFilter = 'all' | 'incorrect';
+type Filter = 'all' | 'incorrect' | 'correct';
 
 type SessionReviewProps = {
-  /** Intentos de la sesión en orden cronológico (1 → N). */
   items: SessionReviewItem[];
-  /** Filtro activo. */
-  filter: SessionReviewFilter;
-  /** Notifica el cambio de filtro. */
-  onFilterChange: (filter: SessionReviewFilter) => void;
-  /** Muestra el conmutador "Solo falladas" / "Todas"; por defecto `true`. */
-  showFilter?: boolean;
+  /** Título del bloque de repaso. */
+  title?: string;
 };
 
-/**
- * Aviso para las preguntas sin respuesta estática (las 8 dinámicas de `questions.json`): su
- * respuesta depende del gobierno o del estado del solicitante y no se puede listar aquí.
- */
-const DYNAMIC_ANSWER_HINT =
-  'Esta pregunta depende del gobierno actual. Consulta la información vigente.';
+const FILTER_LABELS: Record<Filter, string> = {
+  all: 'Todas',
+  incorrect: 'Falladas',
+  correct: 'Acertadas',
+};
 
-export default function SessionReview({
-  items,
-  filter,
-  onFilterChange,
-  showFilter = true,
-}: SessionReviewProps) {
-  // Índice dentro de `items` del intento expandido; `null` = todos plegados (acordeón).
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+export default function SessionReview({ items, title = 'Repaso de la sesión' }: SessionReviewProps) {
+  const [filter, setFilter] = useState<Filter>('all');
+  const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
 
-  /** Abre el detalle de un intento y pliega el que estuviera abierto. */
-  const toggleExpanded = useCallback((index: number) => {
-    setExpandedIndex((current) => (current === index ? null : index));
-  }, []);
+  const correctCount = items.filter((item) => item.wasCorrect).length;
+  const total = items.length;
+  const percentage = total > 0 ? Math.round((correctCount / total) * 100) : 0;
 
-  /**
-   * Se conserva el índice original de cada intento para que la numeración sea la de la sesión
-   * completa (1 → N) aunque el filtro deje parte de la lista fuera de la vista.
-   */
-  const visibleItems = items
-    .map((item, index) => ({ item, index }))
-    .filter(({ item }) => filter === 'all' || !item.wasCorrect);
+  const visibleItems = useMemo(() => {
+    if (filter === 'incorrect') {
+      return items.filter((item) => !item.wasCorrect);
+    }
+
+    if (filter === 'correct') {
+      return items.filter((item) => item.wasCorrect);
+    }
+
+    return items;
+  }, [filter, items]);
+
+  const toggle = (questionId: string) => {
+    setExpandedIds((current) => ({ ...current, [questionId]: !current[questionId] }));
+  };
+
+  if (total === 0) {
+    return (
+      <section className="review">
+        <h2 className="progress-card__title">{title}</h2>
+        <p className="review-empty">No hay preguntas que repasar en esta sesión.</p>
+      </section>
+    );
+  }
 
   return (
-    <View style={styles.screen}>
-      {showFilter && (
-        <View style={styles.filterRow}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityState={{ selected: filter === 'incorrect' }}
-            onPress={() => onFilterChange('incorrect')}
-            style={[styles.filterButton, filter === 'incorrect' && styles.filterButtonActive]}
-          >
-            <Text style={[styles.filterText, filter === 'incorrect' && styles.filterTextActive]}>
-              Solo falladas
-            </Text>
-          </Pressable>
+    <section className="review">
+      <h2 className="progress-card__title">{title}</h2>
 
-          <Pressable
-            accessibilityRole="button"
-            accessibilityState={{ selected: filter === 'all' }}
-            onPress={() => onFilterChange('all')}
-            style={[styles.filterButton, filter === 'all' && styles.filterButtonActive]}
-          >
-            <Text style={[styles.filterText, filter === 'all' && styles.filterTextActive]}>
-              Todas
-            </Text>
-          </Pressable>
-        </View>
-      )}
+      <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <p className="session-score">
+          Resultado: {correctCount} de {total} correctas
+        </p>
+        <p className="session-percentage">{percentage} %</p>
+      </div>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        {visibleItems.length === 0 ? (
-          <Text style={styles.empty}>No hay preguntas en esta vista</Text>
-        ) : (
-          visibleItems.map(({ item, index }) => {
-            const isExpanded = expandedIndex === index;
-            // Las 8 preguntas dinámicas no tienen respuestas estáticas (`answers_en` vacío).
-            const correctAnswer: string | undefined = item.question.answers_en[0];
-            const showsUserChoice =
-              !item.wasCorrect &&
-              item.userChoice !== undefined &&
-              item.userChoice !== correctAnswer;
+      <div className="review-filters" role="group" aria-label="Filtrar preguntas">
+        {(Object.keys(FILTER_LABELS) as Filter[]).map((option) => (
+          <button
+            key={option}
+            type="button"
+            className="review-filter"
+            aria-pressed={filter === option}
+            onClick={() => setFilter(option)}
+          >
+            {FILTER_LABELS[option]}
+          </button>
+        ))}
+      </div>
+
+      {visibleItems.length === 0 ? (
+        <p className="review-empty">No hay preguntas con este filtro.</p>
+      ) : (
+        <ul className="answer-list">
+          {visibleItems.map((item, index) => {
+            const expanded = expandedIds[item.question.id] === true;
 
             return (
-              <View key={`${item.question.id}-${index}`} style={styles.item}>
-                <View style={styles.itemRow}>
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel={`Pregunta ${index + 1}: ${item.question.question_en}`}
-                    accessibilityState={{ expanded: isExpanded }}
-                    onPress={() => toggleExpanded(index)}
-                    style={({ pressed }) => [styles.itemHeader, pressed && styles.itemHeaderPressed]}
+              <li key={item.question.id} className="review-item">
+                <div className="review-item__row">
+                  <button
+                    type="button"
+                    className="review-item__header"
+                    aria-expanded={expanded}
+                    onClick={() => toggle(item.question.id)}
                   >
-                    <Text style={styles.itemNumber}>{index + 1}</Text>
-                    <Text style={styles.itemQuestion}>{item.question.question_en}</Text>
-                    <Text style={styles.chevron}>{isExpanded ? '▴' : '▾'}</Text>
-                    <Text style={item.wasCorrect ? styles.markCorrect : styles.markWrong}>
-                      {item.wasCorrect ? '✓' : '✗'}
-                    </Text>
-                  </Pressable>
+                    <span className="review-item__number">{index + 1}</span>
+                    <span className="review-item__question">{item.question.question_es}</span>
+                    <span className="review-item__chevron" aria-hidden="true">
+                      {expanded ? '▲' : '▼'}
+                    </span>
+                  </button>
+                  <span
+                    className={
+                      item.wasCorrect ? 'review-item__mark--correct' : 'review-item__mark--wrong'
+                    }
+                    aria-label={item.wasCorrect ? 'Correcta' : 'Fallada'}
+                  >
+                    {item.wasCorrect ? '✓' : '✗'}
+                  </span>
+                </div>
 
-                  <SpeakerButton text={item.question.question_en} size="small" />
-                </View>
-
-                {isExpanded && (
-                  <View style={styles.details}>
-                    {showsUserChoice && (
-                      <Text style={styles.userChoice}>Tu respuesta: {item.userChoice}</Text>
+                {expanded && (
+                  <div className="review-item__details">
+                    {item.userAnswer !== undefined && !item.wasCorrect && (
+                      <p className="review-item__user-choice">
+                        <span className="review-item__label">Tu respuesta: </span>
+                        {item.userAnswer}
+                      </p>
                     )}
 
-                    {correctAnswer === undefined ? (
-                      <Text style={styles.dynamicHint}>{DYNAMIC_ANSWER_HINT}</Text>
-                    ) : (
-                      <>
-                        <Text style={styles.detailLabel}>Respuesta correcta:</Text>
-                        <View style={styles.answerRow}>
-                          <Text style={styles.correctAnswer}>{correctAnswer}</Text>
-                          <SpeakerButton text={correctAnswer} size="small" />
-                        </View>
-                      </>
-                    )}
-
-                    {item.question.explanation_es !== '' && (
-                      <Text style={styles.explanation}>{item.question.explanation_es}</Text>
-                    )}
-
-                    {item.question.vocabulary.length > 0 && (
-                      <View style={styles.vocabulary}>
-                        <Text style={styles.detailLabel}>Vocabulario:</Text>
-                        {item.question.vocabulary.map((entry) => (
-                          <View key={entry.word} style={styles.vocabularyRow}>
-                            <Text style={styles.vocabularyWord}>{entry.word}</Text>
-                            <SpeakerButton text={entry.word} size="small" />
-                            <Text style={styles.vocabularyTranslation}>{entry.translation}</Text>
-                          </View>
+                    {item.question.answers_en.length > 0 ? (
+                      <div className="review-item__correct-list">
+                        <span className="review-item__label">
+                          {item.question.answers_en.length === 1
+                            ? 'Respuesta correcta'
+                            : 'Respuestas correctas'}
+                        </span>
+                        {item.question.answers_en.map((answer, answerIndex) => (
+                          <div key={answer} className="review-item__row">
+                            <span className="review-item__correct">
+                              {answer}
+                              {item.question.answers_es[answerIndex] !== undefined &&
+                                item.question.answers_es[answerIndex] !== answer && (
+                                  <span className="answer-pair__es">
+                                    {item.question.answers_es[answerIndex]}
+                                  </span>
+                                )}
+                            </span>
+                            <SpeakerButton text={answer} compact label={`Escuchar: ${answer}`} />
+                          </div>
                         ))}
-                      </View>
+                      </div>
+                    ) : (
+                      <OfficialAnswerCard question={item.question} />
                     )}
-                  </View>
+                  </div>
                 )}
-              </View>
+              </li>
             );
-          })
-        )}
-      </ScrollView>
-    </View>
+          })}
+        </ul>
+      )}
+    </section>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  // Conmutador de filtro: píldoras con el mismo azul de la app.
-  filterRow: {
-    flexDirection: 'row',
-    gap: 8,
-    paddingHorizontal: 20,
-    paddingTop: 12,
-  },
-  filterButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#1a3a6b',
-    backgroundColor: '#ffffff',
-  },
-  filterButtonActive: {
-    backgroundColor: '#1a3a6b',
-  },
-  filterText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#1a3a6b',
-  },
-  filterTextActive: {
-    color: '#ffffff',
-  },
-  content: {
-    padding: 20,
-    paddingBottom: 32,
-    gap: 10,
-  },
-  empty: {
-    fontSize: 15,
-    color: '#666666',
-    textAlign: 'center',
-    marginTop: 24,
-  },
-  item: {
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#dbe3ee',
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  itemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingRight: 12,
-  },
-  itemHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-  },
-  itemHeaderPressed: {
-    backgroundColor: '#f0f4f9',
-  },
-  itemNumber: {
-    minWidth: 22,
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#1a3a6b',
-  },
-  itemQuestion: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#1f1f1f',
-  },
-  chevron: {
-    fontSize: 12,
-    color: '#888888',
-  },
-  markCorrect: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#2e7d32',
-  },
-  markWrong: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#c62828',
-  },
-  details: {
-    paddingHorizontal: 12,
-    paddingBottom: 14,
-    gap: 8,
-  },
-  userChoice: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#c62828',
-  },
-  detailLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#666666',
-  },
-  answerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  correctAnswer: {
-    flexShrink: 1,
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#1a3a6b',
-  },
-  dynamicHint: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    color: '#7a5c00',
-    lineHeight: 20,
-  },
-  explanation: {
-    backgroundColor: '#f0f4f9',
-    padding: 12,
-    borderRadius: 8,
-    fontSize: 14,
-    color: '#555555',
-    lineHeight: 20,
-  },
-  vocabulary: {
-    gap: 6,
-  },
-  vocabularyRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  vocabularyWord: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#1a3a6b',
-  },
-  vocabularyTranslation: {
-    flexShrink: 1,
-    fontSize: 14,
-    color: '#555555',
-  },
-});

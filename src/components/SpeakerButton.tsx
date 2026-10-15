@@ -1,160 +1,134 @@
 // src/components/SpeakerButton.tsx
-// Propósito: botón reutilizable de pronunciación para los textos en inglés de la app
-// (enunciados, respuestas y vocabulario). Usa `expo-speech`, que es gratuito, funciona sin
-// conexión y no necesita claves de API. Al pulsarlo corta el audio en curso y lee el texto
-// indicado con voz en inglés (limpiando antes paréntesis y corchetes, ver `sanitizeForSpeech`);
-// mientras habla, el ícono cambia para dar feedback visual.
-import * as Speech from 'expo-speech';
+// Propósito: leer en voz alta (en inglés) un texto del examen con la Web Speech API
+// (`speechSynthesis`). Sustituye al `expo-speech` de la versión nativa: en web la síntesis
+// de voz es del propio navegador, así que no hace falta ninguna clave de API ni conexión.
+//
+// `sanitizeForSpeech` se exporta porque `src/utils/fuzzyMatch.ts` documenta que normaliza el
+// texto igual que lo sanea este botón: lo que el usuario oye y lo que se compara deben coincidir.
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
-
-/** Tamaños admitidos: el botón crece junto al texto que acompaña. */
-export type SpeakerSize = 'small' | 'medium' | 'large';
-
-type SpeakerButtonProps = {
-  /** Texto en inglés que se pronuncia al pulsar (enunciado, respuesta o palabra). */
-  text: string;
-  /** Tamaño del botón; por defecto `'medium'`. */
-  size?: SpeakerSize;
-};
-
-/** Idioma de la pronunciación. */
-const SPEECH_LANGUAGE = 'en-US';
-/** Velocidad de la voz: algo más lenta que la normal (1.0) para entenderla mejor. */
-const SPEECH_RATE = 0.9;
-/** Tono normal de la voz. */
-const SPEECH_PITCH = 1.0;
-/**
- * Estimación de milisegundos por carácter para mantener el ícono "hablando". `expo-speech`
- * no informa de la duración de la frase, así que se aproxima por su longitud.
- */
-const FEEDBACK_MS_PER_CHARACTER = 80;
-/** Duración mínima del feedback visual (ms), para textos muy cortos. */
-const MIN_FEEDBACK_MS = 800;
-
-/** Tamaño de letra del ícono según el tamaño del botón. */
-const SIZE_FONT_SIZE: Record<SpeakerSize, number> = {
-  small: 14,
-  medium: 18,
-  large: 22,
-};
-
-/** Espaciado interior del botón según su tamaño. */
-const SIZE_PADDING: Record<SpeakerSize, { paddingHorizontal: number; paddingVertical: number }> = {
-  small: { paddingHorizontal: 6, paddingVertical: 2 },
-  medium: { paddingHorizontal: 8, paddingVertical: 4 },
-  large: { paddingHorizontal: 10, paddingVertical: 6 },
-};
 
 /**
- * Limpia el texto que se manda al sintetizador de voz.
- *
- * El TTS duplica el contenido de los paréntesis en algunas plataformas (p. ej. "Twenty-seven
- * (27)" suena como "twenty seven, twenty seven"). Esta limpieza solo afecta al audio; el texto
- * en pantalla se mantiene intacto.
- *
- * Función pura: mismo texto de entrada, mismo texto de salida (no toca estado ni el DOM).
+ * Prepara un texto para leerlo: quita el contenido entre paréntesis y corchetes (casi
+ * siempre aclaraciones que no se dicen en voz alta, p. ej. "(U.S.) Congress" -> "Congress") y
+ * colapsa los espacios.
  */
-function sanitizeForSpeech(text: string): string {
+export function sanitizeForSpeech(text: string): string {
+  const cleaned = text
+    .replace(/\s*\([^)]*\)/g, '')
+    .replace(/\s*\[[^\]]*\]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Si al quitar los paréntesis no queda nada (p. ej. la respuesta era solo "(U.S.)"),
+  // se lee el texto original para no quedarse en silencio.
+  return cleaned.length > 0 ? cleaned : text.trim();
+}
+
+/** `true` si el navegador puede sintetizar voz. */
+export function isSpeechSynthesisSupported(): boolean {
+  return typeof window !== 'undefined' && 'speechSynthesis' in window;
+}
+
+/** Icono de altavoz (SVG inline para no depender de emojis). */
+function SpeakerIcon() {
   return (
-    text
-      // Elimina paréntesis y todo su contenido: "Twenty-seven (27)" → "Twenty-seven"
-      .replace(/\s*\([^)]*\)/g, '')
-      // Elimina corchetes y su contenido, por si acaso
-      .replace(/\s*\[[^\]]*\]/g, '')
-      // Colapsa espacios múltiples
-      .replace(/\s+/g, ' ')
-      .trim()
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z" />
+    </svg>
   );
 }
 
-export default function SpeakerButton({ text, size = 'medium' }: SpeakerButtonProps) {
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  // Id del timeout del feedback visual, en un ref para poder cancelarlo desde el cleanup.
-  const feedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+type SpeakerButtonProps = {
+  /** Texto en inglés que se leerá. */
+  text: string;
+  /** Etiqueta accesible y, si `compact` es falso, texto visible (por defecto "Escuchar"). */
+  label?: string;
+  /** Solo el icono, para listas compactas. */
+  compact?: boolean;
+  /** Velocidad de lectura (por defecto 0.95, algo más lenta para estudiantes). */
+  rate?: number;
+  className?: string;
+};
 
-  /** Apaga el ícono "hablando" y cancela el timeout pendiente, si lo hay. */
-  const stopFeedback = useCallback(() => {
-    if (feedbackTimer.current !== null) {
-      clearTimeout(feedbackTimer.current);
-      feedbackTimer.current = null;
-    }
-    setIsSpeaking(false);
-  }, []);
+export default function SpeakerButton({
+  text,
+  label = 'Escuchar',
+  compact = false,
+  rate = 0.95,
+  className,
+}: SpeakerButtonProps) {
+  const [supported] = useState(isSpeechSynthesisSupported);
+  const [speaking, setSpeaking] = useState(false);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  // Al desmontar el botón se cancela el timeout para no actualizar estado ya desechado.
-  useEffect(() => stopFeedback, [stopFeedback]);
+  // Al desmontar se corta la lectura y se sueltan los callbacks.
+  useEffect(
+    () => () => {
+      const utterance = utteranceRef.current;
 
-  const handlePress = useCallback(() => {
-    // El audio se sintetiza a partir del texto limpio (sin paréntesis); en pantalla y en el
-    // lector de pantalla se sigue usando el texto original.
-    const cleanText = sanitizeForSpeech(text);
+      if (utterance !== null) {
+        utterance.onstart = null;
+        utterance.onend = null;
+        utterance.onerror = null;
+      }
 
-    // Si al limpiar no queda nada pronunciable (p. ej. el texto era solo "(27)"), no se lee nada.
-    if (cleanText === '') {
+      if (isSpeechSynthesisSupported()) {
+        window.speechSynthesis.cancel();
+      }
+    },
+    [],
+  );
+
+  const speak = useCallback(() => {
+    if (!supported) {
       return;
     }
 
-    // 1) Se corta la pronunciación en curso (de este u otro botón) para que no se solapen:
-    //    al pulsar de nuevo se descarta el audio anterior en lugar de encolarlo.
-    // 2) Se lee el texto en inglés. Se espera a que `stop` termine para que Android no
-    //    descarte la lectura nueva al vaciar la cola de reproducción.
-    Speech.stop()
-      .catch(() => {
-        // Si no había nada sonando, `stop` puede rechazar: se ignora y se lee igualmente.
-      })
-      .finally(() => {
-        Speech.speak(cleanText, {
-          language: SPEECH_LANGUAGE,
-          rate: SPEECH_RATE,
-          pitch: SPEECH_PITCH,
-          // El fin real de la lectura (normalmente antes de la estimación) también apaga
-          // el ícono, igual que un error de síntesis.
-          onDone: stopFeedback,
-          onError: stopFeedback,
-        });
-      });
+    const synth = window.speechSynthesis;
 
-    // Feedback visual estimado sobre lo que se va a oír: `cleanText.length * 80 ms`, con un
-    // mínimo de 800 ms.
-    if (feedbackTimer.current !== null) {
-      clearTimeout(feedbackTimer.current);
+    // Si este botón ya está leyendo, el toque lo detiene.
+    if (speaking) {
+      synth.cancel();
+      setSpeaking(false);
+      return;
     }
-    setIsSpeaking(true);
-    feedbackTimer.current = setTimeout(
-      stopFeedback,
-      Math.max(cleanText.length * FEEDBACK_MS_PER_CHARACTER, MIN_FEEDBACK_MS),
-    );
-  }, [stopFeedback, text]);
+
+    const utterance = new SpeechSynthesisUtterance(sanitizeForSpeech(text));
+    utterance.lang = 'en-US';
+    utterance.rate = rate;
+
+    // Se prefiere una voz en inglés si el navegador ya la tiene cargada.
+    const englishVoice = synth.getVoices().find((voice) => voice.lang.toLowerCase().startsWith('en'));
+    if (englishVoice !== undefined) {
+      utterance.voice = englishVoice;
+    }
+
+    utterance.onstart = () => setSpeaking(true);
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
+
+    utteranceRef.current = utterance;
+
+    // `cancel()` seguido de `speak()` se ignora en algunos Chrome; un pequeño respiro lo evita.
+    synth.cancel();
+    window.setTimeout(() => synth.speak(utterance), 60);
+  }, [rate, speaking, supported, text]);
+
+  if (!supported) {
+    return null;
+  }
 
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={`Escuchar: ${text}`}
-      accessibilityHint="Reproduce la pronunciación en inglés"
-      onPress={handlePress}
-      style={({ pressed }) => [styles.button, SIZE_PADDING[size], pressed && styles.buttonPressed]}
+    <button
+      type="button"
+      className={className}
+      onClick={speak}
+      aria-label={speaking ? 'Detener lectura' : label}
+      aria-pressed={speaking}
+      title={speaking ? 'Detener lectura' : label}
     >
-      <Text style={[styles.icon, { fontSize: SIZE_FONT_SIZE[size] }]}>
-        {isSpeaking ? '🔉' : '🔊'}
-      </Text>
-    </Pressable>
+      <SpeakerIcon />
+      {!compact && <span>{speaking ? 'Detener' : label}</span>}
+    </button>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 8,
-    backgroundColor: '#f0f4f9',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonPressed: {
-    // Se oscurece al pulsar: deja claro que es interactivo incluso sin leer el ícono.
-    backgroundColor: '#dbe5f1',
-  },
-  icon: {
-    color: '#1a3a6b',
-    textAlign: 'center',
-  },
-});

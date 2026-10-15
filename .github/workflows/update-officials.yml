@@ -1,0 +1,59 @@
+name: Actualizar datos oficiales
+
+# Regenera src/data/stateOfficials.json (senadores, representantes, gobernadores y capitales) con
+# las fuentes públicas, y hace commit si algo cambió. Así los datos de las 4 preguntas que dependen
+# del estado del solicitante no se quedan viejos sin que nadie se acuerde. El commit dispara un
+# despliegue nuevo en Vercel.
+on:
+  schedule:
+    # El día 1 de cada mes a las 06:00 UTC.
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Regenerar los datos de los estados
+        run: npm run update-officials
+        env:
+          # Token del propio repositorio: solo se usa para subir el límite del API de GitHub al
+          # listar el repositorio de gobernadores.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ¿Cambió algún dato?
+        id: diff
+        run: |
+          if git diff --quiet -- src/data/stateOfficials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ejecutar las pruebas
+        if: steps.diff.outputs.changed == 'true'
+        run: npm test
+
+      - name: Hacer commit y push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/data/stateOfficials.json
+          git commit -m 'chore(datos): actualizar cargos estatales (senadores, representantes, gobernadores)'
+          git push

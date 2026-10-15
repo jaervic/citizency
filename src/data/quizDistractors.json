@@ -1,0 +1,806 @@
+{
+  "gov-001": {
+    "en": ["Monarchy", "Direct democracy", "Confederation"],
+    "es": ["Monarquía", "Democracia directa", "Confederación"]
+  },
+  "gov-002": {
+    "en": ["The Declaration of Independence", "The Bill of Rights", "The Federalist Papers"],
+    "es": ["La Declaración de Independencia", "La Carta de Derechos", "Los Documentos Federalistas"]
+  },
+  "gov-003": {
+    "en": ["Declares war", "Makes the laws", "Prints money"],
+    "es": ["Declara la guerra", "Hace las leyes", "Imprime dinero"]
+  },
+  "gov-004": {
+    "en": ["Limited government", "Separation of powers", "Checks and balances"],
+    "es": ["Gobierno limitado", "Separación de poderes", "Controles y equilibrios"]
+  },
+  "gov-005": {
+    "en": ["By a national vote", "By a presidential order", "By a Supreme Court decision"],
+    "es": ["Por voto nacional", "Por orden presidencial", "Por decisión de la Corte Suprema"]
+  },
+  "gov-006": {
+    "en": ["The powers of the federal government", "The rights of the states", "The duties of citizens"],
+    "es": ["Los poderes del gobierno federal", "Los derechos de los estados", "Los deberes de los ciudadanos"]
+  },
+  "gov-007": {
+    "en": ["Fifty (50)", "One hundred (100)", "Thirteen (13)"],
+    "es": ["Cincuenta (50)", "Cien (100)", "Trece (13)"]
+  },
+  "gov-008": {
+    "en": [
+      "It created the three branches of government.",
+      "It set up the first American government.",
+      "It ended the Civil War."
+    ],
+    "es": [
+      "Creó las tres ramas del gobierno.",
+      "Estableció el primer gobierno estadounidense.",
+      "Puso fin a la Guerra Civil."
+    ]
+  },
+  "gov-009": {
+    "en": ["U.S. Constitution", "Articles of Confederation", "Mayflower Compact"],
+    "es": ["La Constitución de EE. UU.", "Los Artículos de la Confederación", "El Pacto del Mayflower"]
+  },
+  "gov-010": {
+    "en": ["Separation of powers", "Checks and balances", "Federalism"],
+    "es": ["Separación de poderes", "Controles y equilibrios", "Federalismo"]
+  },
+  "gov-011": {
+    "en": ["U.S. Constitution", "Bill of Rights", "Articles of Confederation"],
+    "es": ["La Constitución de EE. UU.", "La Carta de Derechos", "Los Artículos de la Confederación"]
+  },
+  "gov-012": {
+    "en": ["Socialism", "Communism", "Mercantilism"],
+    "es": ["Socialismo", "Comunismo", "Mercantilismo"]
+  },
+  "gov-013": {
+    "en": [
+      "The president can change the law.",
+      "Only citizens must follow the law.",
+      "States do not have to follow federal law."
+    ],
+    "es": [
+      "El presidente puede cambiar la ley.",
+      "Solo los ciudadanos deben obedecer la ley.",
+      "Los estados no tienen que obedecer la ley federal."
+    ]
+  },
+  "gov-014": {
+    "en": ["The Bill of Rights", "The Emancipation Proclamation", "The Gettysburg Address"],
+    "es": ["La Carta de Derechos", "La Proclamación de Emancipación", "El Discurso de Gettysburg"]
+  },
+  "gov-015": {
+    "en": [
+      "So the president can make laws faster",
+      "To give the states more power",
+      "To make the government smaller"
+    ],
+    "es": [
+      "Para que el presidente pueda hacer leyes más rápido",
+      "Para dar más poder a los estados",
+      "Para reducir el tamaño del gobierno"
+    ]
+  },
+  "gov-016": {
+    "en": ["Federal, state, and local", "Senate, House, and Cabinet", "Executive, judicial, and military"],
+    "es": ["Federal, estatal y local", "Senado, Cámara y Gabinete", "Ejecutiva, judicial y militar"]
+  },
+  "gov-017": {
+    "en": ["Legislative branch", "Judicial branch", "Federal branch"],
+    "es": ["La rama legislativa", "La rama judicial", "La rama federal"]
+  },
+  "gov-018": {
+    "en": ["The Supreme Court", "The President", "The Cabinet"],
+    "es": ["La Corte Suprema", "El Presidente", "El Gabinete"]
+  },
+  "gov-019": {
+    "en": [
+      "The President and the Cabinet",
+      "The Supreme Court and the federal courts",
+      "The Senate and the Cabinet"
+    ],
+    "es": [
+      "El Presidente y el Gabinete",
+      "La Corte Suprema y los tribunales federales",
+      "El Senado y el Gabinete"
+    ]
+  },
+  "gov-020": {
+    "en": ["Signs bills into law", "Vetoes bills", "Appoints federal judges"],
+    "es": ["Firma proyectos de ley para convertirlos en leyes", "Veta proyectos de ley", "Nombra jueces federales"]
+  },
+  "gov-021": {
+    "en": ["Four hundred thirty-five (435)", "Fifty (50)", "Twenty-seven (27)"],
+    "es": ["Cuatrocientos treinta y cinco (435)", "Cincuenta (50)", "Veintisiete (27)"]
+  },
+  "gov-022": {
+    "en": ["Two (2) years", "Four (4) years", "Eight (8) years"],
+    "es": ["Dos (2) años", "Cuatro (4) años", "Ocho (8) años"]
+  },
+  "gov-024": {
+    "en": ["One hundred (100)", "Fifty (50)", "Two hundred (200)"],
+    "es": ["Cien (100)", "Cincuenta (50)", "Doscientos (200)"]
+  },
+  "gov-025": {
+    "en": ["Four (4) years", "Six (6) years", "One (1) year"],
+    "es": ["Cuatro (4) años", "Seis (6) años", "Un (1) año"]
+  },
+  "gov-026": {
+    "en": [
+      "Because they represent smaller districts",
+      "To limit their power",
+      "Because they are elected by the states"
+    ],
+    "es": [
+      "Porque representan distritos más pequeños",
+      "Para limitar su poder",
+      "Porque son elegidos por los estados"
+    ]
+  },
+  "gov-027": {
+    "en": ["One (1)", "Three (3)", "Depends on the state's population"],
+    "es": ["Uno (1)", "Tres (3)", "Depende de la población del estado"]
+  },
+  "gov-028": {
+    "en": [
+      "Because some states have more people",
+      "To give large states more power",
+      "Because of the state's population"
+    ],
+    "es": [
+      "Porque algunos estados tienen más personas",
+      "Para dar más poder a los estados grandes",
+      "Por la población del estado"
+    ]
+  },
+  "gov-031": {
+    "en": [
+      "Citizens in their congressional district",
+      "The President of the United States",
+      "All citizens of the United States"
+    ],
+    "es": [
+      "A los ciudadanos de su distrito congresional",
+      "Al Presidente de los Estados Unidos",
+      "A todos los ciudadanos de los Estados Unidos"
+    ]
+  },
+  "gov-032": {
+    "en": [
+      "Citizens from their congressional district",
+      "State legislatures",
+      "The House of Representatives"
+    ],
+    "es": [
+      "Los ciudadanos de su distrito congresional",
+      "Las legislaturas estatales",
+      "La Cámara de Representantes"
+    ]
+  },
+  "gov-033": {
+    "en": [
+      "Citizens of their state",
+      "All citizens of the United States",
+      "The President of the United States"
+    ],
+    "es": [
+      "A los ciudadanos de su estado",
+      "A todos los ciudadanos de los Estados Unidos",
+      "Al Presidente de los Estados Unidos"
+    ]
+  },
+  "gov-034": {
+    "en": ["Citizens from their state", "State legislatures", "The Senate"],
+    "es": ["Los ciudadanos de su estado", "Las legislaturas estatales", "El Senado"]
+  },
+  "gov-035": {
+    "en": [
+      "Because they are older states",
+      "Because they have more senators",
+      "Because of the state's size in area"
+    ],
+    "es": [
+      "Porque son estados más antiguos",
+      "Porque tienen más senadores",
+      "Por el tamaño del estado en superficie"
+    ]
+  },
+  "gov-036": {
+    "en": ["Two (2) years", "Six (6) years", "Eight (8) years"],
+    "es": ["Dos (2) años", "Seis (6) años", "Ocho (8) años"]
+  },
+  "gov-037": {
+    "en": ["Because of the 10th Amendment", "Because of the 14th Amendment", "Because of the 19th Amendment"],
+    "es": ["Por la Enmienda 10", "Por la Enmienda 14", "Por la Enmienda 19"]
+  },
+  "gov-040": {
+    "en": [
+      "The Speaker of the House of Representatives",
+      "The Chief Justice of the United States",
+      "The Secretary of State"
+    ],
+    "es": [
+      "El Presidente de la Cámara de Representantes",
+      "El Presidente de la Corte Suprema",
+      "El Secretario de Estado"
+    ]
+  },
+  "gov-041": {
+    "en": ["Declares war", "Prints paper money", "Makes the federal budget"],
+    "es": ["Declara la guerra", "Imprime papel moneda", "Elabora el presupuesto federal"]
+  },
+  "gov-042": {
+    "en": ["The Secretary of Defense", "The Vice President of the United States", "The Attorney General"],
+    "es": ["El Secretario de Defensa", "El Vicepresidente de los Estados Unidos", "El Fiscal General"]
+  },
+  "gov-043": {
+    "en": [
+      "The Speaker of the House of Representatives",
+      "The Chief Justice of the United States",
+      "The Vice President of the United States"
+    ],
+    "es": [
+      "El Presidente de la Cámara de Representantes",
+      "El Presidente de la Corte Suprema",
+      "El Vicepresidente de los Estados Unidos"
+    ]
+  },
+  "gov-044": {
+    "en": ["The Supreme Court", "(U.S.) Congress", "The Speaker of the House of Representatives"],
+    "es": ["La Corte Suprema", "El Congreso (de EE. UU.)", "El Presidente de la Cámara de Representantes"]
+  },
+  "gov-045": {
+    "en": ["(U.S.) Congress", "The Supreme Court", "The states"],
+    "es": ["El Congreso (de EE. UU.)", "La Corte Suprema", "Los estados"]
+  },
+  "gov-046": {
+    "en": ["Supreme Court", "(U.S.) Congress", "Federal Courts"],
+    "es": ["La Corte Suprema", "El Congreso (de EE. UU.)", "Los tribunales federales"]
+  },
+  "gov-047": {
+    "en": ["Writes the laws", "Decides if a law is constitutional", "Elects the president"],
+    "es": ["Escribe las leyes", "Decide si una ley es constitucional", "Elige al presidente"]
+  },
+  "gov-048": {
+    "en": [
+      "Chief Justice of the United States",
+      "Speaker of the House of Representatives",
+      "President of the Senate"
+    ],
+    "es": [
+      "Presidente de la Corte Suprema",
+      "Presidente de la Cámara de Representantes",
+      "Presidente del Senado"
+    ]
+  },
+  "gov-049": {
+    "en": [
+      "It decides who becomes a Supreme Court justice.",
+      "It counts the votes for Congress.",
+      "It elects the Speaker of the House."
+    ],
+    "es": [
+      "Decide quién es nombrado juez de la Corte Suprema.",
+      "Cuenta los votos para el Congreso.",
+      "Elige al Presidente de la Cámara de Representantes."
+    ]
+  },
+  "gov-050": {
+    "en": ["(U.S.) Congress", "The Cabinet", "The President of the United States"],
+    "es": ["El Congreso (de EE. UU.)", "El Gabinete", "El Presidente de los Estados Unidos"]
+  },
+  "gov-051": {
+    "en": ["Writes laws", "Enforces laws", "Signs bills into law"],
+    "es": ["Escribe leyes", "Hace cumplir las leyes", "Firma proyectos de ley para convertirlos en leyes"]
+  },
+  "gov-052": {
+    "en": ["Federal Courts", "The Court of Appeals", "The District Court"],
+    "es": ["Los tribunales federales", "La Corte de Apelaciones", "El Tribunal de Distrito"]
+  },
+  "gov-053": {
+    "en": ["Five (5)", "Seven (7)", "Eleven (11)"],
+    "es": ["Cinco (5)", "Siete (7)", "Once (11)"]
+  },
+  "gov-054": {
+    "en": ["Nine (9)", "Three (3)", "Seven (7)"],
+    "es": ["Nueve (9)", "Tres (3)", "Siete (7)"]
+  },
+  "gov-055": {
+    "en": ["Four (4) years", "Six (6) years", "Ten (10) years"],
+    "es": ["Cuatro (4) años", "Seis (6) años", "Diez (10) años"]
+  },
+  "gov-056": {
+    "en": [
+      "To follow public opinion",
+      "To save money for the government",
+      "To let the president choose new judges"
+    ],
+    "es": [
+      "Para seguir la opinión pública",
+      "Para ahorrar dinero al gobierno",
+      "Para que el presidente elija jueces nuevos"
+    ]
+  },
+  "gov-058": {
+    "en": ["Provide schooling and education", "Provide protection (police)", "Give a driver's license"],
+    "es": ["Proveer educación y escuelas", "Proveer protección (policía)", "Dar licencias de conducir"]
+  },
+  "gov-059": {
+    "en": ["Declare war", "Print paper money", "Make treaties"],
+    "es": ["Declarar la guerra", "Imprimir papel moneda", "Hacer tratados"]
+  },
+  "gov-060": {
+    "en": [
+      "It gives the president the power to veto bills.",
+      "It says all people born in the United States are citizens.",
+      "It gives the federal government more power than the states."
+    ],
+    "es": [
+      "Le da al presidente el poder de vetar proyectos de ley.",
+      "Dice que todas las personas nacidas en los Estados Unidos son ciudadanos.",
+      "Le da al gobierno federal más poder que a los estados."
+    ]
+  },
+  "civ-063": {
+    "en": ["Only people who own property can vote.", "Only people who pay taxes can vote.", "Only men can vote."],
+    "es": [
+      "Solo las personas que tienen propiedades pueden votar.",
+      "Solo las personas que pagan impuestos pueden votar.",
+      "Solo los hombres pueden votar."
+    ]
+  },
+  "civ-064": {
+    "en": ["Everyone living in the United States", "Legal residents with a green card", "Anyone who pays taxes"],
+    "es": ["Todas las personas que viven en los Estados Unidos", "Los residentes legales con tarjeta verde", "Cualquier persona que pague impuestos"]
+  },
+  "civ-065": {
+    "en": [
+      "The right to vote in federal elections",
+      "The right to a U.S. passport",
+      "The right to run for president"
+    ],
+    "es": [
+      "El derecho a votar en elecciones federales",
+      "El derecho a un pasaporte estadounidense",
+      "El derecho a postularse para presidente"
+    ]
+  },
+  "civ-066": {
+    "en": ["The President of the United States", "The U.S. Constitution", "The U.S. military"],
+    "es": ["Al Presidente de los Estados Unidos", "A la Constitución de EE. UU.", "A las fuerzas armadas de EE. UU."]
+  },
+  "civ-067": {
+    "en": ["Pay taxes every year", "Vote in every election", "Serve on a jury"],
+    "es": ["Pagar impuestos cada año", "Votar en todas las elecciones", "Servir en un jurado"]
+  },
+  "civ-068": {
+    "en": [
+      "Buy citizenship",
+      "Serve in the military for two years",
+      "Live in the United States for five years"
+    ],
+    "es": [
+      "Comprar la ciudadanía",
+      "Servir en las fuerzas armadas durante dos años",
+      "Vivir en los Estados Unidos durante cinco años"
+    ]
+  },
+  "civ-069": {
+    "en": ["Pay your taxes on time", "Serve in the military", "Obey the speed limit"],
+    "es": ["Pagar los impuestos a tiempo", "Servir en las fuerzas armadas", "Respetar el límite de velocidad"]
+  },
+  "civ-070": {
+    "en": ["Travel to other countries", "Own a business", "Go to college"],
+    "es": ["Viajar a otros países", "Tener un negocio", "Ir a la universidad"]
+  },
+  "civ-071": {
+    "en": ["To become a U.S. citizen", "To vote in elections", "To join the military"],
+    "es": ["Para llegar a ser ciudadano estadounidense", "Para votar en las elecciones", "Para unirse a las fuerzas armadas"]
+  },
+  "civ-072": {
+    "en": ["To register to vote", "To become a U.S. citizen", "To pay federal taxes"],
+    "es": ["Para registrarse para votar", "Para llegar a ser ciudadano estadounidense", "Para pagar impuestos federales"]
+  },
+  "his-073": {
+    "en": ["To find gold in California", "To fight in the Civil War", "To serve in the U.S. military"],
+    "es": ["Para encontrar oro en California", "Para luchar en la Guerra Civil", "Para servir en las fuerzas armadas de EE. UU."]
+  },
+  "his-074": {
+    "en": ["The British", "The Spanish", "The Pilgrims"],
+    "es": ["Los británicos", "Los españoles", "Los peregrinos"]
+  },
+  "his-075": {
+    "en": ["American Indians", "Europeans", "People from Asia"],
+    "es": ["Los indígenas americanos", "Los europeos", "Personas de Asia"]
+  },
+  "his-076": {
+    "en": ["The Civil War", "The War of 1812", "World War I"],
+    "es": ["La Guerra Civil", "La Guerra de 1812", "La Primera Guerra Mundial"]
+  },
+  "his-077": {
+    "en": ["They wanted to keep slavery", "They wanted a king", "They wanted to join France"],
+    "es": ["Querían mantener la esclavitud", "Querían un rey", "Querían unirse a Francia"]
+  },
+  "his-078": {
+    "en": ["George Washington", "Benjamin Franklin", "James Madison"],
+    "es": ["George Washington", "Benjamin Franklin", "James Madison"]
+  },
+  "his-079": {
+    "en": ["July 4, 1787", "July 4, 1789", "July 4, 1770"],
+    "es": ["4 de julio de 1787", "4 de julio de 1789", "4 de julio de 1770"]
+  },
+  "his-080": {
+    "en": ["Battle of Gettysburg", "Battle of Fort Sumter", "Battle of Vicksburg"],
+    "es": ["La Batalla de Gettysburg", "La Batalla de Fort Sumter", "La Batalla de Vicksburg"]
+  },
+  "his-081": {
+    "en": ["Ohio", "Florida", "California"],
+    "es": ["Ohio", "Florida", "California"]
+  },
+  "his-082": {
+    "en": ["Declaration of Independence", "Articles of Confederation", "Bill of Rights"],
+    "es": ["La Declaración de Independencia", "Los Artículos de la Confederación", "La Carta de Derechos"]
+  },
+  "his-083": {
+    "en": ["Thomas Jefferson", "George Washington", "Benjamin Franklin"],
+    "es": ["Thomas Jefferson", "George Washington", "Benjamin Franklin"]
+  },
+  "his-084": {
+    "en": [
+      "They declared independence from Britain.",
+      "They ended the Civil War.",
+      "They created the Bill of Rights."
+    ],
+    "es": [
+      "Declararon la independencia de Gran Bretaña.",
+      "Pusieron fin a la Guerra Civil.",
+      "Crearon la Carta de Derechos."
+    ]
+  },
+  "his-085": {
+    "en": [
+      "First president of the United States",
+      "Wrote the national anthem",
+      "Led the Union during the Civil War"
+    ],
+    "es": [
+      "Primer presidente de los Estados Unidos",
+      "Escribió el himno nacional",
+      "Dirigió la Unión durante la Guerra Civil"
+    ]
+  },
+  "his-086": {
+    "en": [
+      "Wrote the Declaration of Independence",
+      "Third president of the United States",
+      "First Secretary of the Treasury"
+    ],
+    "es": [
+      "Escribió la Declaración de Independencia",
+      "Tercer presidente de los Estados Unidos",
+      "Primer Secretario del Tesoro"
+    ]
+  },
+  "his-087": {
+    "en": [
+      "\"Father of the Constitution\"",
+      "First president of the United States",
+      "First Secretary of the Treasury"
+    ],
+    "es": [
+      "\"Padre de la Constitución\"",
+      "Primer presidente de los Estados Unidos",
+      "Primer Secretario del Tesoro"
+    ]
+  },
+  "his-088": {
+    "en": [
+      "First president of the United States",
+      "Wrote the Declaration of Independence",
+      "Commander in Chief of the Continental Army"
+    ],
+    "es": [
+      "Primer presidente de los Estados Unidos",
+      "Escribió la Declaración de Independencia",
+      "Comandante en Jefe del Ejército Continental"
+    ]
+  },
+  "his-089": {
+    "en": [
+      "Wrote the Declaration of Independence",
+      "First president of the United States",
+      "Third president of the United States"
+    ],
+    "es": [
+      "Escribió la Declaración de Independencia",
+      "Primer presidente de los Estados Unidos",
+      "Tercer presidente de los Estados Unidos"
+    ]
+  },
+  "his-090": {
+    "en": ["Alaska", "Florida", "Texas"],
+    "es": ["Alaska", "Florida", "Texas"]
+  },
+  "his-091": {
+    "en": ["World War I", "World War II", "Vietnam War"],
+    "es": ["La Primera Guerra Mundial", "La Segunda Guerra Mundial", "La Guerra de Vietnam"]
+  },
+  "his-092": {
+    "en": ["The Revolutionary War", "The War of 1812", "World War I"],
+    "es": ["La Guerra Revolucionaria", "La Guerra de 1812", "La Primera Guerra Mundial"]
+  },
+  "his-093": {
+    "en": ["Battle of Yorktown", "Battle of Bunker Hill", "Battle of Saratoga"],
+    "es": ["La Batalla de Yorktown", "La Batalla de Bunker Hill", "La Batalla de Saratoga"]
+  },
+  "his-094": {
+    "en": [
+      "First president of the United States",
+      "Wrote the Declaration of Independence",
+      "Third president of the United States"
+    ],
+    "es": [
+      "Primer presidente de los Estados Unidos",
+      "Escribió la Declaración de Independencia",
+      "Tercer presidente de los Estados Unidos"
+    ]
+  },
+  "his-095": {
+    "en": ["Gave women the right to vote", "Ended World War I", "Created the Bill of Rights"],
+    "es": ["Dio a las mujeres el derecho al voto", "Puso fin a la Primera Guerra Mundial", "Creó la Carta de Derechos"]
+  },
+  "his-096": {
+    "en": ["The Revolutionary War", "The War of 1812", "World War II"],
+    "es": ["La Guerra Revolucionaria", "La Guerra de 1812", "La Segunda Guerra Mundial"]
+  },
+  "his-097": {
+    "en": ["10th Amendment", "15th Amendment", "19th Amendment"],
+    "es": ["La Enmienda 10", "La Enmienda 15", "La Enmienda 19"]
+  },
+  "his-098": {
+    "en": ["After World War I", "With the 19th Amendment", "After the Revolutionary War"],
+    "es": ["Después de la Primera Guerra Mundial", "Con la Enmienda 19", "Después de la Guerra Revolucionaria"]
+  },
+  "his-099": {
+    "en": ["Martin Luther King, Jr.", "Rosa Parks", "Abraham Lincoln"],
+    "es": ["Martin Luther King, Jr.", "Rosa Parks", "Abraham Lincoln"]
+  },
+  "his-100": {
+    "en": ["The Civil War", "The War of 1812", "The Mexican-American War"],
+    "es": ["La Guerra Civil", "La Guerra de 1812", "La Guerra México-Americana"]
+  },
+  "his-101": {
+    "en": [
+      "Because Japan bombed Pearl Harbor",
+      "To stop the spread of communism",
+      "To force Iraq out of Kuwait"
+    ],
+    "es": [
+      "Porque Japón bombardeó Pearl Harbor",
+      "Para detener la expansión del comunismo",
+      "Para obligar a Irak a salir de Kuwait"
+    ]
+  },
+  "his-102": {
+    "en": ["1870", "1945", "1965"],
+    "es": ["1870", "1945", "1965"]
+  },
+  "his-103": {
+    "en": ["A long drought in the 1930s", "A war in Europe", "A period of high immigration"],
+    "es": ["Una larga sequía en la década de 1930", "Una guerra en Europa", "Un período de alta inmigración"]
+  },
+  "his-104": {
+    "en": [
+      "The start of World War I",
+      "The end of the Civil War",
+      "The start of World War II"
+    ],
+    "es": [
+      "El inicio de la Primera Guerra Mundial",
+      "El fin de la Guerra Civil",
+      "El inicio de la Segunda Guerra Mundial"
+    ]
+  },
+  "his-105": {
+    "en": ["Abraham Lincoln", "George Washington", "Dwight Eisenhower"],
+    "es": ["Abraham Lincoln", "George Washington", "Dwight Eisenhower"]
+  },
+  "his-106": {
+    "en": [
+      "Because Germany attacked U.S. civilian ships",
+      "To stop the spread of communism",
+      "To force Iraq out of Kuwait"
+    ],
+    "es": [
+      "Porque Alemania atacó barcos civiles de EE. UU.",
+      "Para detener la expansión del comunismo",
+      "Para obligar a Irak a salir de Kuwait"
+    ]
+  },
+  "his-107": {
+    "en": [
+      "Wrote the Declaration of Independence",
+      "General during the Civil War",
+      "First president of the United States"
+    ],
+    "es": [
+      "Escribió la Declaración de Independencia",
+      "General durante la Guerra Civil",
+      "Primer presidente de los Estados Unidos"
+    ]
+  },
+  "his-108": {
+    "en": ["Germany", "Japan", "China"],
+    "es": ["Alemania", "Japón", "China"]
+  },
+  "his-109": {
+    "en": ["Slavery", "High taxes", "Immigration"],
+    "es": ["La esclavitud", "Los impuestos altos", "La inmigración"]
+  },
+  "his-110": {
+    "en": [
+      "Because Japan bombed Pearl Harbor",
+      "To force Iraq out of Kuwait",
+      "Because Germany attacked U.S. civilian ships"
+    ],
+    "es": [
+      "Porque Japón bombardeó Pearl Harbor",
+      "Para obligar a Irak a salir de Kuwait",
+      "Porque Alemania atacó barcos civiles de EE. UU."
+    ]
+  },
+  "his-111": {
+    "en": [
+      "Because Germany attacked U.S. civilian ships",
+      "To force Iraq out of Kuwait",
+      "Because Japan bombed Pearl Harbor"
+    ],
+    "es": [
+      "Porque Alemania atacó barcos civiles de EE. UU.",
+      "Para obligar a Irak a salir de Kuwait",
+      "Porque Japón bombardeó Pearl Harbor"
+    ]
+  },
+  "his-112": {
+    "en": [
+      "Fought to end slavery",
+      "Fought to give women the right to vote",
+      "Fought for independence from Britain"
+    ],
+    "es": [
+      "Luchó para acabar con la esclavitud",
+      "Luchó para dar a las mujeres el derecho al voto",
+      "Luchó por la independencia de Gran Bretaña"
+    ]
+  },
+  "his-113": {
+    "en": [
+      "First president of the United States",
+      "Wrote the Declaration of Independence",
+      "Led the Union during the Civil War"
+    ],
+    "es": [
+      "Primer presidente de los Estados Unidos",
+      "Escribió la Declaración de Independencia",
+      "Dirigió la Unión durante la Guerra Civil"
+    ]
+  },
+  "his-114": {
+    "en": [
+      "To stop the spread of communism",
+      "Because Japan bombed Pearl Harbor",
+      "Because Germany attacked U.S. civilian ships"
+    ],
+    "es": [
+      "Para detener la expansión del comunismo",
+      "Porque Japón bombardeó Pearl Harbor",
+      "Porque Alemania atacó barcos civiles de EE. UU."
+    ]
+  },
+  "his-115": {
+    "en": [
+      "The United States entered World War II",
+      "The Berlin Wall fell",
+      "The Civil War ended"
+    ],
+    "es": [
+      "Estados Unidos entró en la Segunda Guerra Mundial",
+      "Cayó el Muro de Berlín",
+      "Terminó la Guerra Civil"
+    ]
+  },
+  "his-116": {
+    "en": ["The Vietnam War", "The Korean War", "The Persian Gulf War"],
+    "es": ["La Guerra de Vietnam", "La Guerra de Corea", "La Guerra del Golfo Pérsico"]
+  },
+  "his-117": {
+    "en": ["Aztec", "Maya", "Inca"],
+    "es": ["Azteca", "Maya", "Inca"]
+  },
+  "his-118": {
+    "en": ["The compass", "The printing press", "Gunpowder"],
+    "es": ["La brújula", "La imprenta", "La pólvora"]
+  },
+  "civ-119": {
+    "en": ["New York City", "Philadelphia", "Boston"],
+    "es": ["La ciudad de Nueva York", "Filadelfia", "Boston"]
+  },
+  "civ-120": {
+    "en": ["Washington, D.C.", "Boston Harbor", "The Mississippi River"],
+    "es": ["Washington, D.C.", "El puerto de Boston", "El río Misisipi"]
+  },
+  "civ-121": {
+    "en": [
+      "Because there are 13 states",
+      "Because there were 13 presidents",
+      "Because the flag was made in 1913"
+    ],
+    "es": [
+      "Porque hay 13 estados",
+      "Porque hubo 13 presidentes",
+      "Porque la bandera se hizo en 1913"
+    ]
+  },
+  "civ-122": {
+    "en": [
+      "Because there were 50 original colonies",
+      "Because there are 50 senators",
+      "Because the flag has 50 stripes"
+    ],
+    "es": [
+      "Porque hubo 50 colonias originales",
+      "Porque hay 50 senadores",
+      "Porque la bandera tiene 50 franjas"
+    ]
+  },
+  "civ-123": {
+    "en": ["America the Beautiful", "God Bless America", "My Country, 'Tis of Thee"],
+    "es": ["America the Beautiful", "God Bless America", "My Country, 'Tis of Thee"]
+  },
+  "civ-124": {
+    "en": ["In God we trust", "One nation under God", "Liberty and justice for all"],
+    "es": ["En Dios confiamos", "Una nación bajo Dios", "Libertad y justicia para todos"]
+  },
+  "civ-125": {
+    "en": [
+      "A holiday to honor soldiers who died in military service",
+      "A holiday to honor people who have served in the military",
+      "A holiday to celebrate the end of the Civil War"
+    ],
+    "es": [
+      "Un día festivo para honrar a los soldados que murieron en servicio militar",
+      "Un día festivo para honrar a las personas que han servido en las fuerzas armadas",
+      "Un día festivo para celebrar el fin de la Guerra Civil"
+    ]
+  },
+  "civ-126": {
+    "en": ["Election Day", "Valentine's Day", "Halloween"],
+    "es": ["El día de las elecciones", "El día de San Valentín", "Halloween"]
+  },
+  "civ-127": {
+    "en": [
+      "A holiday to honor people who have served in the military",
+      "A holiday to celebrate U.S. independence",
+      "A holiday to honor the president"
+    ],
+    "es": [
+      "Un día festivo para honrar a las personas que han servido en las fuerzas armadas",
+      "Un día festivo para celebrar la independencia de EE. UU.",
+      "Un día festivo para honrar al presidente"
+    ]
+  },
+  "civ-128": {
+    "en": [
+      "A holiday to honor soldiers who died in military service",
+      "A holiday to celebrate U.S. independence",
+      "A holiday to honor the president"
+    ],
+    "es": [
+      "Un día festivo para honrar a los soldados que murieron en servicio militar",
+      "Un día festivo para celebrar la independencia de EE. UU.",
+      "Un día festivo para honrar al presidente"
+    ]
+  }
+}
