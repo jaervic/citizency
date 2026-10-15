@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import AnswerFeedback from '@/components/AnswerFeedback';
 import { useConfirm } from '@/components/ConfirmDialog';
+import Icon from '@/components/Icon';
 import SessionReview from '@/components/SessionReview';
 import type { SessionReviewItem } from '@/components/SessionReview';
 import SpeakerButton from '@/components/SpeakerButton';
@@ -162,7 +163,8 @@ export default function InterviewScreen() {
       <div className="page">
         <SessionReview
           items={entries}
-          title={`Resultado de la entrevista: ${correctCount} de ${questions.length}`}
+          title={`Resultado de la entrevista: ${correctCount} de ${questions.length} correctas`}
+          showSummary={false}
         />
         <div className="results-actions">
           <button type="button" className="btn btn--primary" onClick={handleRetry}>
@@ -218,7 +220,8 @@ export default function InterviewScreen() {
                 }
               }}
             >
-              {speech.isListening ? '⏹ Detener y usar lo dicho' : '🎤 Responder en voz alta'}
+              <Icon name={speech.isListening ? 'stop' : 'mic'} />
+              {speech.isListening ? 'Detener y usar lo dicho' : 'Responder en voz alta'}
             </button>
             <p className="speech-status">
               {speech.isListening

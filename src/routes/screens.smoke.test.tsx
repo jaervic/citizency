@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 
 import App from '@/App';
+import { findFontDependentGlyph } from '@/test/glyphs';
 
 // Nota: con `renderToString` no se puede comprobar el estado que el usuario configura en runtime,
 // porque React usa el "server snapshot" (el estado inicial del store) al renderizar en el
@@ -14,46 +15,39 @@ import App from '@/App';
 // `src/utils/stateOfficials.test.ts`; aquí solo se comprueba que ninguna pantalla revienta.
 const ROUTES = ['/', '/flashcards', '/quiz', '/interview', '/progress', '/state', '/ruta-inexistente'];
 
+const renderRoute = (route: string) =>
+  renderToString(
+    <MemoryRouter initialEntries={[route]}>
+      <App />
+    </MemoryRouter>,
+  );
+
 describe('renderizado de las pantallas', () => {
   for (const route of ROUTES) {
     it(`renderiza ${route} sin errores`, () => {
-      const html = renderToString(
-        <MemoryRouter initialEntries={[route]}>
-          <App />
-        </MemoryRouter>,
-      );
+      expect(renderRoute(route).length).toBeGreaterThan(0);
+    });
 
-      expect(html.length).toBeGreaterThan(0);
+    it(`${route} usa solo iconos SVG (ningún carácter que dependa de una fuente)`, () => {
+      const glyph = findFontDependentGlyph(renderRoute(route));
+
+      expect(glyph, `se coló el carácter ${JSON.stringify(glyph)}`).toBeNull();
     });
   }
 
   it('la pantalla de estudio muestra el contador de la sesión', () => {
-    const html = renderToString(
-      <MemoryRouter initialEntries={['/flashcards']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    expect(html).toContain('Mostrar respuesta');
+    expect(renderRoute('/flashcards')).toContain('Mostrar respuesta');
   });
 
   it('el examen de práctica muestra opciones de respuesta', () => {
-    const html = renderToString(
-      <MemoryRouter initialEntries={['/quiz']}>
-        <App />
-      </MemoryRouter>,
-    );
+    const html = renderRoute('/quiz');
 
     expect(html).toContain('Comprobar respuesta');
     expect(html).toContain('role="radiogroup"');
   });
 
   it('la pantalla "Mi estado" explica para qué sirve', () => {
-    const html = renderToString(
-      <MemoryRouter initialEntries={['/state']}>
-        <App />
-      </MemoryRouter>,
-    );
+    const html = renderRoute('/state');
 
     expect(html).toContain('Estado de residencia');
     expect(html).toContain('Elige tu estado');

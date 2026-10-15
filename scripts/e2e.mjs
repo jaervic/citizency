@@ -1,0 +1,215 @@
+// scripts/e2e.mjs
+// Propósito: comprobar la app en un navegador de verdad. Las pruebas de Vitest cubren la lógica y
+// el render en servidor, pero hay fallos que solo se ven en el navegador: estilos que no se aplican
+// (enlaces subrayados, tarjetas apiladas), glifos que se dibujan como una caja, o interacciones que
+// no funcionan (desplegar el repaso, avanzar en el examen).
+//
+// Uso:
+//   node scripts/e2e.mjs                        # contra el build local (npm run preview)
+//   node scripts/e2e.mjs https://tu-dominio    # contra producción
+//
+// Necesita Playwright, que NO es dependencia del proyecto para no cargar el build (el paquete
+// descarga navegadores al instalarse). Se instala una sola vez:
+//   npm i -D playwright && npx playwright install chromium
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const BASE = process.argv[2] ?? 'http://localhost:4173';
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+/** Preguntas de `questions.json`, para contrastar lo que pinta la app. */
+const QUESTIONS = JSON.parse(readFileSync(path.join(ROOT, 'src/data/questions.json'), 'utf8')).questions;
+
+let playwright;
+try {
+  playwright = await import('playwright');
+} catch {
+  console.error(
+    '❌ Falta Playwright. Instálalo una sola vez con:\n' +
+      '   npm i -D playwright && npx playwright install chromium',
+  );
+  process.exit(2);
+}
+
+const resultados = [];
+function check(nombre, ok, detalle = '') {
+  resultados.push({ nombre, ok });
+  console.log(`${ok ? '✅' : '❌'} ${nombre}${detalle === '' ? '' : ` → ${detalle}`}`);
+}
+
+/** Captura de pantalla opcional (útil para revisar el aspecto a ojo): E2E_SCREENSHOTS=1 */
+const CON_CAPTURAS = process.env.E2E_SCREENSHOTS === '1';
+const DIR_CAPTURAS = process.env.E2E_SCREENSHOTS_DIR ?? '/tmp/opencode';
+const captura = async (nombre) => {
+  if (CON_CAPTURAS) {
+    // Se vuelve arriba antes de capturar: la cabecera es `sticky` y, si la página está desplazada,
+    // aparece pintada en mitad de la captura a página completa.
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const destino = path.join(DIR_CAPTURAS, `e2e-${nombre}.png`);
+    await page.screenshot({ path: destino, fullPage: true });
+    console.log(`   📷 ${destino}`);
+  }
+};
+
+/** Comprobaciones de estilos que se rompieron una vez. */
+const auditEstilos = () =>
+  page.evaluate(() => {
+    const subrayados = [];
+    document.querySelectorAll('a').forEach((anchor) => {
+      const style = getComputedStyle(anchor);
+      // El único enlace que debe ir subrayado es el que está dentro de un texto.
+      if (style.textDecorationLine.includes('underline') && !anchor.classList.contains('state-link')) {
+        subrayados.push(anchor.className || anchor.textContent.trim().slice(0, 20));
+      }
+    });
+
+    const titulosPegados = [];
+    document.querySelectorAll('.home-card').forEach((card) => {
+      const titulo = card.querySelector('.home-card__title');
+      const subtitulo = card.querySelector('.home-card__subtitle');
+      if (titulo !== null && subtitulo !== null) {
+        const a = titulo.getBoundingClientRect();
+        const b = subtitulo.getBoundingClientRect();
+        if (b.top < a.bottom - 2) titulosPegados.push(card.getAttribute('href'));
+      }
+    });
+
+    const titulo = document.querySelector('.home-card__title');
+
+    return {
+      subrayados,
+      titulosPegados,
+      colorTitulo: titulo === null ? null : getComputedStyle(titulo).color,
+      iconos: document.querySelectorAll('svg.icon').length,
+    };
+  });
+
+const browser = await playwright.chromium.launch();
+const context = await browser.newContext({ viewport: { width: 420, height: 900 } });
+const page = await context.newPage();
+
+const errores = [];
+page.on('pageerror', (error) => errores.push(`[pageerror] ${error.message}`));
+page.on('console', (message) => {
+  if (message.type() === 'error') errores.push(`[console] ${message.text()}`);
+});
+
+try {
+  // ------------------------------------------------------------------ Inicio
+  console.log('\n— Inicio');
+  await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+
+  const estilos = await auditEstilos();
+  check('ningún enlace sale subrayado', estilos.subrayados.length === 0, estilos.subrayados.join(', '));
+  check('título y subtítulo se apilan en cada tarjeta', estilos.titulosPegados.length === 0, estilos.titulosPegados.join(', '));
+  check('el título usa el azul de marca', estilos.colorTitulo === 'rgb(26, 58, 107)', String(estilos.colorTitulo));
+  check('los iconos son SVG', estilos.iconos >= 5, `${estilos.iconos} iconos`);
+  await captura('inicio');
+
+  // ------------------------------------------------------------- Mi estado
+  console.log('\n— Mi estado');
+  await page.locator('a[href="/state"]').first().click();
+  await page.waitForURL('**/state');
+  await page.selectOption('#state-select', 'CA');
+  check('al elegir un estado con varios distritos pide el distrito', (await page.locator('#district-select').count()) === 1);
+  await page.selectOption('#district-select', '11');
+
+  const california = JSON.parse(readFileSync(path.join(ROOT, 'src/data/stateOfficials.json'), 'utf8')).states.find(
+    (state) => state.code === 'CA',
+  );
+  const textoEstado = await page.locator('body').innerText();
+  check('muestra la capital', textoEstado.includes(california.capital), california.capital);
+  check('muestra el gobernador', textoEstado.includes(california.governor), california.governor);
+  check('muestra los dos senadores', california.senators.every((s) => textoEstado.includes(s)));
+  check('muestra el representante del distrito', textoEstado.includes(california.representatives['11']));
+  check('sigue sin enlaces subrayados', (await auditEstilos()).subrayados.length === 0);
+  await captura('mi-estado');
+
+  // -------------------------------------------------------- Vuelta al inicio
+  await page.locator('a.btn--secondary', { hasText: 'Volver al inicio' }).click();
+  await page.waitForURL(`${BASE}/`);
+  check('el inicio recuerda el estado elegido', (await page.locator('body').innerText()).includes('Mi estado: California'));
+
+  // ------------------------------------------------------------ Flashcards
+  console.log('\n— Estudiar');
+  await page.locator('a[href="/flashcards"]').click();
+  await page.waitForURL('**/flashcards');
+  const contador1 = await page.locator('.topbar__counter').innerText();
+  await page.getByRole('button', { name: 'Mostrar respuesta' }).click();
+  check('al revelar aparece la respuesta', (await page.locator('.answer-list, .official-card').count()) > 0);
+  await page.getByRole('button', { name: 'Ya lo sabía' }).click();
+  const contador2 = await page.locator('.topbar__counter').innerText();
+  check('avanza a la siguiente pregunta', contador1 !== contador2, `${contador1} → ${contador2}`);
+
+  // ------------------------------------------------------------------ Quiz
+  console.log('\n— Examen de práctica');
+  await page.goto(`${BASE}/quiz`, { waitUntil: 'networkidle' });
+  await page.locator('.quiz-option').first().click();
+  check('se puede seleccionar una opción', (await page.locator('.quiz-option[aria-checked="true"]').count()) === 1);
+  await page.getByRole('button', { name: 'Comprobar respuesta' }).click();
+  check('aparece el feedback', (await page.locator('.feedback').count()) === 1);
+  check('marca la opción correcta', (await page.locator('.quiz-option--correct').count()) === 1);
+
+  // Se responde el examen entero para llegar al repaso final.
+  for (let i = 0; i < 20; i += 1) {
+    const opciones = page.locator('.quiz-option:not([disabled])');
+    if ((await opciones.count()) > 0) {
+      await opciones.first().click();
+      await page.getByRole('button', { name: 'Comprobar respuesta' }).click();
+    }
+    await page.getByRole('button', { name: /Siguiente pregunta|Ver resultados/ }).click();
+  }
+
+  check('al terminar aparece el resultado', (await page.locator('.result-badge').count()) === 1);
+  check('al terminar aparece el repaso', (await page.locator('.review').count()) === 1);
+  await captura('resultado-examen');
+
+  // Se despliega una pregunta fallada del repaso y se contrasta con questions.json.
+  const falladas = page.locator('.review-item', { has: page.locator('.review-item__mark--wrong') });
+  const hayFalladas = (await falladas.count()) > 0;
+  check('hay preguntas falladas que repasar', hayFalladas);
+
+  if (hayFalladas) {
+    const item = falladas.first();
+    await item.locator('.review-item__header').click();
+
+    // El enunciado del repaso es `question_es`: se busca en questions.json cuántas respuestas
+    // aceptadas tiene esa pregunta y se contrasta con lo que ha pintado la app.
+    const enunciado = (await item.locator('.review-item__question').innerText()).trim();
+    const pregunta = QUESTIONS.find((candidata) => candidata.question_es === enunciado);
+    const esperadas = pregunta?.answers_en.length ?? 0;
+    const pintadas = await item.locator('.review-item__correct').count();
+
+    check('se reconoce la pregunta desplegada', esperadas > 0, enunciado.slice(0, 40));
+    check(
+      'al desplegar muestra TODAS las respuestas aceptadas',
+      pintadas > 0 && pintadas === esperadas,
+      `${pintadas} pintadas, ${esperadas} esperadas`,
+    );
+    check('con botón de audio por respuesta', (await item.locator('svg').count()) >= pintadas);
+    await captura('repaso-desplegado');
+  }
+
+  // -------------------------------------------------------------- Progreso
+  console.log('\n— Progreso');
+  await page.goto(`${BASE}/progress`, { waitUntil: 'networkidle' });
+  check('muestra las 7 categorías', (await page.locator('.progress-category__name').count()) === 7);
+  check('muestra el desglose de 4 niveles', (await page.locator('.progress-breakdown__item').count()) >= 4);
+  await captura('progreso');
+
+  // ----------------------------------------------------------------- Rutas
+  console.log('\n— Rutas');
+  await page.goto(`${BASE}/ruta-inexistente`, { waitUntil: 'networkidle' });
+  check('una ruta desconocida muestra el 404', (await page.locator('body').innerText()).includes('Pantalla no encontrada'));
+
+  console.log('\n— Consola');
+  check('sin errores de ejecución', errores.length === 0, errores.join(' | '));
+} finally {
+  await browser.close();
+}
+
+const fallos = resultados.filter((resultado) => !resultado.ok);
+console.log(`\n${fallos.length === 0 ? '🎉' : '⚠️'}  ${resultados.length - fallos.length}/${resultados.length} comprobaciones OK`);
+
+process.exit(fallos.length === 0 ? 0 : 1);

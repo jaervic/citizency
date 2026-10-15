@@ -32,7 +32,8 @@ Antes de escribir código, consulta la documentación de la versión instalada, 
 npm install        # dependencias
 npm run dev        # servidor de desarrollo
 npm run build      # tsc -b && vite build (debe pasar antes de dar algo por terminado)
-npm test           # pruebas con Vitest (utils + render de todas las pantallas)
+npm test           # pruebas con Vitest (utils, datos y render de todas las pantallas)
+npm run test:e2e   # flujo completo en un navegador real (requiere `npm i -D playwright`)
 npm run preview    # sirve dist/ para comprobar el build de producción
 npm run merge      # regenera src/data/questions.json a partir de en.json + es.json
 npm run update-officials  # regenera src/data/stateOfficials.json (senadores, representantes, gobernadores)
@@ -57,18 +58,22 @@ npm run update-officials  # regenera src/data/stateOfficials.json (senadores, re
    pasar.
 2. **Mobile-first**: la mayoría del uso es en teléfono. Objetivos táctiles ≥ 44 px, sin hover como
    única señal, `env(safe-area-inset-*)` en cabecera y pie.
-3. **Decisiones de producto que no se cambian** (ver `NOTES.md`): los 4 niveles de dominio en
+3. **Nada de emoji ni de glifos raros en la interfaz**: dependen de que el sistema tenga esa fuente
+   y, si no la tiene, se dibujan como una caja vacía (▯). Todos los iconos son SVG
+   (`src/components/Icon.tsx`). Lo comprueba `src/test/glyphs.ts` desde las pruebas. Los enlaces que
+   son botones o tarjetas tampoco se subrayan (ver `src/styles/global.test.ts`).
+4. **Decisiones de producto que no se cambian** (ver `NOTES.md`): los 4 niveles de dominio en
    Progreso, la respuesta correcta del quiz es `answers_en[0]`, y los distractores son
    plausibles pero inequívocamente incorrectos.
-4. **Sin claves ni servicios externos.** Si algo necesita un servidor, se replantea.
-5. **Nuevos datos del examen**: actualiza `en.json`/`es.json`, corre `npm run merge` y revisa que
+5. **Sin claves ni servicios externos.** Si algo necesita un servidor, se replantea.
+6. **Nuevos datos del examen**: actualiza `en.json`/`es.json`, corre `npm run merge` y revisa que
    el banco de distractores siga cubriendo todas las preguntas estáticas del quiz (`npm test` lo
    verifica).
-6. **Datos oficiales nacionales**: actualiza `src/data/officialData.json` y su `lastUpdated` cuando
+7. **Datos oficiales nacionales**: actualiza `src/data/officialData.json` y su `lastUpdated` cuando
    cambie el gobierno.
-7. **Datos estatales**: no se editan a mano. Cambia `scripts/updateOfficials.mjs` (o espera a la
+8. **Datos estatales**: no se editan a mano. Cambia `scripts/updateOfficials.mjs` (o espera a la
    tarea mensual de GitHub Actions) y ejecuta `npm run update-officials`.
-8. **Distractores de las preguntas dinámicas**: se derivan de datos vigentes (los otros tres cargos
+9. **Distractores de las preguntas dinámicas**: se derivan de datos vigentes (los otros tres cargos
    nacionales, u otros estados para senadores/representante/gobernador/capital). No los escribas a
    mano: se quedarían obsoletos y romperían el requisito de que un distractor sea plausible pero
    inequívocamente incorrecto.

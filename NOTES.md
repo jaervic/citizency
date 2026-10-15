@@ -52,6 +52,20 @@ teléfono, y una web evita las tiendas de apps, las builds nativas y EAS.
   8): las 4 nacionales siempre, y las 4 estatales cuando el usuario configura su estado y distrito.
   Sus distractores se derivan de datos vigentes (los otros tres cargos nacionales u otros estados),
   así que siguen siendo plausibles y claramente incorrectos sin quedar obsoletos.
+- **Repaso visual en navegador real (2026-10-15)**: la app se probó con Chromium (Playwright)
+  contra el despliegue y aparecieron TRES fallos que las pruebas de unidad no podían ver, porque
+  son de CSS y de fuentes:
+  1. Los `<a>` heredaban el estilo por defecto del navegador, así que las tarjetas del inicio, el
+     botón "Volver al inicio" y la flecha de volver salían **azules y subrayados**.
+  2. El título y el subtítulo de las tarjetas del inicio son `<span>` (elementos **en línea**) y se
+     pegaban en la misma línea ("Configurar mi estadoElige tu estado…").
+  3. Los **emoji** (📍📚📝🎙️📊🎤) y los glifos ✓ ✗ ▲ ▼ se dibujaban como una **caja vacía (▯)** en
+     cualquier sistema sin fuente de emoji, y la interfaz parecía rota. Se sustituyeron todos por
+     iconos SVG (`src/components/Icon.tsx`), que no dependen de ninguna fuente.
+
+  Para que no vuelvan: `src/test/glyphs.ts` detecta glifos problemáticos en el render de todas las
+  pantallas, `src/styles/global.test.ts` fija el contrato del CSS (enlaces sin subrayado, tarjetas
+  apiladas) y `npm run test:e2e` recorre la app en un navegador real (26 comprobaciones).
 
 ---
 

@@ -5,6 +5,7 @@
 import { useMemo, useState } from 'react';
 
 import OfficialAnswerCard from '@/components/OfficialAnswerCard';
+import Icon from '@/components/Icon';
 import SpeakerButton from '@/components/SpeakerButton';
 import type { Question } from '@/types';
 
@@ -21,6 +22,11 @@ type SessionReviewProps = {
   items: SessionReviewItem[];
   /** Título del bloque de repaso. */
   title?: string;
+  /**
+   * Muestra la tarjeta con el resumen (aciertos y porcentaje). Se quita cuando la pantalla que lo
+   * usa ya enseña su propio resumen (el examen y la entrevista), para no repetirlo.
+   */
+  showSummary?: boolean;
 };
 
 const FILTER_LABELS: Record<Filter, string> = {
@@ -29,7 +35,11 @@ const FILTER_LABELS: Record<Filter, string> = {
   correct: 'Acertadas',
 };
 
-export default function SessionReview({ items, title = 'Repaso de la sesión' }: SessionReviewProps) {
+export default function SessionReview({
+  items,
+  title = 'Repaso de la sesión',
+  showSummary = true,
+}: SessionReviewProps) {
   const [filter, setFilter] = useState<Filter>('all');
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
 
@@ -66,12 +76,14 @@ export default function SessionReview({ items, title = 'Repaso de la sesión' }:
     <section className="review">
       <h2 className="progress-card__title">{title}</h2>
 
-      <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <p className="session-score">
-          Resultado: {correctCount} de {total} correctas
-        </p>
-        <p className="session-percentage">{percentage} %</p>
-      </div>
+      {showSummary && (
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <p className="session-score">
+            Resultado: {correctCount} de {total} correctas
+          </p>
+          <p className="session-percentage">{percentage} %</p>
+        </div>
+      )}
 
       <div className="review-filters" role="group" aria-label="Filtrar preguntas">
         {(Object.keys(FILTER_LABELS) as Filter[]).map((option) => (
@@ -105,17 +117,20 @@ export default function SessionReview({ items, title = 'Repaso de la sesión' }:
                   >
                     <span className="review-item__number">{index + 1}</span>
                     <span className="review-item__question">{item.question.question_es}</span>
-                    <span className="review-item__chevron" aria-hidden="true">
-                      {expanded ? '▲' : '▼'}
-                    </span>
+                    <Icon
+                      name="chevron"
+                      className={expanded ? 'review-item__chevron review-item__chevron--up' : 'review-item__chevron'}
+                    />
                   </button>
                   <span
                     className={
-                      item.wasCorrect ? 'review-item__mark--correct' : 'review-item__mark--wrong'
+                      item.wasCorrect
+                        ? 'review-item__mark review-item__mark--correct'
+                        : 'review-item__mark review-item__mark--wrong'
                     }
                     aria-label={item.wasCorrect ? 'Correcta' : 'Fallada'}
                   >
-                    {item.wasCorrect ? '✓' : '✗'}
+                    <Icon name={item.wasCorrect ? 'check' : 'cross'} />
                   </span>
                 </div>
 

@@ -145,7 +145,7 @@ export default function QuizScreen() {
           </p>
         </section>
 
-        <SessionReview items={entries} title="Repaso del examen" />
+        <SessionReview items={entries} title="Repaso del examen" showSummary={false} />
 
         <div className="results-actions">
           <button type="button" className="btn btn--primary" onClick={handleRetry}>

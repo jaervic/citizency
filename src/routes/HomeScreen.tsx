@@ -5,16 +5,18 @@
 import { Link } from 'react-router-dom';
 
 import { useConfirm } from '@/components/ConfirmDialog';
+import Icon from '@/components/Icon';
 import { QUESTIONS } from '@/utils/content';
 import { getStateEntry } from '@/utils/stateOfficials';
 import { useStore } from '@/store/useStore';
 import { getMasteryLevel } from '@/utils/spacedRepetition';
+import type { IconName } from '@/components/Icon';
 
-const MENU = [
-  { to: '/flashcards', icon: '📚', title: 'Estudiar', subtitle: 'Repasa las 128 preguntas con tarjetas.' },
-  { to: '/quiz', icon: '📝', title: 'Examen de práctica', subtitle: '20 preguntas tipo test como en el examen real.' },
-  { to: '/interview', icon: '🎙️', title: 'Entrevista', subtitle: 'Practica respondiendo en voz alta.' },
-  { to: '/progress', icon: '📊', title: 'Progreso', subtitle: 'Mira cuánto dominas por categoría.' },
+const MENU: Array<{ to: string; icon: IconName; title: string; subtitle: string }> = [
+  { to: '/flashcards', icon: 'book', title: 'Estudiar', subtitle: 'Repasa las 128 preguntas con tarjetas.' },
+  { to: '/quiz', icon: 'quiz', title: 'Examen de práctica', subtitle: '20 preguntas tipo test como en el examen real.' },
+  { to: '/interview', icon: 'mic', title: 'Entrevista', subtitle: 'Practica respondiendo en voz alta.' },
+  { to: '/progress', icon: 'chart', title: 'Progreso', subtitle: 'Mira cuánto dominas por categoría.' },
 ];
 
 export default function HomeScreen() {
@@ -65,7 +67,7 @@ export default function HomeScreen() {
       <nav className="home-menu" aria-label="Secciones">
         <Link to="/state" className="home-card home-card--location">
           <span className="home-card__title">
-            <span aria-hidden="true">📍</span>{' '}
+            <Icon name="pin" className="home-card__icon" />
             {stateEntry === null ? 'Configurar mi estado' : `Mi estado: ${stateEntry.nameEs}`}
           </span>
           <span className="home-card__subtitle">
@@ -78,7 +80,8 @@ export default function HomeScreen() {
         {MENU.map((item) => (
           <Link key={item.to} to={item.to} className="home-card">
             <span className="home-card__title">
-              <span aria-hidden="true">{item.icon}</span> {item.title}
+              <Icon name={item.icon} className="home-card__icon" />
+              {item.title}
             </span>
             <span className="home-card__subtitle">{item.subtitle}</span>
           </Link>

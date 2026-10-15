@@ -20,6 +20,16 @@ de API**. Tu progreso se guarda en el propio dispositivo.
   repaso, dominada).
 - **Audio**: cualquier pregunta o respuesta se puede escuchar en inglés.
 
+## Reglas de interfaz
+
+- **Nada de emoji en la interfaz.** Los emoji dependen de que el sistema tenga una fuente
+  instalada; sin ella se dibujan como una caja vacía (▯) y la app parece rota. Todos los iconos son
+  SVG (`src/components/Icon.tsx`), que heredan el color del texto y escalan con la fuente.
+- **Los enlaces no se subrayan** salvo cuando van dentro de un texto (`.state-link`): casi todos los
+  enlaces de la app son tarjetas o botones.
+- **Mobile-first**: objetivos táctiles de 48 px, `env(safe-area-inset-*)` para el notch y
+  `100dvh`. En escritorio el contenido se centra en una columna de 640 px.
+
 ## Requisitos
 
 - Node.js 20.19+ o 22.12+ (probado con Node 22).
@@ -35,6 +45,22 @@ npm test          # pruebas de la lógica pura y del render de las pantallas
 npm run build     # compila a dist/ (ejecuta también el chequeo de tipos)
 npm run preview   # sirve dist/ como en producción
 ```
+
+### Pruebas
+
+- `npm test` (Vitest): lógica pura, datasets, y render de todas las pantallas en el servidor. No
+  necesita navegador.
+- `npm run test:e2e`: comprueba la app en un navegador de verdad (estilos aplicados, iconos, flujo
+  completo de estudio, examen y repaso). Requiere Playwright, que **no** es dependencia del
+  proyecto para no cargar el build; se instala una vez:
+
+  ```bash
+  npm i -D playwright && npx playwright install chromium
+  npm run preview            # en otra terminal
+  npm run test:e2e           # o: npm run test:e2e https://tu-dominio
+  ```
+
+  Con `E2E_SCREENSHOTS=1` guarda capturas de cada pantalla en `/tmp/opencode`.
 
 ## Despliegue en Vercel
 

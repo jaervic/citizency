@@ -5,6 +5,8 @@
 import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
+import Icon from '@/components/Icon';
+
 /** Título de la cabecera según la ruta. */
 const TITLES: Record<string, string> = {
   '/': 'USCIS Ciudadanía',
@@ -35,7 +37,7 @@ export default function Layout() {
           ) : (
             <>
               <Link className="app-header__back" to="/" aria-label="Volver al inicio">
-                <span aria-hidden="true">←</span>
+                <Icon name="back" />
               </Link>
               <span className="app-header__title">{title}</span>
               <span className="app-header__spacer" aria-hidden="true" />
