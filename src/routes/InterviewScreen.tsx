@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import AnswerFeedback from '@/components/AnswerFeedback';
+import CategoryBadge from '@/components/CategoryBadge';
 import { useConfirm } from '@/components/ConfirmDialog';
 import Icon from '@/components/Icon';
 import SessionReview from '@/components/SessionReview';
@@ -197,6 +198,8 @@ export default function InterviewScreen() {
       <p className="screen-subtitle">Responde en inglés, en voz alta o por escrito.</p>
 
       <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <CategoryBadge category={question.category} />
+
         <div className="question-head">
           <h1 className="question-head__text">{question.question_en}</h1>
           <SpeakerButton text={question.question_en} compact label="Escuchar la pregunta" />

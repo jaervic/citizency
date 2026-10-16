@@ -3,10 +3,12 @@
 // mostraba `answers_en[0]` como respuesta correcta; ahora lista TODAS las respuestas aceptadas
 // (en inglés y español), que es lo que el USCIS admite de verdad.
 import { useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
 
 import OfficialAnswerCard from '@/components/OfficialAnswerCard';
 import Icon from '@/components/Icon';
 import SpeakerButton from '@/components/SpeakerButton';
+import { CATEGORY_STYLE } from '@/utils/categories';
 import type { Question } from '@/types';
 
 export type SessionReviewItem = {
@@ -115,7 +117,17 @@ export default function SessionReview({
                     aria-expanded={expanded}
                     onClick={() => toggle(item.question.id)}
                   >
-                    <span className="review-item__number">{index + 1}</span>
+                    <span
+                      className="review-item__number"
+                      style={
+                        {
+                          '--badge-color': CATEGORY_STYLE[item.question.category].color,
+                          '--badge-soft': CATEGORY_STYLE[item.question.category].soft,
+                        } as CSSProperties
+                      }
+                    >
+                      {index + 1}
+                    </span>
                     <span className="review-item__question">{item.question.question_es}</span>
                     <Icon
                       name="chevron"

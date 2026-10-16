@@ -101,10 +101,20 @@ const PARES_CONTRASTE = [
   ['.home-stat', 4.5],
   ['.home-disclaimer', 4.5],
   ['.btn--primary', 4.5],
+  ['.hero__streak', 4.5],
+  ['.hero__sub', 4.5],
+];
+
+/** Textos del progreso: los anillos y las etiquetas de categoría usan los colores por categoría. */
+const PARES_CONTRASTE_PROGRESO = [
+  ['.ring__value', 4.5],
+  ['.progress-category__name', 4.5],
+  ['.progress-category__total', 4.5],
+  ['.progress-breakdown__label', 4.5],
 ];
 
 /** Mide el contraste de cada par dentro de la página (se serializa y se ejecuta en el navegador). */
-async function medirContraste(target) {
+async function medirContraste(target, paresContraste = PARES_CONTRASTE) {
   return target.evaluate((pares) => {
     const toRgb = (value) => {
       const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
@@ -148,7 +158,7 @@ async function medirContraste(target) {
         return { selector, ratio: Math.round(ratio * 100) / 100, minimo };
       })
       .filter((entry) => entry !== null);
-  }, PARES_CONTRASTE);
+  }, paresContraste);
 }
 
 const errores = [];
@@ -195,7 +205,7 @@ try {
 
   // ------------------------------------------------------------ Flashcards
   console.log('\n— Estudiar');
-  await page.locator('a[href="/flashcards"]').click();
+  await page.locator('a.home-card[href="/flashcards"]').click();
   await page.waitForURL('**/flashcards');
   const contador1 = await page.locator('.topbar__counter').innerText();
   await page.getByRole('button', { name: 'Mostrar respuesta' }).click();
@@ -285,9 +295,19 @@ try {
     const medidas = await medirContraste(themedPage);
     const bajos = medidas.filter((medida) => medida.ratio < medida.minimo);
     check(
-      `[${scheme}] contraste AA en ${medidas.length} textos`,
+      `[${scheme}] contraste AA en ${medidas.length} textos del inicio`,
       bajos.length === 0,
       bajos.map((medida) => `${medida.selector}: ${medida.ratio}`).join(', '),
+    );
+
+    // Progreso: aquí viven los anillos y las etiquetas con los colores por categoría.
+    await themedPage.goto(`${BASE}/progress`, { waitUntil: 'networkidle' });
+    const medidasProgreso = await medirContraste(themedPage, PARES_CONTRASTE_PROGRESO);
+    const bajosProgreso = medidasProgreso.filter((medida) => medida.ratio < medida.minimo);
+    check(
+      `[${scheme}] contraste AA en ${medidasProgreso.length} textos del progreso`,
+      bajosProgreso.length === 0,
+      bajosProgreso.map((medida) => `${medida.selector}: ${medida.ratio}`).join(', '),
     );
 
     // El interruptor de Ajustes debe poder forzar el tema contrario al del sistema.

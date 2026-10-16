@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import OfficialAnswerCard from '@/components/OfficialAnswerCard';
 import { useConfirm } from '@/components/ConfirmDialog';
+import CategoryBadge from '@/components/CategoryBadge';
 import SessionReview from '@/components/SessionReview';
 import type { SessionReviewItem } from '@/components/SessionReview';
 import SpeakerButton from '@/components/SpeakerButton';
@@ -202,6 +203,8 @@ export default function FlashcardsScreen() {
       )}
 
       <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <CategoryBadge category={question.category} />
+
         <div className="question-head">
           <h1 className="question-head__text">{question.question_en}</h1>
           <SpeakerButton text={question.question_en} compact label="Escuchar la pregunta" />

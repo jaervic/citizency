@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { useConfirm } from '@/components/ConfirmDialog';
 import Icon from '@/components/Icon';
+import ProgressRing from '@/components/ProgressRing';
 import { QUESTIONS } from '@/utils/content';
 import { getStateEntry } from '@/utils/stateOfficials';
 import { useStore } from '@/store/useStore';
@@ -34,6 +35,8 @@ export default function HomeScreen() {
     (question) => getMasteryLevel({ xp, streak, lastStudyDate, answeredQuestions }, question.id) === 'mastered',
   ).length;
 
+  const masteredRatio = QUESTIONS.length > 0 ? mastered / QUESTIONS.length : 0;
+
   const handleReset = async () => {
     const accepted = await confirm({
       title: 'Reiniciar progreso',
@@ -49,25 +52,32 @@ export default function HomeScreen() {
 
   return (
     <div className="page">
-      <div className="home-stats">
-        <div className="home-stat">
-          {xp}
-          <div className="progress-breakdown__label">XP</div>
+      <section className="hero">
+        <div className="hero__info">
+          <p className="hero__eyebrow">Tu racha</p>
+          <p className="hero__streak">
+            {streak} <span>{streak === 1 ? 'día' : 'días'}</span>
+          </p>
+          <p className="hero__sub">
+            {xp} XP · {mastered} de {QUESTIONS.length} dominadas
+          </p>
         </div>
-        <div className="home-stat">
-          {streak}
-          <div className="progress-breakdown__label">{streak === 1 ? 'día seguido' : 'días seguidos'}</div>
-        </div>
-        <div className="home-stat">
-          {mastered}
-          <div className="progress-breakdown__label">dominadas</div>
-        </div>
-      </div>
+
+        <ProgressRing value={masteredRatio} size={84} stroke={9} label="Preguntas dominadas">
+          <span className="ring__value">{Math.round(masteredRatio * 100)}%</span>
+        </ProgressRing>
+      </section>
+
+      <Link to="/flashcards" className="btn btn--primary">
+        Seguir estudiando
+      </Link>
 
       <nav className="home-menu" aria-label="Secciones">
         <Link to="/state" className="home-card home-card--location">
           <span className="home-card__title">
-            <Icon name="pin" className="home-card__icon" />
+            <span className="home-card__chip">
+              <Icon name="pin" />
+            </span>
             {stateEntry === null ? 'Configurar mi estado' : `Mi estado: ${stateEntry.nameEs}`}
           </span>
           <span className="home-card__subtitle">
@@ -80,7 +90,9 @@ export default function HomeScreen() {
         {MENU.map((item) => (
           <Link key={item.to} to={item.to} className="home-card">
             <span className="home-card__title">
-              <Icon name={item.icon} className="home-card__icon" />
+              <span className="home-card__chip">
+                <Icon name={item.icon} />
+              </span>
               {item.title}
             </span>
             <span className="home-card__subtitle">{item.subtitle}</span>

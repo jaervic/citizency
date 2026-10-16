@@ -4,8 +4,9 @@
 // niveles aunque la barra resuma con «dominadas / total».
 import { Link } from 'react-router-dom';
 
-import ProgressBar from '@/components/ProgressBar';
+import ProgressRing from '@/components/ProgressRing';
 import { useStore } from '@/store/useStore';
+import { CATEGORY_STYLE } from '@/utils/categories';
 import { QUESTIONS } from '@/utils/content';
 import { getMasteryLevel } from '@/utils/spacedRepetition';
 import type { MasteryLevel } from '@/utils/spacedRepetition';
@@ -65,20 +66,21 @@ export default function ProgressScreen() {
     <div className="page">
       <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <h2 className="progress-card__title">Tu progreso</h2>
-        <div className="progress-stats">
-          <span className="progress-stat">{xp} XP</span>
-          <span className="progress-stat">
-            {streak} {streak === 1 ? 'día' : 'días'} de racha
-          </span>
-        </div>
 
         <div className="progress-header">
-          <span className="progress-stat">
-            Dominadas: {totals.mastered} de {QUESTIONS.length}
-          </span>
-          <span className="progress-header__value">{Math.round(masteredPercentage * 100)} %</span>
+          <ProgressRing value={masteredPercentage} size={92} stroke={10} label="Preguntas dominadas">
+            <span className="ring__value">{Math.round(masteredPercentage * 100)}%</span>
+          </ProgressRing>
+
+          <div className="progress-category__info">
+            <span className="progress-stat">
+              {totals.mastered} de {QUESTIONS.length} dominadas
+            </span>
+            <span className="progress-stat">
+              {xp} XP · {streak} {streak === 1 ? 'día' : 'días'} de racha
+            </span>
+          </div>
         </div>
-        <ProgressBar value={masteredPercentage} label="Preguntas dominadas" />
 
         <div className="progress-breakdown">
           {(Object.keys(LEVEL_LABELS) as MasteryLevel[]).map((level) => (
@@ -96,15 +98,30 @@ export default function ProgressScreen() {
         const total = categoryQuestions.length;
         const ratio = total > 0 ? counts.mastered / total : 0;
         const notStarted = counts.new === total;
+        const style = CATEGORY_STYLE[category];
 
         return (
-          <section key={category} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <div className="progress-category__header">
-              <span className="progress-category__name">{category}</span>
-              <span className="progress-category__percent">{Math.round(ratio * 100)} %</span>
-            </div>
+          <section key={category} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div className="progress-category__heading">
+              <ProgressRing
+                value={ratio}
+                size={62}
+                stroke={7}
+                color={style.color}
+                label={`Dominio de ${category}`}
+              >
+                <span className="ring__value" style={{ color: style.color }}>
+                  {Math.round(ratio * 100)}%
+                </span>
+              </ProgressRing>
 
-            <ProgressBar value={ratio} label={`Dominio de ${category}`} />
+              <div className="progress-category__info">
+                <span className="progress-category__name">{category}</span>
+                <span className="progress-category__total">
+                  {notStarted ? 'Todavía no has empezado' : `${total} preguntas · ${counts.mastered} dominadas`}
+                </span>
+              </div>
+            </div>
 
             <div className="progress-breakdown">
               {(Object.keys(LEVEL_LABELS) as MasteryLevel[]).map((level) => (
@@ -114,10 +131,6 @@ export default function ProgressScreen() {
                 </div>
               ))}
             </div>
-
-            <span className="progress-category__total">
-              {notStarted ? 'Todavía no has empezado esta categoría.' : `${total} preguntas en total`}
-            </span>
           </section>
         );
       })}

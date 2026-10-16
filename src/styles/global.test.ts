@@ -12,10 +12,13 @@ import { describe, expect, it } from 'vitest';
 
 const css = readFileSync(new URL('./global.css', import.meta.url), 'utf8');
 
+/** El CSS sin comentarios: los comentarios no deben contar como tokens ni como colores. */
+const sinComentarios = css.replace(/\/\*[\s\S]*?\*\//g, '');
+
 /** Devuelve el bloque de declaraciones de un selector exacto (p. ej. `.home-card`). */
-function rule(selector: string): string {
+function rule(selector: string, source = css): string {
   const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = new RegExp(`(?:^|\\})\\s*${escaped}\\s*\\{([^}]*)\\}`, 'm').exec(css);
+  const match = new RegExp(`(?:^|\\})\\s*${escaped}\\s*\\{([^}]*)\\}`, 'm').exec(source);
 
   return match?.[1] ?? '';
 }
@@ -26,8 +29,10 @@ function tokensIn(block: string): string[] {
 }
 
 describe('temas', () => {
-  const light = rule("[data-theme='light']");
-  const dark = rule("[data-theme='dark']");
+  // Se analiza el CSS sin comentarios: si no, un ejemplo como `var(--token)` escrito en un
+  // comentario aparecería como un token sin definir.
+  const light = rule("[data-theme='light']", sinComentarios);
+  const dark = rule("[data-theme='dark']", sinComentarios);
 
   it('existe el bloque del tema oscuro y define tokens', () => {
     expect(tokensIn(dark).length).toBeGreaterThan(20);
@@ -50,11 +55,31 @@ describe('temas', () => {
     expect(brand).not.toBe(accent);
   });
 
+  it('ningún token se define a sí mismo (sería un valor inválido)', () => {
+    // `--overlay: var(--overlay)` no define nada: el token queda inválido y todo lo que lo use se
+    // queda sin color. Ya pasó una vez al reemplazar colores literales por tokens, y dejó sin fondo
+    // el diálogo de confirmación, sin color el foco y sin verde/rojo las opciones del quiz.
+    const autorreferencias = [...sinComentarios.matchAll(/(--[a-z0-9-]+)\s*:\s*var\(\s*(--[a-z0-9-]+)\s*\)/g)]
+      .filter((match) => match[1] === match[2])
+      .map((match) => match[1]!);
+
+    expect(autorreferencias).toEqual([]);
+  });
+
+  it('todos los var(--token) que se usan están definidos en algún sitio', () => {
+    // Caza erratas del estilo `var(--color-erorr)`, que dejarían la regla sin efecto en silencio.
+    const definidos = new Set([...sinComentarios.matchAll(/(--[a-z0-9-]+)\s*:/g)].map((match) => match[1]!));
+    const usados = [...sinComentarios.matchAll(/var\(\s*(--[a-z0-9-]+)/g)].map((match) => match[1]!);
+    const sinDefinir = [...new Set(usados)].filter((token) => !definidos.has(token));
+
+    expect(sinDefinir, `tokens sin definir: ${sinDefinir.join(', ')}`).toEqual([]);
+  });
+
   it('ningún color literal fuera del bloque de tokens', () => {
     // A partir del marcador "Fin de los tokens" todo debe ir por variables; un color hardcodeado
     // se quedaría igual en modo oscuro y rompería el tema a medias.
-    const rest = css.split('Fin de los tokens')[1] ?? '';
-    const literales = [...rest.matchAll(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g)].map((m) => m[0]);
+    const rest = (css.split('Fin de los tokens')[1] ?? '').replace(/\/\*[\s\S]*?\*\//g, '');
+    const literales = [...rest.matchAll(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g)].map((match) => match[0]);
 
     expect(literales, `colores sin tematizar: ${literales.join(', ')}`).toEqual([]);
   });

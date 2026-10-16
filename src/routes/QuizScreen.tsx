@@ -7,7 +7,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import AnswerFeedback from '@/components/AnswerFeedback';
+import CategoryBadge from '@/components/CategoryBadge';
 import { useConfirm } from '@/components/ConfirmDialog';
+import ProgressRing from '@/components/ProgressRing';
 import SessionReview from '@/components/SessionReview';
 import type { SessionReviewItem } from '@/components/SessionReview';
 import SpeakerButton from '@/components/SpeakerButton';
@@ -23,6 +25,9 @@ type QuizItem = {
   question: Question;
   options: QuizOption[];
 };
+
+/** Letras de las opciones (como en el examen real, que las marca A, B, C…). */
+const LETTERS = ['A', 'B', 'C', 'D'];
 
 /** Copia mezclada de un array (Fisher-Yates). */
 function shuffle<T>(items: T[]): T[] {
@@ -131,14 +136,24 @@ export default function QuizScreen() {
 
     return (
       <div className="page">
-        <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+        <section className="card result-card">
+          <ProgressRing
+            value={percentage / 100}
+            size={132}
+            stroke={12}
+            color={passed ? 'var(--color-success)' : 'var(--color-error)'}
+            label="Resultado del examen"
+          >
+            <span className="ring__value ring__value--big">{percentage}%</span>
+            <span className="ring__label">
+              {correctCount}/{total}
+            </span>
+          </ProgressRing>
+
           <span className={`result-badge result-badge--${passed ? 'passed' : 'failed'}`}>
             {passed ? 'Aprobado' : 'No aprobado'}
           </span>
-          <p className="result-percentage">{percentage} %</p>
-          <p className="result-summary">
-            {correctCount} de {total} correctas
-          </p>
+
           <p className="result-note">
             Se aprueba con {PASS_THRESHOLD} de {total} ({Math.round((PASS_THRESHOLD / total) * 100)} %), igual
             que en el examen real.
@@ -175,6 +190,8 @@ export default function QuizScreen() {
       <ProgressBar value={index / items.length} label="Progreso del examen" />
 
       <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <CategoryBadge category={item.question.category} />
+
         <div className="question-head">
           <h1 className="question-head__text">{item.question.question_en}</h1>
           <SpeakerButton text={item.question.question_en} compact label="Escuchar la pregunta" />
@@ -183,7 +200,7 @@ export default function QuizScreen() {
         <p className="answer-single-es">{item.question.question_es}</p>
 
         <div className="quiz-options" role="radiogroup" aria-label="Opciones de respuesta">
-          {item.options.map((option) => {
+          {item.options.map((option, optionIndex) => {
             const isSelected = option.id === selectedId;
             const state = checked
               ? option.isCorrect
@@ -205,6 +222,9 @@ export default function QuizScreen() {
                 disabled={checked}
                 onClick={() => setSelectedId(option.id)}
               >
+                <span className="quiz-option__letter" aria-hidden="true">
+                  {LETTERS[optionIndex]}
+                </span>
                 <span className="quiz-option__text">
                   <span className="quiz-option__en">{option.en}</span>
                   {option.es !== option.en && <span className="quiz-option__es">{option.es}</span>}
