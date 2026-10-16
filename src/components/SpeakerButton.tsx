@@ -1,16 +1,25 @@
 // src/components/SpeakerButton.tsx
 // Propósito: leer en voz alta (en inglés) un texto del examen con la Web Speech API
-// (`speechSynthesis`). Sustituye al `expo-speech` de la versión nativa: en web la síntesis
-// de voz es del propio navegador, así que no hace falta ninguna clave de API ni conexión.
+// (`speechSynthesis`). Sustituye al `expo-speech` de la versión nativa: en web la síntesis de voz es
+// del propio navegador, así que no hace falta ninguna clave de API ni conexión.
 //
-// `sanitizeForSpeech` se exporta porque `src/utils/fuzzyMatch.ts` documenta que normaliza el
-// texto igual que lo sanea este botón: lo que el usuario oye y lo que se compara deben coincidir.
+// La voz NO se coge al azar: `src/utils/speech.ts` puntúa las disponibles y prefiere las que
+// necesitan internet (las "Google…" de Chrome y las "… Online (Natural)" de Edge), que son las que
+// mejor suenan. Si la persona ha elegido una voz en Ajustes, se respeta.
+//
+// `sanitizeForSpeech` se exporta porque `src/utils/fuzzyMatch.ts` documenta que normaliza el texto
+// igual que lo sanea este botón: lo que el usuario oye y lo que se compara deben coincidir.
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { useVoices } from '@/hooks/useVoices';
+import { useStore } from '@/store/useStore';
+import { isNetworkVoice, rankVoices, resolveVoice } from '@/utils/speech';
+import type { Voice } from '@/utils/speech';
+
 /**
- * Prepara un texto para leerlo: quita el contenido entre paréntesis y corchetes (casi
- * siempre aclaraciones que no se dicen en voz alta, p. ej. "(U.S.) Congress" -> "Congress") y
- * colapsa los espacios.
+ * Prepara un texto para leerlo: quita el contenido entre paréntesis y corchetes (casi siempre
+ * aclaraciones que no se dicen en voz alta, p. ej. "(U.S.) Congress" -> "Congress") y colapsa los
+ * espacios.
  */
 export function sanitizeForSpeech(text: string): string {
   const cleaned = text
@@ -61,6 +70,9 @@ export default function SpeakerButton({
   const [speaking, setSpeaking] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
+  const voices = useVoices();
+  const preferredVoiceName = useStore((state) => state.voiceName);
+
   // Al desmontar se corta la lectura y se sueltan los callbacks.
   useEffect(
     () => () => {
@@ -79,6 +91,54 @@ export default function SpeakerButton({
     [],
   );
 
+  // Al cambiar de voz se corta la lectura en curso, para que se note el cambio.
+  useEffect(() => {
+    if (isSpeechSynthesisSupported()) {
+      window.speechSynthesis.cancel();
+    }
+
+    setSpeaking(false);
+  }, [preferredVoiceName]);
+
+  /** Lanza la lectura con una voz concreta. */
+  const speakWith = useCallback(
+    (voice: Voice | null, isRetry: boolean) => {
+      const synth = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(sanitizeForSpeech(text));
+
+      utterance.lang = 'en-US';
+      utterance.rate = rate;
+
+      if (voice !== null) {
+        utterance.voice = voice;
+      }
+
+      utterance.onstart = () => setSpeaking(true);
+      utterance.onend = () => {
+        setSpeaking(false);
+      };
+      utterance.onerror = () => {
+        setSpeaking(false);
+
+        // Las voces que necesitan internet fallan sin conexión: se reintenta una vez con la mejor
+        // voz LOCAL, para que el botón nunca se quede mudo.
+        const puedeReintentar = !isRetry && voice !== null && isNetworkVoice(voice);
+
+        if (puedeReintentar) {
+          const local = rankVoices(synth.getVoices()).find((candidata) => !isNetworkVoice(candidata)) ?? null;
+          speakWith(local, true);
+        }
+      };
+
+      utteranceRef.current = utterance;
+
+      // `cancel()` seguido de `speak()` se ignora en algunos Chrome; un pequeño respiro lo evita.
+      synth.cancel();
+      window.setTimeout(() => synth.speak(utterance), 60);
+    },
+    [rate, text],
+  );
+
   const speak = useCallback(() => {
     if (!supported) {
       return;
@@ -93,26 +153,13 @@ export default function SpeakerButton({
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(sanitizeForSpeech(text));
-    utterance.lang = 'en-US';
-    utterance.rate = rate;
-
-    // Se prefiere una voz en inglés si el navegador ya la tiene cargada.
-    const englishVoice = synth.getVoices().find((voice) => voice.lang.toLowerCase().startsWith('en'));
-    if (englishVoice !== undefined) {
-      utterance.voice = englishVoice;
-    }
-
-    utterance.onstart = () => setSpeaking(true);
-    utterance.onend = () => setSpeaking(false);
-    utterance.onerror = () => setSpeaking(false);
-
-    utteranceRef.current = utterance;
-
-    // `cancel()` seguido de `speak()` se ignora en algunos Chrome; un pequeño respiro lo evita.
-    synth.cancel();
-    window.setTimeout(() => synth.speak(utterance), 60);
-  }, [rate, speaking, supported, text]);
+    speakWith(
+      // Se prefiere la lista que ya tiene el hook (cargada y ordenada); si aún está vacía se le
+      // pregunta al navegador por si acaba de llenarla.
+      resolveVoice(voices.length > 0 ? voices : synth.getVoices(), preferredVoiceName),
+      false,
+    );
+  }, [preferredVoiceName, speaking, speakWith, supported, voices]);
 
   if (!supported) {
     return null;

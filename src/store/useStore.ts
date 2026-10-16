@@ -33,8 +33,14 @@ function createInitialProgress(): UserProgress {
 
 /** Estado inicial completo (progreso + datos del estado del solicitante + preferencias). */
 function createInitialState(): UserProgress &
-  Pick<StoreState, 'homeState' | 'homeDistrict' | 'theme'> {
-  return { ...createInitialProgress(), homeState: null, homeDistrict: null, theme: 'system' };
+  Pick<StoreState, 'homeState' | 'homeDistrict' | 'theme' | 'voiceName'> {
+  return {
+    ...createInitialProgress(),
+    homeState: null,
+    homeDistrict: null,
+    theme: 'system',
+    voiceName: null,
+  };
 }
 
 /**
@@ -70,6 +76,13 @@ export type StoreState = UserProgress & {
   setLocation: (state: string | null, district: string | null) => void;
   /** Guarda la preferencia de tema. */
   setTheme: (theme: ThemePreference) => void;
+  /**
+   * Nombre exacto de la voz de lectura elegida, o `null` para que la app elija la mejor disponible
+   * (prefiriendo las voces que necesitan internet, que son las que mejor suenan).
+   */
+  voiceName: string | null;
+  /** Guarda la voz elegida (`null` = automática). */
+  setVoiceName: (voiceName: string | null) => void;
   /** Reinicia TODO el progreso del usuario a sus valores por defecto. */
   reset: () => void;
 };
@@ -81,6 +94,7 @@ export const useStore = create<StoreState>()(
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
       setLocation: (homeState, homeDistrict) => set({ homeState, homeDistrict }),
       setTheme: (theme) => set({ theme }),
+      setVoiceName: (voiceName) => set({ voiceName }),
       recordAnswer: (questionId, wasCorrect) => {
         const { xp, streak, lastStudyDate, answeredQuestions } = get();
 
@@ -118,6 +132,7 @@ export const useStore = create<StoreState>()(
         homeState: state.homeState,
         homeDistrict: state.homeDistrict,
         theme: state.theme,
+        voiceName: state.voiceName,
       }),
     },
   ),

@@ -286,6 +286,42 @@ try {
   await page.goto(`${BASE}/ruta-inexistente`, { waitUntil: 'networkidle' });
   check('una ruta desconocida muestra el 404', (await page.locator('body').innerText()).includes('Pantalla no encontrada'));
 
+  // ------------------------------------------------------------------ Voz
+  console.log('\n— Voz');
+  await page.goto(`${BASE}/settings`, { waitUntil: 'networkidle' });
+  check('Ajustes incluye la sección de voz', (await page.locator('#voice-select').count()) === 1);
+
+  const voces = await page.evaluate(() => {
+    if (!('speechSynthesis' in window)) {
+      return { soporte: false, ingles: 0, red: 0 };
+    }
+
+    const lista = window.speechSynthesis.getVoices();
+    const ingles = lista.filter(
+      (voz) => typeof voz.lang === 'string' && voz.lang.toLowerCase().startsWith('en'),
+    );
+
+    return {
+      soporte: true,
+      ingles: ingles.length,
+      // `localService === false` son las que necesitan internet, que son las preferidas.
+      red: ingles.filter((voz) => voz.localService === false).length,
+    };
+  });
+  check(
+    'se puede consultar la lista de voces del sistema',
+    voces.soporte,
+    `${voces.ingles} voces en inglés, ${voces.red} en línea`,
+  );
+
+  const seccionVoz = page.locator('.settings-section', { has: page.locator('#voice-select') });
+  const textoVoz = await seccionVoz.innerText();
+  check(
+    'Ajustes dice qué voz se va a usar (o avisa de que no hay)',
+    textoVoz.includes('Se usará:') || textoVoz.includes('no ofrece voces en inglés'),
+    textoVoz.includes('no ofrece voces') ? 'sin voces en este navegador' : 'con voz',
+  );
+
   // ------------------------------------------------------ Instalar la app
   console.log('\n— Instalar la app');
   await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });

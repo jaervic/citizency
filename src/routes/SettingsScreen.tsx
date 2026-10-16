@@ -5,14 +5,22 @@
 import { Link } from 'react-router-dom';
 
 import Icon from '@/components/Icon';
+import SpeakerButton from '@/components/SpeakerButton';
 import { AUTHOR, DONATION_LABEL, DONATION_URL } from '@/config/support';
+import { useVoices, isSpeechSupported } from '@/hooks/useVoices';
 import { useStore } from '@/store/useStore';
+import { describeVoice, resolveVoice } from '@/utils/speech';
 import { THEME_LABELS, THEME_OPTIONS } from '@/utils/theme';
 import type { ThemePreference } from '@/utils/theme';
 
 export default function SettingsScreen() {
   const theme = useStore((state) => state.theme);
   const setTheme = useStore((state) => state.setTheme);
+  const voiceName = useStore((state) => state.voiceName);
+  const setVoiceName = useStore((state) => state.setVoiceName);
+  const voices = useVoices();
+
+  const vozActual = isSpeechSupported() ? resolveVoice(voices, voiceName) : null;
 
   return (
     <div className="page">
@@ -36,6 +44,52 @@ export default function SettingsScreen() {
             </button>
           ))}
         </div>
+      </section>
+
+      <section className="card settings-section">
+        <h2 className="settings-title">Voz</h2>
+        <p className="settings-hint">
+          La app lee las preguntas y las respuestas en inglés. Se prefieren las voces que necesitan
+          internet porque son las que suenan más naturales; si te quedas sin conexión, la lectura
+          pasa sola a una voz del dispositivo.
+        </p>
+
+        <label className="field-label" htmlFor="voice-select">
+          Voz de lectura
+        </label>
+        <select
+          id="voice-select"
+          className="field-select"
+          value={voiceName ?? ''}
+          disabled={voices.length === 0}
+          onChange={(event) => setVoiceName(event.target.value === '' ? null : event.target.value)}
+        >
+          <option value="">
+            {voices.length === 0 ? 'Cargando voces…' : 'Automática (la mejor disponible)'}
+          </option>
+          {voices.map((voice) => (
+            <option key={voice.name} value={voice.name}>
+              {describeVoice(voice)}
+            </option>
+          ))}
+        </select>
+
+        <SpeakerButton
+          className="settings-donate"
+          text="What is the form of government of the United States?"
+          label="Probar la voz"
+        />
+
+        <p className="settings-hint">
+          {vozActual === null
+            ? 'Este dispositivo no ofrece voces en inglés. La lectura no estará disponible, pero puedes seguir estudiando.'
+            : `Se usará: ${describeVoice(vozActual)}.`}
+        </p>
+
+        <p className="state-note">
+          Si usas Firefox, solo hay voces del sistema y suenan peor. En Chrome, Edge, Safari y en
+          Android e iOS, la lectura es mejor.
+        </p>
       </section>
 
       <section className="card settings-section">
