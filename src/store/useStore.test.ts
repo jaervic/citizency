@@ -57,8 +57,29 @@ describe('registro de respuestas', () => {
   });
 });
 
-describe('persistencia', () => {
-  it('guarda el progreso y la localización en localStorage', () => {
+describe('tema', () => {
+  it('empieza siguiendo al sistema', () => {
+    expect(useStore.getState().theme).toBe('system');
+  });
+
+  it('guarda la preferencia elegida', () => {
+    useStore.getState().setTheme('dark');
+    expect(useStore.getState().theme).toBe('dark');
+  });
+
+  it('el reinicio vuelve a «sistema»', () => {
+    useStore.getState().setTheme('light');
+    useStore.getState().reset();
+    expect(useStore.getState().theme).toBe('system');
+  });
+
+  it('se persiste en localStorage', () => {
+    useStore.getState().setTheme('dark');
+    expect(localStorage.getItem('userProgress')).toContain('"theme":"dark"');
+  });
+});
+
+describe('persistencia', () => {  it('guarda el progreso y la localización en localStorage', () => {
     useStore.getState().setLocation('CA', '11');
     useStore.getState().recordAnswer('gov-001', true);
 

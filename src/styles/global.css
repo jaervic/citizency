@@ -4,29 +4,132 @@
    amplían en pantallas grandes. Incluye tokens de la paleta, reset, layout (cabecera +
    contenido) y los bloques de cada pantalla. */
 
-/* ------------------------------------------------------------------ Tokens */
-:root {
-  --color-primary: #1a3a6b;
-  --color-primary-strong: #142f57;
-  --color-on-primary: #ffffff;
-  --color-background: #f0f4f9;
-  --color-surface: #ffffff;
-  --color-border: #dbe3ee;
-  --color-pressed: #f0f4f9;
-  --color-text: #1f1f1f;
-  --color-text-secondary: #666666;
-  --color-text-muted: #888888;
-  --color-success: #2e7d32;
-  --color-error: #c62828;
-  --color-warning: #7a5c00;
+/* ------------------------------------------------------------------ Tokens
+   Dos capas:
+   1. Escalas que NO dependen del tema (espaciado, radios, tap, transición).
+   2. Colores por ROL semántico, con valor para el tema claro y para el oscuro.
 
-  --radius-card: 14px;
-  --radius-control: 12px;
+   Clave del sistema: `--brand` es la SUPERFICIE de marca (cabecera, botones sólidos) y
+   `--accent` el color de ÉNFASIS para texto e iconos. No pueden ser el mismo valor: un azul
+   marino oscuro funciona como fondo, pero como texto sobre fondo oscuro no se leería. */
+:root {
+  /* Escalas (independientes del tema) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-full: 999px;
+
   --tap-target: 48px;
   --content-max: 640px;
+  --transition: 180ms ease;
+
+  /* Alias heredados, para no tener que tocar cientos de reglas a la vez. */
+  --radius-card: var(--radius-lg);
+  --radius-control: var(--radius-md);
+}
+
+/* ------------------------------------------------------------------ Tema claro */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --brand: #1a3a6b;
+  --brand-strong: #142f57;
+  --on-brand: #ffffff;
+  --on-brand-muted: rgba(255, 255, 255, 0.16);
+
+  --accent: #1a3a6b;
+  --accent-strong: #142f57;
+  --accent-soft: var(--accent-soft);
+  --accent-border: var(--accent-border);
+
+  --color-background: #f0f4f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f5f7fa;
+  --color-surface-3: var(--color-surface-3);
+  --color-border: #dbe3ee;
+  --color-border-strong: var(--color-border-strong);
+  --color-pressed: var(--accent-soft);
+
+  --color-text: #1f1f1f;
+  /* Los dos tonos secundarios están elegidos para superar el contraste AA (4.5:1) sobre el fondo
+     de la página (#f0f4f9), no «a ojo»: el aviso legal daba 3.13 antes. Lo comprueba
+     `scripts/e2e.mjs` midiendo el contraste en el navegador. */
+  --color-text-secondary: #4a5462;
+  --color-text-muted: #5f6a7d;
+
+  --color-success: #2e7d32;
+  --color-success-soft: var(--color-success-soft);
+  --color-error: #c62828;
+  --color-error-strong: #b02a2a;
+  --color-error-soft: var(--color-error-soft);
+  --color-warning: #7a5c00;
+  --color-warning-soft: #fff8e1;
+
+  --overlay: var(--overlay);
+  --ring: var(--ring);
 
   --shadow-card: 0 1px 2px rgba(16, 37, 66, 0.06);
+  --shadow-raised: 0 6px 18px rgba(16, 37, 66, 0.1);
+  --shadow-pop: 0 12px 32px rgba(16, 37, 66, 0.18);
 }
+
+/* ------------------------------------------------------------------ Tema oscuro
+   El atributo `data-theme` lo pone un script en línea de `index.html` antes del primer pintado
+   (a partir de la preferencia guardada o de `prefers-color-scheme`), así que el CSS no necesita
+   duplicar el bloque con una media query y no hay destello de tema equivocado. */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --brand: #16233c;
+  --brand-strong: #1d2d4c;
+  --on-brand: #eaf1fb;
+  --on-brand-muted: rgba(255, 255, 255, 0.12);
+
+  --accent: #8fb4ea;
+  --accent-strong: #b6cef6;
+  --accent-soft: #1b2740;
+  --accent-border: #3b5a86;
+
+  --color-background: #0b1220;
+  --color-surface: #131b28;
+  --color-surface-2: #18222f;
+  --color-surface-3: #1f2b3d;
+  --color-border: #27364b;
+  --color-border-strong: #2e3f57;
+  --color-pressed: #1b2740;
+
+  --color-text: #e8eef7;
+  --color-text-secondary: #a9b8cd;
+  --color-text-muted: #8595ab;
+
+  --color-success: #6ee7a0;
+  --color-success-soft: #16281c;
+  --color-error: #ff9a9a;
+  --color-error-strong: #ffb4b4;
+  --color-error-soft: #2b1717;
+  --color-warning: #f0c674;
+  --color-warning-soft: #2a2312;
+
+  --overlay: rgba(0, 0, 0, 0.62);
+  --ring: #93c5fd;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-raised: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.55);
+}
+
+/* ------------------------------------------------------- Fin de los tokens
+   A partir de aquí NO puede haber ningún color literal (hex o rgba): todo va por `var(--token)`.
+   Si no, el modo oscuro se rompe a medias. Lo comprueba `src/styles/global.test.ts`. */
 
 /* ------------------------------------------------------------------- Reset */
 *,
@@ -109,7 +212,7 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid #3b82f6;
+  outline: 3px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -124,10 +227,10 @@ button {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--brand);
+  color: var(--on-brand);
   padding-top: env(safe-area-inset-top);
-  box-shadow: 0 1px 4px rgba(16, 37, 66, 0.25);
+  box-shadow: 0 1px 4px var(--shadow-raised);
 }
 
 .app-header__inner {
@@ -148,14 +251,14 @@ button {
   width: var(--tap-target);
   height: var(--tap-target);
   border-radius: 50%;
-  color: var(--color-on-primary);
+  color: var(--on-brand);
   font-size: 26px;
   line-height: 1;
   flex: 0 0 auto;
 }
 
 .app-header__back:active {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--on-brand-muted);
 }
 
 .app-header__back .icon {
@@ -207,7 +310,7 @@ button {
 .screen-title {
   font-size: 24px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
   text-align: center;
 }
 
@@ -239,7 +342,7 @@ button {
 .topbar__counter {
   font-size: 15px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 /* ------------------------------------------------------------------ Botones */
@@ -259,17 +362,17 @@ button {
 }
 
 .btn--primary {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--brand);
+  color: var(--on-brand);
 }
 
 .btn--primary:active {
-  background: var(--color-primary-strong);
+  background: var(--brand-strong);
 }
 
 .btn--secondary {
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   background: var(--color-surface);
 }
 
@@ -282,13 +385,13 @@ button {
   padding: 8px 14px;
   font-size: 15px;
   color: var(--color-text-secondary);
-  border: 1px solid #d5dbe5;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   width: auto;
 }
 
 .btn--danger {
-  background: #fdeeee;
+  background: var(--color-error-soft);
   color: var(--color-error);
 }
 
@@ -318,7 +421,7 @@ button {
   text-align: center;
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .home-menu {
@@ -345,7 +448,7 @@ button {
 
 .home-card:active {
   background: var(--color-pressed);
-  border-color: #9bb7e8;
+  border-color: var(--accent-border);
 }
 
 .home-card__title {
@@ -354,7 +457,7 @@ button {
   gap: 10px;
   font-size: 17px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .home-card__icon {
@@ -379,6 +482,67 @@ button {
   font-weight: 600;
 }
 
+.home-settings-link {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 8px 14px;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+}
+
+.home-settings-link:active {
+  background: var(--color-pressed);
+}
+
+/* ------------------------------------------------ Ajustes (controles) */
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.settings-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.settings-hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.segmented {
+  display: flex;
+  gap: var(--space-1);
+  padding: 4px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+
+.segment {
+  flex: 1;
+  min-height: 40px;
+  padding: 8px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.segment[aria-pressed='true'] {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
 .home-disclaimer {
   font-size: 12px;
   color: var(--color-text-muted);
@@ -398,7 +562,7 @@ button {
 .question-head__text {
   font-size: 21px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent);
   text-align: center;
 }
 
@@ -442,8 +606,8 @@ button {
   min-height: 40px;
   padding: 8px 14px;
   border-radius: 10px;
-  background: #eef2f8;
-  color: var(--color-primary);
+  background: var(--accent-soft);
+  color: var(--accent);
   font-size: 15px;
   font-weight: 600;
 }
@@ -454,7 +618,7 @@ button {
   padding: 6px 12px;
   border-radius: 8px;
   background: var(--color-pressed);
-  color: var(--color-primary);
+  color: var(--accent);
   font-size: 14px;
   font-weight: 600;
 }
@@ -483,7 +647,7 @@ button {
   flex: 1;
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .official-card__date {
@@ -510,8 +674,8 @@ button {
   min-height: 34px;
   padding: 6px 12px;
   border-radius: 8px;
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--brand);
+  color: var(--on-brand);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -521,7 +685,7 @@ button {
 .field-label {
   font-size: 14px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .field-select {
@@ -550,22 +714,22 @@ button {
 }
 
 .state-link {
-  color: var(--color-primary);
+  color: var(--accent);
   font-weight: 600;
   /* Es un enlace dentro de un texto: aquí sí queremos el subrayado que quita el reset global. */
   text-decoration: underline;
 }
 
 .home-card--location {
-  border-color: #9bb7e8;
+  border-color: var(--accent-border);
 }
 
 .explanation {
-  background: #f5f5f5;
+  background: var(--color-surface-2);
   border-radius: 8px;
   padding: 12px;
   font-size: 14px;
-  color: #555555;
+  color: var(--color-text-secondary);
 }
 
 .vocabulary {
@@ -583,13 +747,13 @@ button {
 .vocabulary__word {
   font-size: 15px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .vocabulary__translation {
   flex: 1;
   font-size: 14px;
-  color: #555555;
+  color: var(--color-text-secondary);
 }
 
 .answer-actions {
@@ -600,12 +764,12 @@ button {
 }
 
 .answer-actions .btn--review {
-  background: #ffe5e5;
-  color: #c0392b;
+  background: var(--color-error-soft);
+  color: var(--color-error-strong);
 }
 
 .answer-actions .btn--knew {
-  background: #e5f5e5;
+  background: var(--color-success-soft);
   color: var(--color-success);
 }
 
@@ -619,13 +783,13 @@ button {
 .session-score {
   font-size: 18px;
   font-weight: 600;
-  color: #333333;
+  color: var(--color-text);
 }
 
 .session-percentage {
   font-size: 42px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .session-note {
@@ -648,18 +812,18 @@ button {
   width: 100%;
   min-height: var(--tap-target);
   padding: 12px 14px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border-strong);
   border-radius: var(--radius-control);
   background: var(--color-surface);
   text-align: left;
 }
 
 .quiz-option:hover {
-  border-color: #c2d3ea;
+  border-color: var(--accent-border);
 }
 
 .quiz-option[aria-checked='true'] {
-  border-color: var(--color-primary);
+  border-color: var(--accent-border);
   background: var(--color-pressed);
 }
 
@@ -687,12 +851,12 @@ button {
 
 .quiz-option--correct {
   border-color: var(--color-success);
-  background: #eef7ee;
+  background: var(--color-success-soft);
 }
 
 .quiz-option--wrong {
   border-color: var(--color-error);
-  background: #fdeeee;
+  background: var(--color-error-soft);
 }
 
 .quiz-option--muted {
@@ -702,7 +866,7 @@ button {
 .result-badge {
   align-self: center;
   padding: 8px 18px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 2px solid;
   font-size: 16px;
   font-weight: 700;
@@ -710,27 +874,27 @@ button {
 
 .result-badge--passed {
   border-color: var(--color-success);
-  background: #eef7ee;
+  background: var(--color-success-soft);
   color: var(--color-success);
 }
 
 .result-badge--failed {
   border-color: var(--color-error);
-  background: #fdeeee;
+  background: var(--color-error-soft);
   color: var(--color-error);
 }
 
 .result-percentage {
   font-size: 48px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
   text-align: center;
 }
 
 .result-summary {
   font-size: 17px;
   font-weight: 600;
-  color: #333333;
+  color: var(--color-text);
   text-align: center;
 }
 
@@ -792,13 +956,13 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: var(--color-on-primary);
+  color: var(--on-brand);
   font-size: 17px;
   font-weight: 700;
 }
 
 .speech-button--start {
-  background: var(--color-primary);
+  background: var(--brand);
 }
 
 .speech-button--stop {
@@ -850,7 +1014,7 @@ button {
   align-self: center;
   min-height: 40px;
   padding: 8px 12px;
-  color: var(--color-primary);
+  color: var(--accent);
   font-size: 15px;
   font-weight: 600;
   text-decoration: underline;
@@ -860,7 +1024,7 @@ button {
 .progress-card__title {
   font-size: 18px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .progress-stats {
@@ -872,7 +1036,7 @@ button {
 .progress-stat {
   font-size: 16px;
   font-weight: 600;
-  color: #334155;
+  color: var(--color-text-secondary);
 }
 
 .progress-header {
@@ -885,7 +1049,7 @@ button {
 .progress-header__value {
   font-size: 15px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .progress-category__header {
@@ -899,13 +1063,13 @@ button {
   flex: 1;
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .progress-category__percent {
   font-size: 15px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .progress-category__not-started {
@@ -974,17 +1138,17 @@ button {
 .review-filter {
   min-height: 40px;
   padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--accent);
   background: var(--color-surface);
-  color: var(--color-primary);
+  color: var(--accent);
   font-size: 14px;
   font-weight: 600;
 }
 
 .review-filter[aria-pressed='true'] {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--brand);
+  color: var(--on-brand);
 }
 
 .review-empty {
@@ -1026,7 +1190,7 @@ button {
   min-width: 22px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .review-item__question {
@@ -1090,7 +1254,7 @@ button {
   flex: 1;
   font-size: 15px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .review-item__correct-list {
@@ -1150,19 +1314,19 @@ button {
   flex: 1;
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 /* ----------------------------------------------------------- ProgressBar */
 .progress-bar {
   width: 100%;
-  background: #e4eaf2;
+  background: var(--color-surface-3);
   overflow: hidden;
 }
 
 .progress-bar__fill {
   height: 100%;
-  background: var(--color-primary);
+  background: var(--brand);
   transition: width 0.25s ease;
 }
 
@@ -1175,7 +1339,7 @@ button {
   align-items: flex-end;
   justify-content: center;
   padding: 16px;
-  background: rgba(16, 37, 66, 0.45);
+  background: var(--overlay);
 }
 
 @media (min-width: 480px) {
@@ -1205,7 +1369,7 @@ button {
 .modal__title {
   font-size: 18px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .modal__message {

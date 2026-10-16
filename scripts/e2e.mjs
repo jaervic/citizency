@@ -89,6 +89,68 @@ const browser = await playwright.chromium.launch();
 const context = await browser.newContext({ viewport: { width: 420, height: 900 } });
 const page = await context.newPage();
 
+/**
+ * Texto (selector) y el mínimo de contraste WCAG AA exigido. 4.5 es el mínimo para texto normal:
+ * el aviso legal daba 3.13 en tema claro antes de arreglar los tonos secundarios.
+ */
+const PARES_CONTRASTE = [
+  ['.home-card__title', 4.5],
+  ['.home-card__subtitle', 4.5],
+  ['.app-header__title', 4.5],
+  ['.screen-subtitle', 4.5],
+  ['.home-stat', 4.5],
+  ['.home-disclaimer', 4.5],
+  ['.btn--primary', 4.5],
+];
+
+/** Mide el contraste de cada par dentro de la página (se serializa y se ejecuta en el navegador). */
+async function medirContraste(target) {
+  return target.evaluate((pares) => {
+    const toRgb = (value) => {
+      const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      return match === null ? null : [Number(match[1]), Number(match[2]), Number(match[3])];
+    };
+    const linear = (value) => {
+      const c = value / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    };
+    const luminance = (rgb) => 0.2126 * linear(rgb[0]) + 0.7152 * linear(rgb[1]) + 0.0722 * linear(rgb[2]);
+
+    // Sube por los antecesores hasta encontrar un fondo opaco.
+    const background = (element) => {
+      let node = element;
+      while (node !== null) {
+        const style = getComputedStyle(node).backgroundColor;
+        const rgb = toRgb(style);
+        const alpha = Number((style.match(/rgba?\([^)]*?,\s*([\d.]+)\)/) ?? [])[1] ?? 1);
+        if (rgb !== null && alpha > 0.9) {
+          return rgb;
+        }
+        node = node.parentElement;
+      }
+      return [255, 255, 255];
+    };
+
+    return pares
+      .map(([selector, minimo]) => {
+        const element = document.querySelector(selector);
+        if (element === null) {
+          return null;
+        }
+        const foreground = toRgb(getComputedStyle(element).color);
+        if (foreground === null) {
+          return null;
+        }
+        const back = background(element);
+        const l1 = luminance(foreground);
+        const l2 = luminance(back);
+        const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+        return { selector, ratio: Math.round(ratio * 100) / 100, minimo };
+      })
+      .filter((entry) => entry !== null);
+  }, PARES_CONTRASTE);
+}
+
 const errores = [];
 page.on('pageerror', (error) => errores.push(`[pageerror] ${error.message}`));
 page.on('console', (message) => {
@@ -202,6 +264,56 @@ try {
   console.log('\n— Rutas');
   await page.goto(`${BASE}/ruta-inexistente`, { waitUntil: 'networkidle' });
   check('una ruta desconocida muestra el 404', (await page.locator('body').innerText()).includes('Pantalla no encontrada'));
+
+  // ------------------------------------------------------------------ Temas
+  console.log('\n— Modo claro y oscuro');
+  for (const scheme of ['light', 'dark']) {
+    const themed = await browser.newContext({
+      viewport: { width: 420, height: 900 },
+      colorScheme: scheme,
+    });
+    const themedPage = await themed.newPage();
+
+    // Contexto nuevo = almacenamiento vacío, así que la preferencia es 'system' y el tema debe
+    // resolverse a partir de `prefers-color-scheme`.
+    await themedPage.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+    const aplicado = await themedPage.evaluate(() =>
+      document.documentElement.getAttribute('data-theme'),
+    );
+    check(`[${scheme}] «Sistema» sigue al sistema operativo`, aplicado === scheme, String(aplicado));
+
+    const medidas = await medirContraste(themedPage);
+    const bajos = medidas.filter((medida) => medida.ratio < medida.minimo);
+    check(
+      `[${scheme}] contraste AA en ${medidas.length} textos`,
+      bajos.length === 0,
+      bajos.map((medida) => `${medida.selector}: ${medida.ratio}`).join(', '),
+    );
+
+    // El interruptor de Ajustes debe poder forzar el tema contrario al del sistema.
+    await themedPage.goto(`${BASE}/settings`, { waitUntil: 'networkidle' });
+    const contrario = scheme === 'light' ? 'Oscuro' : 'Claro';
+    await themedPage.getByRole('button', { name: contrario }).click();
+
+    const forzado = await themedPage.evaluate(() => ({
+      tema: document.documentElement.getAttribute('data-theme'),
+      meta: document.querySelector('meta[name="theme-color"]')?.getAttribute('content'),
+      colorScheme: getComputedStyle(document.documentElement).colorScheme,
+    }));
+    const esperado = scheme === 'light' ? 'dark' : 'light';
+    check(
+      `[${scheme}] Ajustes fuerza el tema «${contrario}»`,
+      forzado.tema === esperado && forzado.colorScheme === esperado,
+      `data-theme=${forzado.tema}, color-scheme=${forzado.colorScheme}, theme-color=${forzado.meta}`,
+    );
+    check(
+      `[${scheme}] la barra del navegador cambia con el tema`,
+      forzado.meta === (esperado === 'dark' ? '#16233c' : '#1a3a6b'),
+      String(forzado.meta),
+    );
+
+    await themed.close();
+  }
 
   console.log('\n— Consola');
   check('sin errores de ejecución', errores.length === 0, errores.join(' | '));

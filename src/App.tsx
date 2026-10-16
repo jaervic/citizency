@@ -5,15 +5,20 @@ import { Route, Routes } from 'react-router-dom';
 
 import { ConfirmProvider } from '@/components/ConfirmDialog';
 import Layout from '@/components/Layout';
+import { useThemeEffect } from '@/hooks/useThemeEffect';
 import FlashcardsScreen from '@/routes/FlashcardsScreen';
 import HomeScreen from '@/routes/HomeScreen';
 import InterviewScreen from '@/routes/InterviewScreen';
 import NotFoundScreen from '@/routes/NotFoundScreen';
 import ProgressScreen from '@/routes/ProgressScreen';
 import QuizScreen from '@/routes/QuizScreen';
+import SettingsScreen from '@/routes/SettingsScreen';
 import StateScreen from '@/routes/StateScreen';
 
 export default function App() {
+  // Mantiene aplicado el tema (claro/oscuro) elegido en Ajustes.
+  useThemeEffect();
+
   return (
     <ConfirmProvider>
       <Routes>
@@ -24,6 +29,7 @@ export default function App() {
           <Route path="interview" element={<InterviewScreen />} />
           <Route path="progress" element={<ProgressScreen />} />
           <Route path="state" element={<StateScreen />} />
+          <Route path="settings" element={<SettingsScreen />} />
           <Route path="*" element={<NotFoundScreen />} />
         </Route>
       </Routes>

@@ -8,6 +8,40 @@
       name="description"
       content="Prepárate para el examen de ciudadanía de los Estados Unidos (USCIS 2025): flashcards, examen de práctica, simulacro de entrevista y progreso. Todo funciona en tu navegador."
     />
+    <script>
+      // El tema se aplica ANTES del primer pintado para que no se vea un destello del tema
+      // equivocado. Lee la preferencia guardada por Zustand ('system' si no hay nada o si el
+      // almacenamiento está bloqueado) y, si es 'system', pregunta al sistema operativo.
+      (function () {
+        var preference = 'system';
+
+        try {
+          var saved = window.localStorage.getItem('userProgress');
+          if (saved !== null) {
+            var parsed = JSON.parse(saved);
+            if (parsed && parsed.state && typeof parsed.state.theme === 'string') {
+              preference = parsed.state.theme;
+            }
+          }
+        } catch (error) {
+          preference = 'system';
+        }
+
+        var dark =
+          preference === 'dark' ||
+          (preference !== 'light' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+        var theme = dark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta !== null) {
+          meta.setAttribute('content', theme === 'dark' ? '#16233c' : '#1a3a6b');
+        }
+      })();
+    </script>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="USCIS Ciudadanía" />

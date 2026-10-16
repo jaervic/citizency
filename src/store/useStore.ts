@@ -15,6 +15,7 @@ import type { UserProgress } from '@/types';
 import { recordAnswer as applyRecordAnswer } from '@/utils/spacedRepetition';
 import { computeNextStreak, getLocalDateString } from '@/utils/streak';
 import type { Location } from '@/utils/stateOfficials';
+import type { ThemePreference } from '@/utils/theme';
 
 /** Clave con la que se guarda el progreso en `localStorage`. */
 const PERSIST_KEY = 'userProgress';
@@ -30,9 +31,10 @@ function createInitialProgress(): UserProgress {
   return { xp: 0, streak: 0, lastStudyDate: null, answeredQuestions: {} };
 }
 
-/** Estado inicial completo (progreso + datos del estado del solicitante). */
-function createInitialState(): UserProgress & Pick<StoreState, 'homeState' | 'homeDistrict'> {
-  return { ...createInitialProgress(), homeState: null, homeDistrict: null };
+/** Estado inicial completo (progreso + datos del estado del solicitante + preferencias). */
+function createInitialState(): UserProgress &
+  Pick<StoreState, 'homeState' | 'homeDistrict' | 'theme'> {
+  return { ...createInitialProgress(), homeState: null, homeDistrict: null, theme: 'system' };
 }
 
 /**
@@ -51,6 +53,11 @@ export type StoreState = UserProgress & {
    */
   homeDistrict: string | null;
   /**
+   * Preferencia de tema: 'system' sigue al sistema operativo, 'light' y 'dark' lo fuerzan. El
+   * script en línea de `index.html` la lee antes del primer pintado para no destellar.
+   */
+  theme: ThemePreference;
+  /**
    * Registra el resultado de un intento: actualiza `answeredQuestions` con la
    * función pura `recordAnswer` de `spacedRepetition`, suma la XP del intento y
    * actualiza la racha del día con `computeNextStreak` (idempotente dentro del día,
@@ -61,6 +68,8 @@ export type StoreState = UserProgress & {
   addXp: (amount: number) => void;
   /** Guarda el estado y el distrito del solicitante (usa `null` para borrarlos). */
   setLocation: (state: string | null, district: string | null) => void;
+  /** Guarda la preferencia de tema. */
+  setTheme: (theme: ThemePreference) => void;
   /** Reinicia TODO el progreso del usuario a sus valores por defecto. */
   reset: () => void;
 };
@@ -71,6 +80,7 @@ export const useStore = create<StoreState>()(
       ...createInitialState(),
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
       setLocation: (homeState, homeDistrict) => set({ homeState, homeDistrict }),
+      setTheme: (theme) => set({ theme }),
       recordAnswer: (questionId, wasCorrect) => {
         const { xp, streak, lastStudyDate, answeredQuestions } = get();
 
@@ -107,6 +117,7 @@ export const useStore = create<StoreState>()(
         answeredQuestions: state.answeredQuestions,
         homeState: state.homeState,
         homeDistrict: state.homeDistrict,
+        theme: state.theme,
       }),
     },
   ),

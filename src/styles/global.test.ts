@@ -20,6 +20,46 @@ function rule(selector: string): string {
   return match?.[1] ?? '';
 }
 
+/** Nombres de los tokens definidos en un bloque de declaraciones. */
+function tokensIn(block: string): string[] {
+  return [...block.matchAll(/(--[a-z0-9-]+)\s*:/g)].map((match) => match[1]!);
+}
+
+describe('temas', () => {
+  const light = rule("[data-theme='light']");
+  const dark = rule("[data-theme='dark']");
+
+  it('existe el bloque del tema oscuro y define tokens', () => {
+    expect(tokensIn(dark).length).toBeGreaterThan(20);
+  });
+
+  it('todos los tokens del tema claro tienen valor en el oscuro', () => {
+    // Si a un token le faltara el valor oscuro, heredaría el claro en silencio y rompería el
+    // contraste en modo nocturno.
+    const faltan = tokensIn(light).filter((token) => !tokensIn(dark).includes(token));
+
+    expect(faltan, `sin valor en oscuro: ${faltan.join(', ')}`).toEqual([]);
+  });
+
+  it('en el tema oscuro la marca (fondo) y el acento (texto) son distintos', () => {
+    const brand = /--brand:\s*([^;]+);/.exec(dark)?.[1]?.trim();
+    const accent = /--accent:\s*([^;]+);/.exec(dark)?.[1]?.trim();
+
+    expect(brand).toBeDefined();
+    expect(accent).toBeDefined();
+    expect(brand).not.toBe(accent);
+  });
+
+  it('ningún color literal fuera del bloque de tokens', () => {
+    // A partir del marcador "Fin de los tokens" todo debe ir por variables; un color hardcodeado
+    // se quedaría igual en modo oscuro y rompería el tema a medias.
+    const rest = css.split('Fin de los tokens')[1] ?? '';
+    const literales = [...rest.matchAll(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g)].map((m) => m[0]);
+
+    expect(literales, `colores sin tematizar: ${literales.join(', ')}`).toEqual([]);
+  });
+});
+
 describe('contrato de la hoja de estilos', () => {
   it('los enlaces no heredan el azul ni el subrayado del navegador', () => {
     const block = rule('a');

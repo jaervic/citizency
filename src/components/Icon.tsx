@@ -19,7 +19,8 @@ export type IconName =
   | 'speaker'
   | 'check'
   | 'cross'
-  | 'chevron';
+  | 'chevron'
+  | 'settings';
 
 /**
  * Trazos de cada icono, en un lienzo de 24x24. Todos usan trazo (no relleno) salvo `stop`, que es
@@ -68,6 +69,12 @@ const PATHS: Record<IconName, ReactNode> = {
   check: <path d="M5 12.5l4.5 4.5L19 7" />,
   cross: <path d="M6 6l12 12M18 6L6 18" />,
   chevron: <path d="M6 9.5l6 6 6-6" />,
+  settings: (
+    <>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.6v2.3M12 19.1v2.3M2.6 12h2.3M19.1 12h2.3M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6" />
+    </>
+  ),
 };
 
 export type IconProps = {

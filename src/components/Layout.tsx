@@ -15,6 +15,7 @@ const TITLES: Record<string, string> = {
   '/interview': 'Entrevista',
   '/progress': 'Progreso',
   '/state': 'Mi estado',
+  '/settings': 'Ajustes',
 };
 
 export default function Layout() {
