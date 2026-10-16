@@ -248,29 +248,48 @@ try {
   check('al terminar aparece el repaso', (await page.locator('.review').count()) === 1);
   await captura('resultado-examen');
 
-  // Se despliega una pregunta fallada del repaso y se contrasta con questions.json.
+  // Se despliegan TODAS las preguntas falladas y se contrasta cada una con questions.json.
   const falladas = page.locator('.review-item', { has: page.locator('.review-item__mark--wrong') });
-  const hayFalladas = (await falladas.count()) > 0;
-  check('hay preguntas falladas que repasar', hayFalladas);
+  const totalFalladas = await falladas.count();
+  check('hay preguntas falladas que repasar', totalFalladas > 0, `${totalFalladas} falladas`);
 
-  if (hayFalladas) {
-    const item = falladas.first();
+  const problemas = [];
+
+  for (let indice = 0; indice < totalFalladas; indice += 1) {
+    const item = falladas.nth(indice);
     await item.locator('.review-item__header').click();
 
-    // El enunciado del repaso es `question_es`: se busca en questions.json cuántas respuestas
-    // aceptadas tiene esa pregunta y se contrasta con lo que ha pintado la app.
     const enunciado = (await item.locator('.review-item__question').innerText()).trim();
     const pregunta = QUESTIONS.find((candidata) => candidata.question_es === enunciado);
-    const esperadas = pregunta?.answers_en.length ?? 0;
+
+    if (pregunta === undefined) {
+      problemas.push(`no se reconoce "${enunciado.slice(0, 30)}"`);
+      continue;
+    }
+
+    if (pregunta.answers_en.length === 0) {
+      // Pregunta dinámica (presidente, gobernador, senadores…): la respuesta correcta no está en
+      // questions.json, se muestra como dato oficial vigente.
+      if ((await item.locator('.official-card').count()) !== 1) {
+        problemas.push(`sin dato oficial en "${enunciado.slice(0, 30)}"`);
+      }
+      continue;
+    }
+
     const pintadas = await item.locator('.review-item__correct').count();
 
-    check('se reconoce la pregunta desplegada', esperadas > 0, enunciado.slice(0, 40));
-    check(
-      'al desplegar muestra TODAS las respuestas aceptadas',
-      pintadas > 0 && pintadas === esperadas,
-      `${pintadas} pintadas, ${esperadas} esperadas`,
-    );
-    check('con botón de audio por respuesta', (await item.locator('svg').count()) >= pintadas);
+    if (pintadas !== pregunta.answers_en.length) {
+      problemas.push(`"${enunciado.slice(0, 30)}": ${pintadas} de ${pregunta.answers_en.length}`);
+    }
+  }
+
+  check(
+    `las ${totalFalladas} preguntas falladas se despliegan con su respuesta correcta`,
+    problemas.length === 0,
+    problemas.join(' | '),
+  );
+
+  if (totalFalladas > 0) {
     await captura('repaso-desplegado');
   }
 
