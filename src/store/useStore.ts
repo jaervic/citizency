@@ -16,6 +16,7 @@ import { recordAnswer as applyRecordAnswer } from '@/utils/spacedRepetition';
 import { computeNextStreak, getLocalDateString } from '@/utils/streak';
 import type { Location } from '@/utils/stateOfficials';
 import type { ThemePreference } from '@/utils/theme';
+import type { ExportableState } from '@/utils/backup';
 
 /** Clave con la que se guarda el progreso en `localStorage`. */
 const PERSIST_KEY = 'userProgress';
@@ -83,6 +84,11 @@ export type StoreState = UserProgress & {
   voiceName: string | null;
   /** Guarda la voz elegida (`null` = automática). */
   setVoiceName: (voiceName: string | null) => void;
+  /**
+   * Aplica datos restaurados desde una copia de seguridad (progreso, ubicación y preferencias).
+   * Reemplaza lo que hubiera.
+   */
+  restore: (data: ExportableState) => void;
   /** Reinicia TODO el progreso del usuario a sus valores por defecto. */
   reset: () => void;
 };
@@ -95,6 +101,7 @@ export const useStore = create<StoreState>()(
       setLocation: (homeState, homeDistrict) => set({ homeState, homeDistrict }),
       setTheme: (theme) => set({ theme }),
       setVoiceName: (voiceName) => set({ voiceName }),
+      restore: (data) => set({ ...data }),
       recordAnswer: (questionId, wasCorrect) => {
         const { xp, streak, lastStudyDate, answeredQuestions } = get();
 
@@ -161,4 +168,21 @@ export function selectUserProgress(state: StoreState): UserProgress {
  */
 export function selectLocation(state: StoreState): Location {
   return { state: state.homeState, district: state.homeDistrict };
+}
+
+/**
+ * Extrae todo lo que se guarda en una copia de seguridad. Igual que los anteriores: es un objeto
+ * nuevo, así que se usa con `useStore.getState()`.
+ */
+export function selectExportableState(state: StoreState): ExportableState {
+  return {
+    xp: state.xp,
+    streak: state.streak,
+    lastStudyDate: state.lastStudyDate,
+    answeredQuestions: state.answeredQuestions,
+    homeState: state.homeState,
+    homeDistrict: state.homeDistrict,
+    theme: state.theme,
+    voiceName: state.voiceName,
+  };
 }

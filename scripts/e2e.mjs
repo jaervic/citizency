@@ -305,6 +305,53 @@ try {
   await page.goto(`${BASE}/ruta-inexistente`, { waitUntil: 'networkidle' });
   check('una ruta desconocida muestra el 404', (await page.locator('body').innerText()).includes('Pantalla no encontrada'));
 
+  // ---------------------------------------------------- Copia de seguridad
+  console.log('\n— Copia de seguridad');
+
+  // 1) Se genera algo de progreso respondiendo una tarjeta.
+  await page.goto(`${BASE}/flashcards`, { waitUntil: 'networkidle' });
+  await page.getByRole('button', { name: 'Mostrar respuesta' }).click();
+  await page.getByRole('button', { name: 'Ya lo sabía' }).click();
+
+  // 2) Se exporta el código.
+  await page.goto(`${BASE}/backup`, { waitUntil: 'networkidle' });
+  await page.getByRole('button', { name: /Copiar código/ }).click();
+  await page.locator('#codigo-generado').waitFor({ state: 'visible' });
+
+  const copia = await page.locator('#codigo-generado').inputValue();
+  check('se genera un código de copia', copia.startsWith('USCIS1'), copia.slice(0, 12));
+  check('el código es manejable para pegar', copia.length < 4000, `${copia.length} caracteres`);
+
+  // 3) Se reinicia el progreso.
+  const leerXp = async () =>
+    Number((await page.locator('.hero__sub').innerText()).match(/(\d+)\s*XP/)?.[1] ?? -1);
+
+  await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  const xpAntes = await leerXp();
+  check('hay progreso antes de la copia', xpAntes > 0, `${xpAntes} XP`);
+
+  await page.getByRole('button', { name: 'Reiniciar progreso' }).click();
+  await page.getByRole('button', { name: 'Sí, reiniciar' }).click();
+  check('el progreso se reinicia', (await leerXp()) === 0, `${await leerXp()} XP`);
+
+  // 4) Se restaura desde el código.
+  await page.goto(`${BASE}/backup`, { waitUntil: 'networkidle' });
+  await page.locator('#codigo-entrada').fill(copia);
+  await page.getByRole('button', { name: 'Leer este código' }).click();
+  await page.locator('.backup-preview').waitFor({ state: 'visible', timeout: 8000 });
+  check(
+    'la copia se reconoce y enseña su resumen',
+    (await page.locator('.backup-preview').innerText()).includes('XP'),
+  );
+
+  await page.getByRole('button', { name: 'Reemplazar mi progreso' }).click();
+  await page.getByRole('button', { name: 'Sí, reemplazar' }).click();
+  await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+
+  const xpDespues = await leerXp();
+  // Comprobación por número y no por texto: "60 XP" contiene la subcadena "0 XP".
+  check('el progreso vuelve a estar como antes', xpDespues === xpAntes, `${xpAntes} → ${xpDespues} XP`);
+
   // ------------------------------------------------------------------ Voz
   console.log('\n— Voz');
   await page.goto(`${BASE}/settings`, { waitUntil: 'networkidle' });

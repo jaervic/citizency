@@ -23,7 +23,9 @@ export type IconName =
   | 'settings'
   | 'github'
   | 'coffee'
-  | 'download';
+  | 'download'
+  | 'copy'
+  | 'upload';
 
 /**
  * Iconos de relleno (no de trazo). El logotipo de GitHub solo tiene sentido relleno, así que estos
@@ -100,6 +102,19 @@ const PATHS: Record<IconName, ReactNode> = {
       <path d="M12 3.5v11" />
       <path d="M7.5 10.5L12 15l4.5-4.5" />
       <path d="M4.5 19.5h15" />
+    </>
+  ),
+  upload: (
+    <>
+      <path d="M12 15.5v-11" />
+      <path d="M7.5 9L12 4.5 16.5 9" />
+      <path d="M4.5 19.5h15" />
+    </>
+  ),
+  copy: (
+    <>
+      <rect x="9" y="9" width="11" height="11" rx="2" />
+      <path d="M15 6.5A2.5 2.5 0 0 0 12.5 4h-6A2.5 2.5 0 0 0 4 6.5v6A2.5 2.5 0 0 0 6.5 15" />
     </>
   ),
 };

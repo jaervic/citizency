@@ -42,7 +42,8 @@ export default function HomeScreen() {
   const handleReset = async () => {
     const accepted = await confirm({
       title: 'Reiniciar progreso',
-      message: 'Se borrarán tu XP, tu racha y el historial de todas las preguntas. Esta acción no se puede deshacer.',
+      message:
+        'Se borrarán tu XP, tu racha y el historial de todas las preguntas. Esta acción no se puede deshacer. Si quieres conservarlo, cancela y descarga antes una copia desde Ajustes.',
       confirmLabel: 'Sí, reiniciar',
       cancelLabel: 'Cancelar',
     });

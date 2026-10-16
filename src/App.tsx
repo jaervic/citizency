@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ConfirmProvider } from '@/components/ConfirmDialog';
 import Layout from '@/components/Layout';
 import { useThemeEffect } from '@/hooks/useThemeEffect';
+import BackupScreen from '@/routes/BackupScreen';
 import FlashcardsScreen from '@/routes/FlashcardsScreen';
 import HomeScreen from '@/routes/HomeScreen';
 import InstallScreen from '@/routes/InstallScreen';
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="state" element={<StateScreen />} />
           <Route path="settings" element={<SettingsScreen />} />
           <Route path="install" element={<InstallScreen />} />
+          <Route path="backup" element={<BackupScreen />} />
           <Route path="*" element={<NotFoundScreen />} />
         </Route>
       </Routes>

@@ -79,6 +79,64 @@ describe('tema', () => {
   });
 });
 
+describe('restaurar una copia', () => {
+  it('aplica progreso, ubicación y preferencias de golpe', () => {
+    useStore.getState().restore({
+      xp: 250,
+      streak: 7,
+      lastStudyDate: '2026-10-15',
+      answeredQuestions: { 'gov-001': { correct: 3, incorrect: 0, lastSeen: '2026-10-15T10:00:00.000Z' } },
+      homeState: 'TX',
+      homeDistrict: '35',
+      theme: 'dark',
+      voiceName: 'Google US English',
+    });
+
+    const estado = useStore.getState();
+
+    expect(estado.xp).toBe(250);
+    expect(estado.streak).toBe(7);
+    expect(estado.homeState).toBe('TX');
+    expect(estado.homeDistrict).toBe('35');
+    expect(estado.theme).toBe('dark');
+    expect(estado.voiceName).toBe('Google US English');
+    expect(estado.answeredQuestions['gov-001']).toBeDefined();
+  });
+
+  it('una copia con progreso vacío borra el historial (modo reemplazar)', () => {
+    useStore.getState().recordAnswer('gov-001', true);
+    useStore.getState().restore({
+      xp: 0,
+      streak: 0,
+      lastStudyDate: null,
+      answeredQuestions: {},
+      homeState: null,
+      homeDistrict: null,
+      theme: 'system',
+      voiceName: null,
+    });
+
+    expect(useStore.getState().answeredQuestions).toEqual({});
+    expect(useStore.getState().xp).toBe(0);
+  });
+
+  it('se persiste en localStorage', () => {
+    useStore.getState().restore({
+      xp: 999,
+      streak: 3,
+      lastStudyDate: '2026-10-15',
+      answeredQuestions: {},
+      homeState: 'CA',
+      homeDistrict: '11',
+      theme: 'light',
+      voiceName: null,
+    });
+
+    expect(localStorage.getItem('userProgress')).toContain('999');
+    expect(localStorage.getItem('userProgress')).toContain('"homeState":"CA"');
+  });
+});
+
 describe('persistencia', () => {  it('guarda el progreso y la localización en localStorage', () => {
     useStore.getState().setLocation('CA', '11');
     useStore.getState().recordAnswer('gov-001', true);

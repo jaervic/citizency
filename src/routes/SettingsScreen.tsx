@@ -93,6 +93,18 @@ export default function SettingsScreen() {
       </section>
 
       <section className="card settings-section">
+        <h2 className="settings-title">Tu progreso</h2>
+        <p className="settings-hint">
+          Se guarda en este dispositivo. Descarga una copia de vez en cuando para no perderlo si
+          borras los datos del navegador o cambias de teléfono.
+        </p>
+        <Link to="/backup" className="settings-donate">
+          <Icon name="download" />
+          Copia de seguridad
+        </Link>
+      </section>
+
+      <section className="card settings-section">
         <h2 className="settings-title">Instalar la app</h2>
         <p className="settings-hint">
           Añádela a la pantalla de inicio de tu teléfono o computadora para abrirla como una app y
