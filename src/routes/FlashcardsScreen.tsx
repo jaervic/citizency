@@ -7,8 +7,8 @@
 // El estado de la sesión vive en un `useReducer` puro: el único efecto secundario (registrar
 // la respuesta en el store) se hace en el manejador del evento, no en el reducer, porque React
 // en modo estricto invoca los reducers dos veces para detectar impurezas.
-import { useReducer, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useMemo, useReducer, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import OfficialAnswerCard from '@/components/OfficialAnswerCard';
 import { useConfirm } from '@/components/ConfirmDialog';
@@ -19,9 +19,10 @@ import SpeakerButton from '@/components/SpeakerButton';
 import ProgressBar from '@/components/ProgressBar';
 import { FLASHCARD_SESSION_SIZE } from '@/constants';
 import { selectUserProgress, useStore } from '@/store/useStore';
+import { CATEGORY_ORDER } from '@/utils/categories';
 import { QUESTIONS } from '@/utils/content';
 import { buildStudyQueue } from '@/utils/spacedRepetition';
-import type { Question } from '@/types';
+import type { Category, Question } from '@/types';
 
 type Phase = 'primary' | 'intensive' | 'done';
 
@@ -101,18 +102,62 @@ function sessionReducer(state: SessionState, action: SessionAction): SessionStat
   return { ...state, results, order, byId, phase: 'done' };
 }
 
+/** Filtros de la sesión, que llegan por la URL desde la pantalla de practicar. */
+type SessionConfig = {
+  limit: number;
+  category?: Category;
+  only65_20?: boolean;
+  onlyPending?: boolean;
+  /** Texto que se enseña en el contador, para saber qué modo está activo. */
+  mode: string;
+};
+
+/** Lee los filtros de la URL (`/flashcards?only65=1`, `?onlyFailed=1`, `?category=…`). */
+export function readSessionConfig(params: URLSearchParams): SessionConfig {
+  const category = params.get('category');
+
+  if (params.get('only65') === '1') {
+    return { limit: FLASHCARD_SESSION_SIZE, only65_20: true, mode: 'Exención 65/20' };
+  }
+
+  if (params.get('onlyFailed') === '1') {
+    return { limit: FLASHCARD_SESSION_SIZE, onlyPending: true, mode: 'Solo las falladas' };
+  }
+
+  if (category !== null && (CATEGORY_ORDER as string[]).includes(category)) {
+    return { limit: FLASHCARD_SESSION_SIZE, category: category as Category, mode: category };
+  }
+
+  return { limit: FLASHCARD_SESSION_SIZE, mode: 'Sesión de estudio' };
+}
+
 /** Cola de una sesión nueva, calculada con el progreso actual del store. */
-function buildSessionQueue(): Question[] {
+function buildSessionQueue(config: SessionConfig): Question[] {
   return buildStudyQueue(QUESTIONS, selectUserProgress(useStore.getState()), {
-    limit: FLASHCARD_SESSION_SIZE,
+    limit: config.limit,
+    category: config.category,
+    only65_20: config.only65_20,
+    onlyPending: config.onlyPending,
   });
 }
 
+/**
+ * Al cambiar los filtros de la URL (`key`) se monta una sesión nueva desde cero. Sin la `key`, ir de
+ * una categoría a otra no reiniciaría la sesión, porque React reutiliza el mismo componente.
+ */
 export default function FlashcardsScreen() {
+  const [searchParams] = useSearchParams();
+  const params = searchParams.toString();
+
+  return <StudySession key={params} params={params} />;
+}
+
+function StudySession({ params }: { params: string }) {
+  const config = useMemo(() => readSessionConfig(new URLSearchParams(params)), [params]);
   const recordAnswer = useStore((state) => state.recordAnswer);
   const navigate = useNavigate();
   const confirm = useConfirm();
-  const [state, dispatch] = useReducer(sessionReducer, undefined, () => emptySession(buildSessionQueue()));
+  const [state, dispatch] = useReducer(sessionReducer, undefined, () => emptySession(buildSessionQueue(config)));
   const [showVocabulary, setShowVocabulary] = useState(false);
 
   const handleExit = async () => {
@@ -150,8 +195,33 @@ export default function FlashcardsScreen() {
 
   const handleNewSession = () => {
     setShowVocabulary(false);
-    dispatch({ type: 'start', queue: buildSessionQueue() });
+    dispatch({ type: 'start', queue: buildSessionQueue(config) });
   };
+
+  // Modo «solo las falladas» sin fallos (o filtro sin preguntas): se explica en vez de dejar al
+  // usuario en una pantalla vacía.
+  if (state.primaryQueue.length === 0) {
+    return (
+      <div className="page">
+        <section className="card settings-section">
+          <h2 className="settings-title">{config.mode}</h2>
+          <p className="settings-hint">
+            No hay preguntas para este repaso. Si has elegido «solo las falladas», significa que no
+            tienes ninguna pendiente: ¡buena señal! Prueba con otro modo o sigue estudiando.
+          </p>
+        </section>
+
+        <div className="btn-row">
+          <Link to="/practice" className="btn btn--primary">
+            Ver otras formas de practicar
+          </Link>
+          <Link to="/flashcards" className="btn btn--secondary">
+            Sesión de estudio normal
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (state.phase === 'done') {
     const entries: SessionReviewItem[] = state.order
@@ -193,6 +263,10 @@ export default function FlashcardsScreen() {
           Salir
         </button>
       </div>
+
+      {config.mode !== 'Sesión de estudio' && (
+        <p className="reinforcement-note">Modo: {config.mode}</p>
+      )}
 
       <ProgressBar value={progress} label="Progreso de la sesión" />
 

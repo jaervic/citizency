@@ -212,7 +212,14 @@ try {
   // -------------------------------------------------------- Vuelta al inicio
   await page.locator('a.btn--secondary', { hasText: 'Volver al inicio' }).click();
   await page.waitForURL(`${BASE}/`);
-  check('el inicio recuerda el estado elegido', (await page.locator('body').innerText()).includes('Mi estado: California'));
+  // Se espera a que el inicio esté montado antes de leer: con `waitForURL` solo se sabe que cambió
+  // la dirección, no que React haya pintado.
+  await page.locator('.home-card--location').waitFor({ state: 'visible', timeout: 8000 });
+  check(
+    'el inicio recuerda el estado elegido',
+    (await page.locator('.home-card--location').innerText()).includes('California'),
+    await page.locator('.home-card--location').innerText(),
+  );
 
   // ------------------------------------------------------------ Flashcards
   console.log('\n— Estudiar');
@@ -299,6 +306,68 @@ try {
   check('muestra las 7 categorías', (await page.locator('.progress-category__name').count()) === 7);
   check('muestra el desglose de 4 niveles', (await page.locator('.progress-breakdown__item').count()) >= 4);
   await captura('progreso');
+
+  // ------------------------------------------------------------ Practicar
+  console.log('\n— Practicar');
+  await page.goto(`${BASE}/practice`, { waitUntil: 'networkidle' });
+  check('la pantalla de practicar reúne los modos', (await page.locator('.home-card').count()) >= 4);
+  check('ofrece las 7 categorías', (await page.locator('.practice-category').count()) === 7);
+
+  // Modo 65/20: la exención de mayores de 65 con 20 años de residencia.
+  await page.goto(`${BASE}/flashcards?only65=1`, { waitUntil: 'networkidle' });
+  check(
+    'el modo 65/20 se identifica y trae sus preguntas',
+    (await page.locator('body').innerText()).includes('Exención 65/20'),
+  );
+
+  // Solo las falladas: tras el examen hay falladas, así que debe cargar sesión (o explicar que no
+  // hay ninguna pendiente, si no hubiera).
+  await page.goto(`${BASE}/flashcards?onlyFailed=1`, { waitUntil: 'networkidle' });
+  const textoSoloFalladas = await page.locator('body').innerText();
+  check(
+    'el modo «solo las falladas» carga o explica que no hay',
+    textoSoloFalladas.includes('Solo las falladas') ||
+      textoSoloFalladas.includes('No hay preguntas para este repaso'),
+  );
+
+  // Simulacro real: 10 preguntas y se aprueba con 6, sin corrección hasta el final.
+  await page.goto(`${BASE}/quiz?count=10&feedback=final`, { waitUntil: 'networkidle' });
+  const textoSimulacro = await page.locator('body').innerText();
+  check('el simulacro real plantea 10 preguntas', textoSimulacro.includes('de 10'));
+  check(
+    'no corrige hasta el final',
+    textoSimulacro.includes('no sabrás si acertaste') && (await page.locator('.feedback').count()) === 0,
+  );
+
+  // Se responde siempre la opción A hasta que el examen se decida (se corta solo).
+  for (let intento = 0; intento < 10; intento += 1) {
+    const opciones = page.locator('.quiz-option:not([disabled])');
+
+    if ((await opciones.count()) === 0) {
+      break;
+    }
+
+    await opciones.first().click();
+    await page.getByRole('button', { name: /Siguiente pregunta|Ver resultado/ }).click();
+
+    if ((await page.locator('.result-badge').count()) > 0) {
+      break;
+    }
+  }
+
+  check('el simulacro termina y da su resultado', (await page.locator('.result-badge').count()) === 1);
+  check(
+    'explica el formato (6 de 10)',
+    (await page.locator('body').innerText()).includes('6 de 10'),
+  );
+
+  // Práctica de escritura: sin micrófono.
+  await page.goto(`${BASE}/interview?modo=escribir&size=10`, { waitUntil: 'networkidle' });
+  check('el modo escribir no ofrece micrófono', (await page.locator('.speech-button').count()) === 0);
+  check(
+    'el modo escribir pide escribir la respuesta',
+    (await page.locator('body').innerText()).includes('Escribe la respuesta'),
+  );
 
   // ----------------------------------------------------------------- Rutas
   console.log('\n— Rutas');

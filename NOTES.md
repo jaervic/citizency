@@ -69,6 +69,62 @@ teléfono, y una web evita las tiendas de apps, las builds nativas y EAS.
 
 ---
 
+## 0-bis. Diseño, ajustes y modos de práctica (2026-10-15, misma sesión)
+
+Segunda tanda del día, ya con la app en Vercel. Todo verificado en Chromium (claro y oscuro).
+
+**Fundamento visual y modo nocturno**
+- Tokens de color en dos capas: escalas + **roles semánticos** con valor claro y oscuro. Se separa
+  `--brand` (superficie de marca) de `--accent` (texto e iconos): con un único token no se puede,
+  porque un azul marino sirve de fondo pero no se lee como texto.
+- **Fuera del bloque de tokens no queda ni un color literal.** Lo comprueba una prueba, junto con
+  que todos los tokens del claro existan en el oscuro y que ninguno se defina a sí mismo.
+- El tema lo aplica un script en línea de `index.html` **antes del primer pintado** (sin destello) y
+  `useThemeEffect` lo mantiene al día siguiendo a `prefers-color-scheme`.
+- Se corrigió el contraste del texto atenuado en claro (daba 3.13; ahora 4.95). **El contraste se
+  mide en el navegador**, no a ojo.
+
+**Rediseño**
+- Cada categoría tiene color e insignia propios, usados en examen, tarjetas, repaso y progreso.
+- `ProgressRing` (SVG, sin librerías) en el inicio y por categoría.
+- Inicio con bloque de racha y botón "Seguir estudiando"; examen con fichas A/B/C/D y resultado en
+  anillo.
+
+**Pie, donaciones e instalación**
+- Pie en todas las pantallas con el crédito (GitHub), el enlace de Ko-fi y el aviso legal, que
+  antes solo estaba en el inicio.
+- **Service worker**: la app es instalable (Chrome lo exige), arranca al instante y **funciona sin
+  conexión** (probado cortando la red en el E2E).
+- Guía de instalación por plataforma, con la detección de iPadOS (que se anuncia como Mac) resuelta
+  por puntos táctiles.
+
+**Audio**
+- El sonido robótico era la elección de voz, no la API: se cogía la PRIMERA en inglés. Ahora se
+  puntúan y se prefieren **las que necesitan internet** (`localService === false`): las "Google…" de
+  Chrome y las "… Online (Natural)" de Edge. Filtro defensivo del fallo de Edge 150 y reintento con
+  voz local si se cae la conexión. Selector de voz en Ajustes.
+- Descartado a propósito: modelos neuronales locales (20-160 MB) y TTS con clave.
+
+**Copia de seguridad** (decisión de producto importante)
+- Fichero `.json` + **código de texto comprimido** (~550 caracteres con las 128 preguntas) para el
+  móvil. Restaurar con resumen previo y elección entre reemplazar o combinar.
+- **Aviso honesto**: sincronizar entre dispositivos sigue necesitando backend; esto no lo resuelve.
+
+**Modos de práctica** (por URL, sin duplicar pantallas)
+- 65/20, solo las falladas, por categoría, escribir las respuestas y **simulacro real (10 preguntas,
+  se aprueba con 6, se corta cuando el resultado ya no puede cambiar)**.
+
+**Estado del tooling**
+- 212 pruebas de unidad y 65 comprobaciones E2E (que incluyen contraste AA en dos temas, la app sin
+  conexión y el viaje completo de la copia de seguridad).
+
+**Pendiente y detectado**
+- `officialData.json` sigue con fecha **2025-01-20**: los 4 cargos nacionales (presidente,
+  vicepresidente, speaker, chief justice) hay que revisarlos a mano. El pie ahora muestra esa fecha,
+  así que la antigüedad se ve.
+
+---
+
 ## 1. Modelo de monetización
 
 **Modelo elegido**: Freemium con **pago único** (NO suscripción).
@@ -210,8 +266,9 @@ vez de inventar una respuesta.
 - [x] **Fase 6**: entrevista. En web con Web Speech API (dictado del navegador) + `fuzzyMatch` +
   `AnswerFeedback`. Degrada a escribir cuando el navegador no soporta voz.
 - [x] **Fase 7 (parcial)**: migración a webapp Vite + despliegue en Vercel, banco curado de
-  distractores, tests, datos estatales al día y pantalla "Mi estado". Queda: paywall, página
-  "Acerca de", política de privacidad.
+  distractores, tests, datos estatales al día, pantalla "Mi estado", modo nocturno, rediseño, pie
+  con donaciones, instalable como app (service worker), Ajustes, copia de seguridad y modos de
+  práctica. Queda: paywall, página "Acerca de" formal, política de privacidad y publicar el enlace.
 - [ ] Fase 8: examen de lectura/escritura, práctica N-400, sincronización opcional entre
   dispositivos, estructura 501(c)(3).
 
@@ -223,19 +280,25 @@ vez de inventar una respuesta.
 
 - [ ] Precio final del desbloqueo premium y proveedor de pago en web (Stripe vs Gumroad).
 - [ ] ¿El simulacro de entrevista tiene límite de intentos en la versión gratis?
-- [ ] Modo oscuro: el theme ya está en tokens CSS, así que es barato. Es una de las peticiones más
-      comunes en móvil; tratarlo como parte del lanzamiento, no como "nice to have".
+- [x] Modo oscuro (2026-10-15): hecho, con tokens por rol, script en línea para no destellar y
+      selector Sistema/Claro/Oscuro en Ajustes.
 - [ ] ¿Idioma inglés para la UI además de español?
 - [x] Pantalla "Mi estado" (2026-10-15): el usuario elige su estado y su distrito para resolver
       senadores, representante, gobernador y capital (gov-023, gov-029, gov-061, gov-062). Ver la
       sección 5-bis.
-- [ ] Modo Práctica vs Modo Examen en el quiz: hoy el quiz ya da feedback inmediato por pregunta
-      (selección → Comprobar → verde/rojo + respuestas correctas → Siguiente). Falta el modo
-      "Examen" estricto (sin feedback hasta el final + cronómetro).
+- [x] Modo Práctica vs Modo Examen (2026-10-15): el examen de práctica corrige al momento y el
+      "Simulacro real" (`/quiz?count=10&feedback=final`) usa el formato de la entrevista (10
+      preguntas, se aprueba con 6, sin corrección hasta el final y se corta cuando el resultado ya
+      no puede cambiar). Falta, si se quiere, el **cronómetro**; no encontrado como necesario.
+- [ ] Sincronizar el progreso ENTRE dispositivos: la copia de seguridad (fichero o código) no lo
+      resuelve, es manual. Requiere backend + cuentas + política de privacidad, así que es una
+      decisión aparte (hoy está aparcado).
 - [ ] Años > 100 en `answers_en`: 7 respuestas tienen números > 100 (435, 1776, 1812, 1870, 1920,
       1929, 1956) que hoy quedan en dígitos al comparar. Decir "seventeen seventy six" contra
       "1776" no matchea. Evaluar si duele en pruebas reales antes de implementar una regla de
       lectura de años.
+- [ ] Revisar `officialData.json` (última fecha: 2025-01-20): los 4 cargos nacionales se actualizan a
+      mano y el pie de página ya muestra la fecha, así que su antigüedad queda a la vista.
 
 ---
 

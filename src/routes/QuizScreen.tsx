@@ -1,10 +1,14 @@
 // src/routes/QuizScreen.tsx
-// Propósito: examen de práctica de 20 preguntas tipo test. Las opciones salen del banco
-// curado de distractores (`buildQuizOptions`), así que los distractores son plausibles pero
-// claramente incorrectos (antes se generaban por heurística y salían opciones sin sentido).
-// Se aprueba con 12 de 20. Al final hay repaso de todas las preguntas.
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+// Propósito: examen de práctica tipo test. Las opciones salen del banco curado de distractores
+// (`buildQuizOptions`), así que son plausibles pero claramente incorrectas.
+//
+// Dos formatos, elegidos por la URL:
+//   - `/quiz` (por defecto): 20 preguntas, se aprueba con 12 y se corrige al momento.
+//   - `/quiz?count=10&feedback=final`: el SIMULACRO REAL. El examen de la entrevista son hasta 10
+//     preguntas y se aprueba con 6, sin saber el resultado hasta el final. Además se corta en cuanto
+//     el resultado ya no puede cambiar, como hace el oficial.
+import { useMemo, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import AnswerFeedback from '@/components/AnswerFeedback';
 import CategoryBadge from '@/components/CategoryBadge';
@@ -14,7 +18,7 @@ import SessionReview from '@/components/SessionReview';
 import type { SessionReviewItem } from '@/components/SessionReview';
 import SpeakerButton from '@/components/SpeakerButton';
 import ProgressBar from '@/components/ProgressBar';
-import { PASS_THRESHOLD, QUIZ_SIZE } from '@/constants';
+import { QUIZ_SIZE } from '@/constants';
 import { selectLocation, useStore } from '@/store/useStore';
 import { buildQuizPool } from '@/utils/content';
 import { buildQuizOptions } from '@/utils/quizOptions';
@@ -28,6 +32,36 @@ type QuizItem = {
 
 /** Letras de las opciones (como en el examen real, que las marca A, B, C…). */
 const LETTERS = ['A', 'B', 'C', 'D'];
+
+/** Configuración del examen, que llega por la URL. */
+type QuizConfig = {
+  /** Número de preguntas (20 por defecto; 10 en el simulacro real). */
+  count: number;
+  /** Aciertos necesarios para aprobar (12 de 20, 6 de 10: el 60 %). */
+  passThreshold: number;
+  /** `instant`: se corrige cada pregunta. `final`: solo al terminar (simulacro real). */
+  feedback: 'instant' | 'final';
+  /** Solo las 20 preguntas de la exención 65/20. */
+  only65_20: boolean;
+  /** Texto que se enseña en la cabecera. */
+  mode: string;
+};
+
+/** Lee la configuración del examen desde la URL. */
+export function readQuizConfig(params: URLSearchParams): QuizConfig {
+  const count = Number(params.get('count') ?? QUIZ_SIZE);
+  const preguntas = Number.isFinite(count) && count > 0 ? Math.min(128, Math.floor(count)) : QUIZ_SIZE;
+  const feedback = params.get('feedback') === 'final' ? 'final' : 'instant';
+  const only65_20 = params.get('only65') === '1';
+
+  return {
+    count: preguntas,
+    passThreshold: Math.ceil(preguntas * 0.6),
+    feedback,
+    only65_20,
+    mode: feedback === 'final' ? 'Simulacro real' : 'Examen de práctica',
+  };
+}
 
 /** Copia mezclada de un array (Fisher-Yates). */
 function shuffle<T>(items: T[]): T[] {
@@ -44,26 +78,34 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 /**
- * Arma el examen: se eligen 20 preguntas al azar (no las 20 de mayor prioridad, que serían casi
- * siempre las mismas preguntas nuevas) y se construyen sus opciones.
- *
- * El grupo de preguntas se calcula con el estado/distrito que el usuario tenga configurado en ese
- * momento, así que si los ha elegido también entran las 4 preguntas que dependen de ellos.
+ * Arma el examen: se eligen las preguntas al azar (no las de mayor prioridad, que serían casi
+ * siempre las mismas) y se construyen sus opciones.
  */
-function buildQuiz(): QuizItem[] {
+function buildQuiz(config: QuizConfig): QuizItem[] {
   const location = selectLocation(useStore.getState());
-  const pool = buildQuizPool(location);
+  const pool = buildQuizPool(location).filter(
+    (question) => !config.only65_20 || question.is_65_20,
+  );
 
   return shuffle(pool)
-    .slice(0, QUIZ_SIZE)
+    .slice(0, config.count)
     .map((question) => ({ question, options: buildQuizOptions({ question, quizPool: pool, location }) }));
 }
 
+/** Al cambiar la configuración de la URL se monta un examen nuevo desde cero. */
 export default function QuizScreen() {
+  const [searchParams] = useSearchParams();
+  const params = searchParams.toString();
+
+  return <QuizSession key={params} params={params} />;
+}
+
+function QuizSession({ params }: { params: string }) {
+  const config = useMemo(() => readQuizConfig(new URLSearchParams(params)), [params]);
   const recordAnswer = useStore((state) => state.recordAnswer);
   const navigate = useNavigate();
   const confirm = useConfirm();
-  const [items, setItems] = useState<QuizItem[]>(buildQuiz);
+  const [items, setItems] = useState<QuizItem[]>(() => buildQuiz(config));
   const [index, setIndex] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
@@ -72,19 +114,29 @@ export default function QuizScreen() {
 
   const item = items[index];
 
+  /** Registra la respuesta actual y devuelve si fue correcta. */
+  const registrar = (): boolean => {
+    const wasCorrect = item?.options.find((option) => option.id === selectedId)?.isCorrect === true;
+
+    if (item !== undefined) {
+      recordAnswer(item.question.id, wasCorrect);
+      setResults((current) => ({ ...current, [item.question.id]: wasCorrect }));
+    }
+
+    return wasCorrect;
+  };
+
+  /** Modo con corrección inmediata: comprobar la pregunta actual. */
   const handleCheck = () => {
     if (item === undefined || selectedId === null || checked) {
       return;
     }
 
-    const selected = item.options.find((option) => option.id === selectedId);
-    const wasCorrect = selected?.isCorrect === true;
-
-    recordAnswer(item.question.id, wasCorrect);
-    setResults((current) => ({ ...current, [item.question.id]: wasCorrect }));
+    registrar();
     setChecked(true);
   };
 
+  /** Modo con corrección inmediata: pasar a la siguiente. */
   const handleNext = () => {
     if (index + 1 < items.length) {
       setIndex(index + 1);
@@ -96,8 +148,31 @@ export default function QuizScreen() {
     setFinished(true);
   };
 
+  /** Simulacro real: se registra sin corregir y se corta si el resultado ya no puede cambiar. */
+  const handleFinalAnswer = () => {
+    if (item === undefined || selectedId === null) {
+      return;
+    }
+
+    const wasCorrect = registrar();
+    const aciertos = Object.values(results).filter(Boolean).length + (wasCorrect ? 1 : 0);
+    const respondidas = Object.keys(results).length + 1;
+    const restantes = items.length - respondidas;
+
+    // El resultado está decidido: ya ha aprobado o ya no puede llegar a los aciertos necesarios.
+    const decidido = aciertos >= config.passThreshold || aciertos + restantes < config.passThreshold;
+
+    if (decidido || respondidas >= items.length) {
+      setFinished(true);
+      return;
+    }
+
+    setIndex(index + 1);
+    setSelectedId(null);
+  };
+
   const handleRetry = () => {
-    setItems(buildQuiz());
+    setItems(buildQuiz(config));
     setIndex(0);
     setSelectedId(null);
     setChecked(false);
@@ -127,7 +202,7 @@ export default function QuizScreen() {
     const correctCount = items.filter((entry) => results[entry.question.id] === true).length;
     const total = items.length;
     const percentage = total > 0 ? Math.round((correctCount / total) * 100) : 0;
-    const passed = correctCount >= PASS_THRESHOLD;
+    const passed = correctCount >= config.passThreshold;
 
     const entries: SessionReviewItem[] = items.map((entry) => ({
       question: entry.question,
@@ -155,8 +230,9 @@ export default function QuizScreen() {
           </span>
 
           <p className="result-note">
-            Se aprueba con {PASS_THRESHOLD} de {total} ({Math.round((PASS_THRESHOLD / total) * 100)} %), igual
-            que en el examen real.
+            {config.mode}: hay que acertar {config.passThreshold} de {total} (
+            {Math.round((config.passThreshold / total) * 100)} %), igual que en el examen real.
+            {config.feedback === 'final' && ' El examen se detuvo en cuanto se decidió el resultado.'}
           </p>
         </section>
 
@@ -175,6 +251,8 @@ export default function QuizScreen() {
   }
 
   const selected = item.options.find((option) => option.id === selectedId);
+  const esSimulacro = config.feedback === 'final';
+  const puedeAvanzar = selectedId !== null;
 
   return (
     <div className="page">
@@ -189,6 +267,12 @@ export default function QuizScreen() {
 
       <ProgressBar value={index / items.length} label="Progreso del examen" />
 
+      {esSimulacro && (
+        <p className="reinforcement-note">
+          Modo simulacro: no sabrás si acertaste hasta el final.
+        </p>
+      )}
+
       <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <CategoryBadge category={item.question.category} />
 
@@ -202,15 +286,16 @@ export default function QuizScreen() {
         <div className="quiz-options" role="radiogroup" aria-label="Opciones de respuesta">
           {item.options.map((option, optionIndex) => {
             const isSelected = option.id === selectedId;
-            const state = checked
-              ? option.isCorrect
+            // En el simulacro no se colorea nada hasta el final: no hay corrección por pregunta.
+            const state = !checked
+              ? isSelected
+                ? 'selected'
+                : 'idle'
+              : option.isCorrect
                 ? 'correct'
                 : isSelected
                   ? 'wrong'
-                  : 'muted'
-              : isSelected
-                ? 'selected'
-                : 'idle';
+                  : 'muted';
 
             return (
               <button
@@ -234,12 +319,21 @@ export default function QuizScreen() {
           })}
         </div>
 
-        {!checked ? (
+        {esSimulacro ? (
+          <button
+            type="button"
+            className="btn btn--primary"
+            onClick={handleFinalAnswer}
+            disabled={!puedeAvanzar}
+          >
+            {index + 1 < items.length ? 'Siguiente pregunta' : 'Ver resultado'}
+          </button>
+        ) : !checked ? (
           <button
             type="button"
             className="btn btn--primary"
             onClick={handleCheck}
-            disabled={selectedId === null}
+            disabled={!puedeAvanzar}
           >
             Comprobar respuesta
           </button>

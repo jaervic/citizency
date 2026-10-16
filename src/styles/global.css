@@ -1866,3 +1866,37 @@ button {
 .backup-tips li::marker {
   color: var(--accent);
 }
+
+/* ---------------------------------------------- Practicar */
+.practice-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.practice-category {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-2) var(--space-2) 0;
+  border-radius: var(--radius-control);
+}
+
+.practice-category:active {
+  background: var(--color-pressed);
+}
+
+.practice-category__count {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.practice-category__arrow {
+  width: 16px;
+  height: 16px;
+  transform: rotate(-90deg);
+  color: var(--color-text-muted);
+}

@@ -13,6 +13,7 @@ import InstallScreen from '@/routes/InstallScreen';
 import InterviewScreen from '@/routes/InterviewScreen';
 import NotFoundScreen from '@/routes/NotFoundScreen';
 import ProgressScreen from '@/routes/ProgressScreen';
+import PracticeScreen from '@/routes/PracticeScreen';
 import QuizScreen from '@/routes/QuizScreen';
 import SettingsScreen from '@/routes/SettingsScreen';
 import StateScreen from '@/routes/StateScreen';
@@ -27,6 +28,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<HomeScreen />} />
           <Route path="flashcards" element={<FlashcardsScreen />} />
+          <Route path="practice" element={<PracticeScreen />} />
           <Route path="quiz" element={<QuizScreen />} />
           <Route path="interview" element={<InterviewScreen />} />
           <Route path="progress" element={<ProgressScreen />} />

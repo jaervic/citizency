@@ -13,7 +13,23 @@ import { findFontDependentGlyph } from '@/test/glyphs';
 // porque React usa el "server snapshot" (el estado inicial del store) al renderizar en el
 // servidor. La resolución de las respuestas estatales se prueba en `src/utils/content.test.ts` y
 // `src/utils/stateOfficials.test.ts`; aquí solo se comprueba que ninguna pantalla revienta.
-const ROUTES = ['/', '/flashcards', '/quiz', '/interview', '/progress', '/state', '/settings', '/install', '/backup', '/ruta-inexistente'];
+const ROUTES = [
+  '/',
+  '/flashcards',
+  '/flashcards?only65=1',
+  '/flashcards?onlyFailed=1',
+  '/quiz',
+  '/quiz?count=10&feedback=final',
+  '/interview',
+  '/interview?modo=escribir&size=10',
+  '/practice',
+  '/progress',
+  '/state',
+  '/settings',
+  '/install',
+  '/backup',
+  '/ruta-inexistente',
+];
 
 const renderRoute = (route: string) =>
   renderToString(

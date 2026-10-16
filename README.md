@@ -10,15 +10,24 @@ de API**. Tu progreso se guarda en el propio dispositivo.
 
 - **Estudiar (flashcards)**: sesiones de 20 preguntas priorizadas por un sistema de repetición
   espaciada. Revelas la respuesta, te autoevalúas y las que fallas se repasan en la misma sesión.
-- **Examen de práctica**: 20 preguntas tipo test con 4 opciones. Se aprueba con 12 de 20, igual
-  que en el examen real. Los distractores son plausibles pero claramente incorrectos.
+- **Practicar**: las 20 preguntas de la **exención 65/20**, **solo las que has fallado**, práctica
+  **por categoría**, **escribir las respuestas** (sin micrófono) y el **simulacro real** (10
+  preguntas, se aprueba con 6, sin saber el resultado hasta el final).
+- **Examen de práctica**: 20 preguntas tipo test con 4 opciones. Se aprueba con 12 de 20. Los
+  distractores son plausibles pero claramente incorrectos.
 - **Entrevista**: 5 preguntas al azar. Puedes responder en voz alta (Web Speech API) o escribiendo;
   la corrección es tolerante a errores de reconocimiento.
 - **Mi estado**: eliges tu estado (y tu distrito) y la app resuelve las 4 preguntas del examen que
   dependen de dónde vives: senadores, representante, gobernador y capital, con datos actualizados.
 - **Progreso**: XP, racha de días y dominio por categoría con 4 niveles (nueva, en estudio, en
-  repaso, dominada).
-- **Audio**: cualquier pregunta o respuesta se puede escuchar en inglés.
+  repaso, dominada), con un anillo por categoría y su color.
+- **Ajustes**: tema claro/oscuro/sistema, voz de lectura, copia de seguridad e instalación.
+- **Copia de seguridad**: descarga un fichero o copia un código de texto (~550 caracteres) para no
+  perder el progreso; se puede reemplazar o combinar al restaurar.
+- **Instalar como app**: guía por plataforma (iPhone, Android, computadora). Instalada funciona
+  **sin conexión** y arranca al instante.
+- **Modo nocturno** y **audio**: cualquier pregunta o respuesta se puede escuchar en inglés, con
+  preferencia por las voces que necesitan internet (las que mejor suenan).
 
 ## Reglas de interfaz
 
@@ -84,6 +93,24 @@ HTTPS lo pone Vercel, así que el micrófono de la entrevista funcionará sin co
 - `src/data/stateOfficials.json` — los 50 estados con su capital, gobernador, dos senadores y los
   representantes por distrito.
 
+### Modos de práctica y cómo se eligen
+
+No son pantallas distintas para cada modo: van por la URL, así que se pueden compartir y el
+enrutador no duplica código.
+
+| Modo | Dirección |
+| --- | --- |
+| Sesión de estudio normal | `/flashcards` |
+| Las 20 del 65/20 | `/flashcards?only65=1` |
+| Solo las falladas | `/flashcards?onlyFailed=1` |
+| Por categoría | `/flashcards?category=Sistema+de+gobierno` |
+| Escribir las respuestas | `/interview?modo=escribir&size=10` |
+| Simulacro real (10, se aprueba con 6) | `/quiz?count=10&feedback=final` |
+| Examen de práctica (20, se aprueba con 12) | `/quiz` |
+
+Las reglas (cuántas preguntas, cuántos aciertos, si corrige al momento) están en funciones puras
+(`readSessionConfig`, `readQuizConfig`, `readInterviewSize`) con pruebas propias.
+
 ### Datos que dependen del estado del solicitante
 
 El examen incluye 4 preguntas que dependen de dónde vive el solicitante (gov-023 senadores, gov-029
@@ -114,13 +141,24 @@ tocar el fichero si algo falta: es preferible un fallo ruidoso a publicar una re
 
 ```
 src/
-  components/   UI reutilizable (Layout, SpeakerButton, ProgressBar, SessionReview…)
-  hooks/        useSpeechRecognition (dictado con Web Speech API)
-  routes/       una pantalla por ruta (Home, Flashcards, Quiz, Interview, Progress, NotFound)
+  components/   UI reutilizable (Layout, Footer, SpeakerButton, ProgressRing, CategoryBadge…)
+  config/       enlaces externos (autor, GitHub, Ko-fi) y aviso legal
+  hooks/        useSpeechRecognition, useVoices, useInstallPrompt, useThemeEffect
+  routes/       una pantalla por ruta (Home, Flashcards, Practice, Quiz, Interview, Progress,
+                State, Settings, Install, Backup, NotFound)
   store/        estado global con Zustand, persistido en localStorage
-  utils/        lógica pura: repetición espaciada, racha, comparación difusa, opciones del quiz
-  styles/       hoja de estilos única (tokens + mobile-first)
+  utils/        lógica pura: repetición espaciada, racha, comparación difusa, opciones del quiz,
+                datos estatales, temas, voz, instalación y copia de seguridad
+  styles/       hoja de estilos única (tokens por rol, tema claro y oscuro)
 ```
+
+## Accesibilidad y contraste
+
+- El contraste de texto se mide **en el navegador** (`npm run test:e2e`), en tema claro y oscuro,
+  incluida la pantalla de progreso donde están los colores por categoría. Debe cumplir el mínimo
+  AA (4.5:1).
+- Los objetivos táctiles son de 48 px y el foco es visible en ambos temas.
+- Nada de emoji: todos los iconos son SVG para que no dependan de la fuente del sistema.
 
 ## Aviso
 

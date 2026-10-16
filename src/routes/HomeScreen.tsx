@@ -17,6 +17,7 @@ import type { IconName } from '@/components/Icon';
 const MENU: Array<{ to: string; icon: IconName; title: string; subtitle: string }> = [
   { to: '/flashcards', icon: 'book', title: 'Estudiar', subtitle: 'Repasa las 128 preguntas con tarjetas.' },
   { to: '/quiz', icon: 'quiz', title: 'Examen de práctica', subtitle: '20 preguntas tipo test como en el examen real.' },
+  { to: '/practice', icon: 'target', title: 'Practicar', subtitle: 'Por categoría, solo las falladas, el 65/20 y más.' },
   { to: '/interview', icon: 'mic', title: 'Entrevista', subtitle: 'Practica respondiendo en voz alta.' },
   { to: '/progress', icon: 'chart', title: 'Progreso', subtitle: 'Mira cuánto dominas por categoría.' },
 ];

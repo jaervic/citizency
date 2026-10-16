@@ -13,6 +13,7 @@ const TITLES: Record<string, string> = {
   '/': 'USCIS Ciudadanía',
   '/flashcards': 'Estudiar',
   '/quiz': 'Examen de práctica',
+  '/practice': 'Practicar',
   '/interview': 'Entrevista',
   '/progress': 'Progreso',
   '/state': 'Mi estado',

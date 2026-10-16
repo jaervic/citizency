@@ -44,13 +44,18 @@ npm run update-officials  # regenera src/data/stateOfficials.json (senadores, re
 - `src/data/` — contenido: `questions.json` (generado), `en.json`, `es.json`, `officialData.json`
   (cargos nacionales), `stateOfficials.json` (los 50 estados), y `quizDistractors.json` (banco
   curado de distractores de las preguntas estáticas).
+- `src/config/support.ts` — enlaces externos (autor, GitHub, Ko-fi) y aviso legal. Es el ÚNICO sitio
+  donde se añaden enlaces de fuera.
 - `src/utils/` — lógica pura y probada: `spacedRepetition.ts`, `streak.ts`, `fuzzyMatch.ts`,
-  `quizOptions.ts`, `content.ts`, `stateOfficials.ts`.
-- `src/store/useStore.ts` — estado global (Zustand) con el progreso del usuario.
-- `src/components/` — UI reutilizable (Layout, SpeakerButton, ProgressBar, SessionReview,
-  AnswerFeedback, ConfirmDialog, OfficialAnswerCard).
-- `src/routes/` — una pantalla por ruta: Home, Flashcards, Quiz, Interview, Progress, NotFound.
-- `src/styles/global.css` — estilos y tokens de color (clases prefijadas, mobile-first).
+  `quizOptions.ts`, `content.ts`, `stateOfficials.ts`, `categories.ts`, `theme.ts`, `speech.ts`,
+  `install.ts`, `backup.ts`.
+- `src/store/useStore.ts` — estado global (Zustand) con el progreso del usuario y las preferencias.
+- `src/components/` — UI reutilizable (Layout, Footer, SpeakerButton, ProgressBar, ProgressRing,
+  CategoryBadge, SessionReview, AnswerFeedback, ConfirmDialog, OfficialAnswerCard, Icon).
+- `src/routes/` — una pantalla por ruta: Home, Flashcards, Practice, Quiz, Interview, Progress,
+  State, Settings, Install, Backup, NotFound.
+- `src/styles/global.css` — estilos y tokens de color (claro y oscuro), mobile-first.
+- `public/sw.js` — service worker: hace la app instalable y le da soporte sin conexión.
 
 ## Reglas del proyecto
 
@@ -65,15 +70,25 @@ npm run update-officials  # regenera src/data/stateOfficials.json (senadores, re
 4. **Decisiones de producto que no se cambian** (ver `NOTES.md`): los 4 niveles de dominio en
    Progreso, la respuesta correcta del quiz es `answers_en[0]`, y los distractores son
    plausibles pero inequívocamente incorrectos.
-5. **Sin claves ni servicios externos.** Si algo necesita un servidor, se replantea.
-6. **Nuevos datos del examen**: actualiza `en.json`/`es.json`, corre `npm run merge` y revisa que
+5. **CSS**: fuera del bloque de tokens no puede haber NINGÚN color literal (hex o rgba), y todos los
+   tokens del tema claro deben existir en el oscuro. Lo comprueba `src/styles/global.test.ts`, que
+   también caza tokens autorreferenciados (`--x: var(--x)`) y `var(--token)` sin definir.
+6. **Enlaces externos**: solo desde `src/config/support.ts`, con `https`, `target="_blank"` y
+   `rel="noopener noreferrer"`. Nunca incrustar scripts, iframes ni widgets de terceros.
+7. **Modos de práctica**: se eligen por parámetros de la URL, no duplicando pantallas. Las reglas
+   (cuántas preguntas, qué umbral, si corrige al momento) van en funciones puras con pruebas:
+   `readSessionConfig`, `readQuizConfig` y `readInterviewSize`.
+8. **Sin claves ni servicios externos.** Si algo necesita un servidor, se replantea.
+9. **Nuevos datos del examen**: actualiza `en.json`/`es.json`, corre `npm run merge` y revisa que
    el banco de distractores siga cubriendo todas las preguntas estáticas del quiz (`npm test` lo
    verifica).
-7. **Datos oficiales nacionales**: actualiza `src/data/officialData.json` y su `lastUpdated` cuando
-   cambie el gobierno.
-8. **Datos estatales**: no se editan a mano. Cambia `scripts/updateOfficials.mjs` (o espera a la
-   tarea mensual de GitHub Actions) y ejecuta `npm run update-officials`.
-9. **Distractores de las preguntas dinámicas**: se derivan de datos vigentes (los otros tres cargos
-   nacionales, u otros estados para senadores/representante/gobernador/capital). No los escribas a
-   mano: se quedarían obsoletos y romperían el requisito de que un distractor sea plausible pero
-   inequívocamente incorrecto.
+10. **Datos oficiales nacionales**: actualiza `src/data/officialData.json` y su `lastUpdated` cuando
+    cambie el gobierno (el pie de página muestra esa fecha).
+11. **Datos estatales**: no se editan a mano. Cambia `scripts/updateOfficials.mjs` (o espera a la
+    tarea mensual de GitHub Actions) y ejecuta `npm run update-officials`.
+12. **Distractores de las preguntas dinámicas**: se derivan de datos vigentes (los otros tres cargos
+    nacionales, u otros estados para senadores/representante/gobernador/capital). No los escribas a
+    mano: se quedarían obsoletos y romperían el requisito de que un distractor sea plausible pero
+    inequívocamente incorrecto.
+13. **El progreso del usuario es sagrado**: cualquier cambio en lo que se persiste debe seguir
+    pasando por `src/utils/backup.ts` (formato versionado) y por las pruebas de ida y vuelta.

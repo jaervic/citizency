@@ -6,7 +6,7 @@
 // Degradación: si el navegador no soporta reconocimiento de voz (Firefox) o no hay permiso de
 // micrófono, se puede escribir la respuesta a mano igualmente.
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import AnswerFeedback from '@/components/AnswerFeedback';
 import CategoryBadge from '@/components/CategoryBadge';
@@ -43,24 +43,40 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 /**
- * Elige las 5 preguntas del simulacro entre las que se pueden corregir con el estado y el
- * distrito configurados: las 120 estáticas y, si el usuario los ha elegido, las estatales.
+ * Elige las preguntas del simulacro entre las que se pueden corregir con el estado y el distrito
+ * configurados: las 120 estáticas y, si el usuario los ha elegido, las estatales.
  */
-function buildInterviewQuestions(): Question[] {
+function buildInterviewQuestions(size: number): Question[] {
   const location = selectLocation(useStore.getState());
 
   const pool = QUESTIONS.filter(
     (question) => getAcceptedAnswers(question, OFFICIAL_DATA, location).length > 0,
   );
 
-  return shuffle(pool).slice(0, INTERVIEW_SIZE);
+  return shuffle(pool).slice(0, size);
+}
+
+/** Número de preguntas del simulacro (5 por defecto; `?size=10` para practicar más). */
+export function readInterviewSize(params: URLSearchParams): number {
+  const size = Number(params.get('size') ?? INTERVIEW_SIZE);
+
+  if (!Number.isFinite(size) || size <= 0) {
+    return INTERVIEW_SIZE;
+  }
+
+  return Math.min(128, Math.floor(size));
 }
 
 export default function InterviewScreen() {
   const recordAnswer = useStore((state) => state.recordAnswer);
   const navigate = useNavigate();
   const confirm = useConfirm();
-  const [questions, setQuestions] = useState<Question[]>(buildInterviewQuestions);
+  const [searchParams] = useSearchParams();
+  const [questions, setQuestions] = useState<Question[]>(() =>
+    buildInterviewQuestions(readInterviewSize(searchParams)),
+  );
+  /** Modo "escribir": sin micrófono, para practicar tecleando la respuesta. */
+  const soloEscribir = searchParams.get('modo') === 'escribir';
   const [index, setIndex] = useState(0);
   const [text, setText] = useState('');
   const [feedback, setFeedback] = useState<Feedback | null>(null);
@@ -119,7 +135,7 @@ export default function InterviewScreen() {
 
   const handleRetry = () => {
     // Se pide un simulacro nuevo: 5 preguntas distintas (no las mismas en otro orden).
-    setQuestions(buildInterviewQuestions());
+    setQuestions(buildInterviewQuestions(questions.length));
     setIndex(0);
     setFeedback(null);
     setText('');
@@ -164,7 +180,7 @@ export default function InterviewScreen() {
       <div className="page">
         <SessionReview
           items={entries}
-          title={`Resultado de la entrevista: ${correctCount} de ${questions.length} correctas`}
+          title={`Resultado: ${correctCount} de ${questions.length} correctas`}
           showSummary={false}
         />
         <div className="results-actions">
@@ -207,7 +223,7 @@ export default function InterviewScreen() {
 
         <p className="answer-single-es">{question.question_es}</p>
 
-        {speech.supported ? (
+        {speech.supported && !soloEscribir ? (
           <div className="speech-block">
             <button
               type="button"
@@ -242,8 +258,9 @@ export default function InterviewScreen() {
           </div>
         ) : (
           <p className="speech-note">
-            Tu navegador no permite responder con la voz. Escribe la respuesta abajo (para usar el
-            micrófono, abre la app en Chrome, Edge o Safari con HTTPS).
+            {soloEscribir
+              ? 'Escribe la respuesta en inglés. Se corregirá con tolerancia a los errores de escritura.'
+              : 'Tu navegador no permite responder con la voz. Escribe la respuesta abajo (para usar el micrófono, abre la app en Chrome, Edge o Safari con HTTPS).'}
           </p>
         )}
 
