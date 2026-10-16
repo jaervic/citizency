@@ -8,6 +8,7 @@ import Layout from '@/components/Layout';
 import { useThemeEffect } from '@/hooks/useThemeEffect';
 import FlashcardsScreen from '@/routes/FlashcardsScreen';
 import HomeScreen from '@/routes/HomeScreen';
+import InstallScreen from '@/routes/InstallScreen';
 import InterviewScreen from '@/routes/InterviewScreen';
 import NotFoundScreen from '@/routes/NotFoundScreen';
 import ProgressScreen from '@/routes/ProgressScreen';
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="progress" element={<ProgressScreen />} />
           <Route path="state" element={<StateScreen />} />
           <Route path="settings" element={<SettingsScreen />} />
+          <Route path="install" element={<InstallScreen />} />
           <Route path="*" element={<NotFoundScreen />} />
         </Route>
       </Routes>

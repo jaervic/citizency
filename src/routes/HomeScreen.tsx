@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useConfirm } from '@/components/ConfirmDialog';
 import Icon from '@/components/Icon';
 import ProgressRing from '@/components/ProgressRing';
+import { useInstallPrompt } from '@/hooks/useInstallPrompt';
 import { QUESTIONS } from '@/utils/content';
 import { getStateEntry } from '@/utils/stateOfficials';
 import { useStore } from '@/store/useStore';
@@ -28,6 +29,7 @@ export default function HomeScreen() {
   const reset = useStore((state) => state.reset);
   const homeState = useStore((state) => state.homeState);
   const confirm = useConfirm();
+  const install = useInstallPrompt();
 
   const stateEntry = getStateEntry(homeState);
 
@@ -98,6 +100,20 @@ export default function HomeScreen() {
             <span className="home-card__subtitle">{item.subtitle}</span>
           </Link>
         ))}
+
+        {!install.installed && (
+          <Link to="/install" className="home-card">
+            <span className="home-card__title">
+              <span className="home-card__chip">
+                <Icon name="download" />
+              </span>
+              Instalar la app
+            </span>
+            <span className="home-card__subtitle">
+              Añádela a la pantalla de inicio y úsala sin conexión.
+            </span>
+          </Link>
+        )}
       </nav>
 
       <button type="button" className="home-reset" onClick={handleReset}>

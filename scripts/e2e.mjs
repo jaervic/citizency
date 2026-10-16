@@ -286,6 +286,47 @@ try {
   await page.goto(`${BASE}/ruta-inexistente`, { waitUntil: 'networkidle' });
   check('una ruta desconocida muestra el 404', (await page.locator('body').innerText()).includes('Pantalla no encontrada'));
 
+  // ------------------------------------------------------ Instalar la app
+  console.log('\n— Instalar la app');
+  await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  check(
+    'el inicio ofrece instalarla (no está instalada)',
+    (await page.locator('a.home-card[href="/install"]').count()) === 1,
+  );
+
+  await page.locator('a.home-card[href="/install"]').click();
+  await page.waitForURL('**/install');
+  check(
+    'la pantalla de instalación explica los pasos',
+    (await page.locator('.install-steps__item').count()) >= 3,
+  );
+
+  const swRegistrado = await page.evaluate(async () => {
+    if (!('serviceWorker' in navigator)) {
+      return 'sin soporte';
+    }
+
+    const registro = await navigator.serviceWorker.getRegistration();
+
+    return registro === undefined || registro === null ? 'no registrado' : 'ok';
+  });
+  check('el service worker queda registrado', swRegistrado === 'ok', String(swRegistrado));
+
+  // Sin conexión: la app debe seguir cargando desde la caché del service worker.
+  await page.waitForTimeout(1000); // deja que el service worker termine de activarse
+  await context.setOffline(true);
+  let offlineOk = false;
+  try {
+    await page.reload({ waitUntil: 'load', timeout: 15000 });
+    await page.locator('.app-footer__legal').first().waitFor({ state: 'visible', timeout: 8000 });
+    offlineOk = true;
+  } catch {
+    offlineOk = false;
+  } finally {
+    await context.setOffline(false);
+  }
+  check('la app carga sin conexión (gracias al service worker)', offlineOk);
+
   // ----------------------------------------------------------- Pie de página
   console.log('\n— Pie de página');
   await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });

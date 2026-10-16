@@ -22,7 +22,8 @@ export type IconName =
   | 'chevron'
   | 'settings'
   | 'github'
-  | 'coffee';
+  | 'coffee'
+  | 'download';
 
 /**
  * Iconos de relleno (no de trazo). El logotipo de GitHub solo tiene sentido relleno, así que estos
@@ -92,6 +93,13 @@ const PATHS: Record<IconName, ReactNode> = {
       <path d="M4 8h13v5.5a5.5 5.5 0 0 1-5.5 5.5h-2A5.5 5.5 0 0 1 4 13.5z" />
       <path d="M17 9.5h1.8a2.7 2.7 0 0 1 0 5.4H17" />
       <path d="M6.5 3.2c.7.7.7 1.4 0 2.1M10.5 3.2c.7.7.7 1.4 0 2.1" />
+    </>
+  ),
+  download: (
+    <>
+      <path d="M12 3.5v11" />
+      <path d="M7.5 10.5L12 15l4.5-4.5" />
+      <path d="M4.5 19.5h15" />
     </>
   ),
 };

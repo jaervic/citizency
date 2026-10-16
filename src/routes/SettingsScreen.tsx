@@ -39,6 +39,18 @@ export default function SettingsScreen() {
       </section>
 
       <section className="card settings-section">
+        <h2 className="settings-title">Instalar la app</h2>
+        <p className="settings-hint">
+          Añádela a la pantalla de inicio de tu teléfono o computadora para abrirla como una app y
+          usarla sin conexión.
+        </p>
+        <Link to="/install" className="settings-donate">
+          <Icon name="download" />
+          Ver cómo instalarla
+        </Link>
+      </section>
+
+      <section className="card settings-section">
         <h2 className="settings-title">Apoyar el proyecto</h2>
         <p className="settings-hint">
           La app es gratis y sin anuncios, y tu progreso se queda en tu dispositivo. Si te está

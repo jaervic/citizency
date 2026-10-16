@@ -21,3 +21,14 @@ createRoot(container).render(
     </BrowserRouter>
   </StrictMode>,
 );
+
+// Service worker: hace la app instalable (Chrome lo exige) y le da soporte sin conexión. Solo en
+// producción: en desarrollo estorbaría con el recargado en caliente de Vite.
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    void navigator.serviceWorker.register('/sw.js').catch(() => {
+      // Si falla, la app funciona igual: solo se pierde la instalación automática y el modo sin
+      // conexión.
+    });
+  });
+}

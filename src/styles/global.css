@@ -1733,3 +1733,65 @@ button {
   font-size: 14px;
   font-weight: 600;
 }
+
+/* ---------------------------------------------- Instalar la app */
+.install-done,
+.install-ok {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-control);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.install-done {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.install-ok {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.install-done .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.install-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  counter-reset: paso;
+}
+
+.install-steps__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.install-steps__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.install-steps__text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text);
+  padding-top: 2px;
+}

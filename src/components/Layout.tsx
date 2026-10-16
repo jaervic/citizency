@@ -17,6 +17,7 @@ const TITLES: Record<string, string> = {
   '/progress': 'Progreso',
   '/state': 'Mi estado',
   '/settings': 'Ajustes',
+  '/install': 'Instalar la app',
 };
 
 export default function Layout() {
