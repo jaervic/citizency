@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 import Icon from '@/components/Icon';
+import Footer from '@/components/Footer';
 
 /** Título de la cabecera según la ruta. */
 const TITLES: Record<string, string> = {
@@ -50,6 +51,8 @@ export default function Layout() {
       <main className="app-main">
         <Outlet />
       </main>
+
+      <Footer />
     </div>
   );
 }

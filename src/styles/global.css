@@ -325,7 +325,8 @@ button {
   width: 100%;
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 16px 16px calc(32px + env(safe-area-inset-bottom));
+  /* El espacio inferior grande lo aporta el pie de página (que además respeta el notch). */
+  padding: 16px 16px 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1642,4 +1643,93 @@ button {
   color: var(--badge-color);
   font-size: 12px;
   font-weight: 700;
+}
+
+/* ---------------------------------------------- Pie de página */
+.app-footer {
+  width: 100%;
+  margin-top: var(--space-4);
+  padding: var(--space-5) var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.app-footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.app-footer__link,
+.app-footer__donate {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.app-footer__link {
+  color: var(--color-text-secondary);
+}
+
+.app-footer__donate {
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+}
+
+.app-footer__link:active,
+.app-footer__donate:active {
+  background: var(--color-pressed);
+}
+
+.app-footer__legal {
+  max-width: 46ch;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.app-footer__meta {
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+}
+
+.settings-donate,
+.settings-author {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: 12px 16px;
+  border-radius: var(--radius-control);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.settings-donate {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.settings-donate:active {
+  background: var(--color-pressed);
+}
+
+.settings-author {
+  align-self: center;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 600;
 }

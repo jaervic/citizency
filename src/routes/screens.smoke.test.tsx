@@ -33,6 +33,14 @@ describe('renderizado de las pantallas', () => {
 
       expect(glyph, `se coló el carácter ${JSON.stringify(glyph)}`).toBeNull();
     });
+
+    it(`${route} incluye el pie con el crédito y el aviso legal`, () => {
+      const html = renderRoute(route);
+
+      expect(html).toContain('Hecho por');
+      expect(html).toContain('No está afiliada ni respaldada por USCIS');
+      expect(html).toContain('ko-fi.com/jaervic');
+    });
   }
 
   it('la pantalla de estudio muestra el contador de la sesión', () => {

@@ -108,12 +108,6 @@ export default function HomeScreen() {
         <Icon name="settings" />
         Ajustes
       </Link>
-
-      <p className="home-disclaimer">
-        App de estudio independiente basada en las 128 preguntas oficiales del examen de
-        naturalización de USCIS (versión 2025). No está afiliada a USCIS. Verifica siempre la
-        información con las fuentes oficiales.
-      </p>
     </div>
   );
 }

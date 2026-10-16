@@ -20,7 +20,15 @@ export type IconName =
   | 'check'
   | 'cross'
   | 'chevron'
-  | 'settings';
+  | 'settings'
+  | 'github'
+  | 'coffee';
+
+/**
+ * Iconos de relleno (no de trazo). El logotipo de GitHub solo tiene sentido relleno, así que estos
+ * se pintan con `fill` en vez de `stroke`.
+ */
+const SOLID: ReadonlySet<IconName> = new Set<IconName>(['github']);
 
 /**
  * Trazos de cada icono, en un lienzo de 24x24. Todos usan trazo (no relleno) salvo `stop`, que es
@@ -75,6 +83,17 @@ const PATHS: Record<IconName, ReactNode> = {
       <path d="M12 2.6v2.3M12 19.1v2.3M2.6 12h2.3M19.1 12h2.3M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6" />
     </>
   ),
+  // Marca de GitHub (trazado de dominio público, como en Simple Icons).
+  github: (
+    <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.1 4.6 18.1 5 18.1 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z" />
+  ),
+  coffee: (
+    <>
+      <path d="M4 8h13v5.5a5.5 5.5 0 0 1-5.5 5.5h-2A5.5 5.5 0 0 1 4 13.5z" />
+      <path d="M17 9.5h1.8a2.7 2.7 0 0 1 0 5.4H17" />
+      <path d="M6.5 3.2c.7.7.7 1.4 0 2.1M10.5 3.2c.7.7.7 1.4 0 2.1" />
+    </>
+  ),
 };
 
 export type IconProps = {
@@ -84,13 +103,15 @@ export type IconProps = {
 };
 
 export default function Icon({ name, className }: IconProps) {
+  const solid = SOLID.has(name);
+
   return (
     <svg
       className={className === undefined ? 'icon' : `icon ${className}`}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
+      fill={solid ? 'currentColor' : 'none'}
+      stroke={solid ? 'none' : 'currentColor'}
+      strokeWidth={solid ? undefined : 2}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"

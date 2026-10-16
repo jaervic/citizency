@@ -34,7 +34,7 @@ try {
 
 const resultados = [];
 function check(nombre, ok, detalle = '') {
-  resultados.push({ nombre, ok });
+  resultados.push({ nombre, ok, detalle });
   console.log(`${ok ? '✅' : '❌'} ${nombre}${detalle === '' ? '' : ` → ${detalle}`}`);
 }
 
@@ -99,7 +99,8 @@ const PARES_CONTRASTE = [
   ['.app-header__title', 4.5],
   ['.screen-subtitle', 4.5],
   ['.home-stat', 4.5],
-  ['.home-disclaimer', 4.5],
+  ['.app-footer__legal', 4.5],
+  ['.app-footer__link', 4.5],
   ['.btn--primary', 4.5],
   ['.hero__streak', 4.5],
   ['.hero__sub', 4.5],
@@ -165,6 +166,16 @@ const errores = [];
 page.on('pageerror', (error) => errores.push(`[pageerror] ${error.message}`));
 page.on('console', (message) => {
   if (message.type() === 'error') errores.push(`[console] ${message.text()}`);
+});
+
+/** Dominios de los recursos pedidos: sirve para comprobar que la app no carga nada de terceros. */
+const hostsVisitados = new Set();
+page.on('request', (request) => {
+  try {
+    hostsVisitados.add(new URL(request.url()).host);
+  } catch {
+    hostsVisitados.add('');
+  }
 });
 
 try {
@@ -275,6 +286,68 @@ try {
   await page.goto(`${BASE}/ruta-inexistente`, { waitUntil: 'networkidle' });
   check('una ruta desconocida muestra el 404', (await page.locator('body').innerText()).includes('Pantalla no encontrada'));
 
+  // ----------------------------------------------------------- Pie de página
+  console.log('\n— Pie de página');
+  await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+
+  const credito = page.locator('.app-footer__link');
+  const donacion = page.locator('.app-footer__donate');
+
+  check(
+    'acredita al autor',
+    (await credito.innerText()).includes('Jaervic Guevara'),
+    await credito.innerText(),
+  );
+
+  const github = {
+    href: await credito.getAttribute('href'),
+    target: await credito.getAttribute('target'),
+    rel: await credito.getAttribute('rel'),
+  };
+  check('el crédito enlaza el perfil de GitHub', github.href === 'https://github.com/jaervic', String(github.href));
+  check(
+    'el crédito abre en otra pestaña y con rel seguro',
+    github.target === '_blank' && (github.rel ?? '').includes('noopener') && (github.rel ?? '').includes('noreferrer'),
+    `target=${github.target}, rel=${github.rel}`,
+  );
+
+  const koFi = {
+    href: await donacion.getAttribute('href'),
+    target: await donacion.getAttribute('target'),
+    rel: await donacion.getAttribute('rel'),
+  };
+  check('la donación enlaza el Ko-fi del autor', koFi.href === 'https://ko-fi.com/jaervic', String(koFi.href));
+  check(
+    'la donación abre en otra pestaña y con rel seguro',
+    koFi.target === '_blank' && (koFi.rel ?? '').includes('noopener'),
+    `target=${koFi.target}, rel=${koFi.rel}`,
+  );
+
+  check(
+    'el aviso legal está en el pie',
+    (await page.locator('.app-footer__legal').innerText()).includes('No está afiliada ni respaldada por USCIS'),
+  );
+
+  // El pie debe verse en TODAS las pantallas, no solo en el inicio.
+  const rutasSinPie = [];
+  for (const ruta of ['/flashcards', '/quiz', '/interview', '/progress', '/state', '/settings']) {
+    await page.goto(`${BASE}${ruta}`, { waitUntil: 'load' });
+
+    // Se espera a que React monte antes de contar: con `domcontentloaded` la comprobación era
+    // intermitente porque el pie todavía no estaba en el DOM.
+    try {
+      await page.locator('.app-footer__legal').first().waitFor({ state: 'visible', timeout: 5000 });
+    } catch {
+      rutasSinPie.push(ruta);
+    }
+  }
+  check('el pie aparece en todas las pantallas', rutasSinPie.length === 0, rutasSinPie.join(', '));
+
+  // Nada de terceros: la app no debe pedir recursos a dominios externos (es la promesa de
+  // privacidad; los enlaces solo se abren si la persona hace clic).
+  const externos = [...hostsVisitados].filter((host) => host !== new URL(BASE).host && host !== '');
+  check('ninguna petición a dominios externos', externos.length === 0, externos.join(', '));
+
   // ------------------------------------------------------------------ Temas
   console.log('\n— Modo claro y oscuro');
   for (const scheme of ['light', 'dark']) {
@@ -342,6 +415,14 @@ try {
 }
 
 const fallos = resultados.filter((resultado) => !resultado.ok);
+
+if (fallos.length > 0) {
+  console.log('\nFallos:');
+  for (const fallo of fallos) {
+    console.log(`  ❌ ${fallo.nombre}${fallo.detalle === '' ? '' : ` → ${fallo.detalle}`}`);
+  }
+}
+
 console.log(`\n${fallos.length === 0 ? '🎉' : '⚠️'}  ${resultados.length - fallos.length}/${resultados.length} comprobaciones OK`);
 
 process.exit(fallos.length === 0 ? 0 : 1);
